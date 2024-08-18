@@ -16,10 +16,23 @@
     <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
     <link rel="stylesheet" href="{% static 'css/basic.css' %}">
     <link rel="stylesheet" href="{% static 'css/extra.css' %}">
-    <script src="{% static 'plg/CountDown/countdown.js' %}"></script>
 </head>
 
 <body>
+    {% block header %}
+    <!-- Здесь будет подключён header -->
+    {% endblock %}
 
+    {% block content %}
+    <!-- Основное содержимое страницы -->
+    {% endblock %}
+
+    {% block footer %}
+    <!-- Здесь будет подключён footer -->
+    {% endblock %}
+
+    {% block extra_scripts %}
+    <script src="{% static 'plg/CountDown/countdown.js' %}"></script>
+    {% endblock %}
 </body>
 </html>
