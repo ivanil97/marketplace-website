@@ -3,7 +3,7 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <title>Megano</title>
+    <title>{% block title %} Megano {% endblock %}</title>
     <meta name="description" content="Описание страницы">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <link href="{% static 'img/favicon.ico' %}" rel="shortcut icon">
@@ -19,20 +19,26 @@
 </head>
 
 <body>
+<header>
     {% block header %}
     <!-- Здесь будет подключён header -->
     {% endblock %}
+</header>
 
-    {% block body %}
-    <!-- Основное содержимое страницы -->
-    {% endblock %}
 
+{% block body %}
+<!-- Основное содержимое страницы -->
+{% endblock %}
+
+<footer>
     {% block footer %}
     <!-- Здесь будет подключён footer -->
     {% endblock %}
+</footer>
 
-    {% block extra_scripts %}
-    <script src="{% static 'plg/CountDown/countdown.js' %}"></script>
-    {% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'plg/CountDown/countdown.js' %}"></script>
+{% endblock %}
 </body>
 </html>
