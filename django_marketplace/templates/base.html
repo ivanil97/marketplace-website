@@ -1,3 +1,6 @@
+<!-- Pager & Footer для развернутого вывода страницы about, необходимо
+        установить в context параметр is_about_view в True
+        передать в include значение True (include '...' with is_about=True) -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
@@ -19,23 +22,14 @@
 </head>
 
 <body>
-<header>
-    {% block header %}
-    <!-- Здесь будет подключён header -->
-    {% endblock %}
-</header>
 
+{% include 'header.html' with is_about=is_about_view %}
 
 {% block body %}
 <!-- Основное содержимое страницы -->
 {% endblock %}
 
-<footer>
-    {% block footer %}
-    <!-- Здесь будет подключён footer -->
-    {% endblock %}
-</footer>
-
+{% include 'footer.html' with is_about=is_about_view %}
 
 {% block extra_scripts %}
 <script src="{% static 'plg/CountDown/countdown.js' %}"></script>
