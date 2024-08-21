@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'mptt',
     'products.apps.ProductsConfig',
     'django_cleanup.apps.CleanupConfig',
+    'adminpanel',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'products/templates/products/django-frontend')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
