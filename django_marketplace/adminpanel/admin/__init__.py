@@ -1,0 +1,2 @@
+from .sliderbanneradmin import SliderBannerAdmin
+from .staticbanneradmin import StaticBannerAdmin
