@@ -7,6 +7,9 @@
               <div class="row-block">
                   <div class="row ControlPanel-rowSplit">
                       <div class="row-block hide_700">
+                          {% if is_about %}
+                              <span class="ControlPanel-title">Follow Us</span>
+                          {% endif %}
                           <ul class="menu menu_img menu_smallImg ControlPanel-menu">
                               <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'assets/img/icons/socialHeader/tw.svg' %}" alt="tw.svg" /></a>
                               </li>
@@ -183,6 +186,7 @@ block
           <div class="Header-search">
               <div class="search">
                   <form class="form form_search" action="#" method="post">
+                      {% csrf_token %}
                       <input class="search-input" id="query" name="query" type="text" placeholder="NVIDIA GeForce RTX 3060" />
                       <button class="search-button" type="submit" name="search" id="search"><img src="{% static 'assets/img/icons/search.svg' %}" alt="search.svg" />Поиск
                       </button>
