@@ -144,7 +144,7 @@ data/
 *.db
 *.sqlite3
 /category_cache/
-uploads/
+/uploads/
 cache/
 /gajdenv/
 
