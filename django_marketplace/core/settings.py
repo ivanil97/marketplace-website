@@ -27,12 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'users.User'
-"""
-указываем, что модель пользователя, которая должна использоваться
-в проекте — это кастомная модель users.User.
-"""
-
 
 # Application definition
 
@@ -47,7 +41,6 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'django_cleanup.apps.CleanupConfig',
     'adminpanel',
-    'users',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +58,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'products/templates/products/django-frontend')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
