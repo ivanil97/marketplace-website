@@ -37,10 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mptt',
+
     'products.apps.ProductsConfig',
+    'users.apps.UsersConfig',
+    'vendors.apps.VendorsConfig',
+    'reviews.apps.ReviewsConfig',
+    'orders.apps.OrdersConfig',
+    'comparisons.apps.ComparisonsConfig',
+    'adminpanel.apps.AdminpanelConfig',
+
+    'mptt',
     'django_cleanup.apps.CleanupConfig',
-    'adminpanel',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +65,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'products/templates/products/django-frontend')],
+        'DIRS': [os.path.join(BASE_DIR, 'django_marketplace/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
