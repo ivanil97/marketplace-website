@@ -14,4 +14,4 @@ class Discount(models.Model):
     archived = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Discount " + self.pk
+        return "Discount " + str(self.pk)

@@ -8,3 +8,4 @@ class TagAdmin(admin.ModelAdmin):
     list_display_links = "pk", "name",
     ordering = "name", "pk",
     search_fields = "name",
+    filter_horizontal = "products",
