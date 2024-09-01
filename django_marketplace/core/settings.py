@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-@9a=h4+*ds9ohkcfj0svnx7q9&m$x@9@5l(cys7tz#tvqu!duz
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL = 'users.User'
+"""
+AUTH_USER_MODEL = 'users.User' - использовать модель User из приложения users вместо стандартной модели auth.User
+"""
 
 
 # Application definition
@@ -37,10 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mptt',
+
     'products.apps.ProductsConfig',
+    'users.apps.UsersConfig',
+    'vendors.apps.VendorsConfig',
+    'reviews.apps.ReviewsConfig',
+    'orders.apps.OrdersConfig',
+    'comparisons.apps.ComparisonsConfig',
+    'adminpanel.apps.AdminpanelConfig',
+
+    'mptt',
     'django_cleanup.apps.CleanupConfig',
-    'adminpanel',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +69,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'products/templates/products/django-frontend')],
+        'DIRS': [os.path.join(BASE_DIR, 'django_marketplace/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
