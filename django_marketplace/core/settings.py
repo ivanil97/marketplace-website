@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-@9a=h4+*ds9ohkcfj0svnx7q9&m$x@9@5l(cys7tz#tvqu!duz
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL = 'users.User'
+"""
+AUTH_USER_MODEL = 'users.User' - использовать модель User из приложения users вместо стандартной модели auth.User
+"""
 
 
 # Application definition
