@@ -14,4 +14,7 @@ class Discount(models.Model):
     archived = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Discount " + str(self.pk)
+        return f"Discount {self.percent} %"
+
+    class Meta:
+        ordering = "-to_date",

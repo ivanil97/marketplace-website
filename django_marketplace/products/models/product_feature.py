@@ -7,4 +7,4 @@ class ProductFeature(models.Model):
     value = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.product
+        return str(self.product)
