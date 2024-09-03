@@ -59,41 +59,47 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = "pk", "name", "description", "count", "discount", "price", "category", "archived"
     list_display_links = "pk", "name",
     list_filter = "category", "archived", SellerFilter,
-    prepopulated_fields = {"slug": ("name", )}
+    prepopulated_fields = {"slug": ("name",)}
     ordering = "name", "pk",
     search_fields = "name", "description",
 
-    # def get_queryset(self, request):
-    #     return
+    def get_queryset(self, request):
+        query = (
+            super().get_queryset(request).
+            select_related("category").
+            prefetch_related("discounts").
+            prefetch_related("seller_price")
+        )
+        return query
 
     def description(self, obj: Product) -> str:
         if len(obj.description) < 50:
             return obj.description
         return obj.description[:50] + "..."
 
+    def category(self, obj: Product):
+        return obj.category.name
+
     def discount(self, obj: Product):
-        f = obj.discounts.filter(archived=False, is_active=True)
+        f = obj.discounts.filter(archived=False) # n + 1
         if f:
             return f"{f[0].percent} %"
         return "no discount"
 
-    def category(self, obj: Product):
-        return obj.category.name
-
     def archived(self, obj: Product):
-        f = obj.seller_price.filter(archived=False)
+        f = obj.seller_price.filter(archived=False)  # n + 1
         if f:
             return f"{f[0].archived}"
         return f"{obj.name} is not archived"
 
     def price(self, obj: Product):
-        f = obj.seller_price.filter(archived=False)
+        f = obj.seller_price.filter(archived=False)  # n + 1
         if f:
             return f"{f[0].price}"
         return "price is not stuff"
 
     def count(self, obj: Product):
-        f = obj.seller_price.filter(archived=False, count_products__gt=0)
+        f = obj.seller_price.filter(archived=False, count_products__gt=0) # n + 1
         if f:
             return f"{f[0].count_products} шт."
         return f"products are not have"
