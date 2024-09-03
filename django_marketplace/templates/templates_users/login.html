@@ -1,0 +1,32 @@
+{% extends 'templates_users/base.html' %}
+
+{% block content %}
+    <main class="Middle">
+      <div class="wrapper">
+        <div class="header">
+            <h3 class="sign-in">Вход</h3>
+        </div>
+        <div class="clear"></div>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <input class="user-input" type="text" name="username" id="name" placeholder="E-mail" />
+            </div>
+            <div>
+
+                <input type="password" name="password" id="name" placeholder="*********" />
+            </div>
+            <div>
+                <input type="submit" value="Войти" />
+            </div>
+            <a class="forgot-label" href="e-mail.html">Забыли пароль?</a>
+            <a class="registr" href="registr.html">
+                Регистрация
+            </a>
+        </form>
+        {% if form.non_field_errors %}
+            <p>Вы ввели неверные данные</p>
+        {% endif %}
+      </div>
+    </main>
+{% endblock %}
