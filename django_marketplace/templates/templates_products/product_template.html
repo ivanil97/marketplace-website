@@ -22,7 +22,7 @@
                             </div>
                             {% for img in product.images %}
                                 <div class="ProductCard-picts">
-                                    <a class="ProductCard-pict" href="{{ img.image.url }}"><img src="" alt="{{ product.name }}"/></a>
+                                    <a class="ProductCard-pict {% if forloop.first %} ProductCard-pict_ACTIVE{% endif %}" href="{{ img.image.url }}"><img src="" alt="{{ product.name }}"/></a>
                                 </div>
                             {% empty %}
                                 <p>No image yet</p>
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="ProductCard-cartElement">
                                     <a class="btn btn_primary" href="#modal_open">
-                                        <img class="btn-icon" src="{% static img/icons/card/cart_white.svg %}" alt="cart_white.svg" />
+                                        <img class="btn-icon" src="{% static 'img/icons/card/cart_white.svg' %}" alt="cart_white.svg" />
                                         <span class="btn-content">Купить</span>
                                     </a>
                                 </div>
