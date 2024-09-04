@@ -7,7 +7,7 @@ from products.models import Seller
 class SellerAdmin(admin.ModelAdmin):
     list_display = "pk", "name", "description", "email", "phone", "address",
     list_display_links = "pk", "name"
-    ordering = "pk",
+    ordering = "name",
     search_fields = "name",
     prepopulated_fields = {"slug": ("name",)}
 

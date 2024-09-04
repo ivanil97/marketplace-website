@@ -1,5 +1,6 @@
 from django.contrib import admin
-
+from django.db.models import Prefetch, QuerySet
+from django.http import HttpRequest
 from products.models import (
     Tag,
     Seller,
@@ -10,6 +11,24 @@ from products.models import (
 )
 
 
+@admin.action(description="Archived products")
+def mark_archived(
+        modeladmin: admin.ModelAdmin,
+        request: HttpRequest,
+        query: QuerySet
+):
+    query.update(archived=True)
+
+
+@admin.action(description="Unarchived products")
+def mark_unarchived(
+        modeladmin: admin.ModelAdmin,
+        request: HttpRequest,
+        query: QuerySet
+):
+    query.update(archived=False)
+
+
 class SellerFilter(admin.SimpleListFilter):
     """Кастомный фильтр для фильтрации товаров по продавцу"""
 
@@ -17,8 +36,7 @@ class SellerFilter(admin.SimpleListFilter):
     parameter_name = 'sellers'
 
     def lookups(self, request, model_admin):
-        sellers = Seller.objects.all()
-        return [(seller.pk, seller.name) for seller in sellers]
+        return [(seller.pk, seller.name) for seller in Seller.objects.all()]
 
     def queryset(self, request, queryset):
         if self.value():
@@ -50,6 +68,10 @@ class SellerPriceInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    actions = [
+        mark_archived,
+        mark_unarchived,
+    ]
     inlines = [
         DiscountInline,
         SellerPriceInline,
@@ -62,44 +84,28 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     ordering = "name", "pk",
     search_fields = "name", "description",
+    list_per_page = 40
 
     def get_queryset(self, request):
         query = (
             super().get_queryset(request).
             select_related("category").
-            prefetch_related("discounts").
-            prefetch_related("seller_price")
+            prefetch_related(Prefetch("discounts", to_attr="discount")).
+            prefetch_related(Prefetch("seller_price", to_attr="seller"))
         )
         return query
 
     def description(self, obj: Product) -> str:
-        if len(obj.description) < 50:
-            return obj.description
-        return obj.description[:50] + "..."
+        return obj.description if len(obj.description) < 50 else obj.description[:50] + "..."
 
     def category(self, obj: Product):
         return obj.category.name
 
     def discount(self, obj: Product):
-        f = obj.discounts.filter(archived=False) # n + 1
-        if f:
-            return f"{f[0].percent} %"
-        return "no discount"
-
-    def archived(self, obj: Product):
-        f = obj.seller_price.filter(archived=False)  # n + 1
-        if f:
-            return f"{f[0].archived}"
-        return f"{obj.name} is not archived"
+        return f"{obj.discount[0].percent} %" if obj.discount != [] else "No discount",
 
     def price(self, obj: Product):
-        f = obj.seller_price.filter(archived=False)  # n + 1
-        if f:
-            return f"{f[0].price}"
-        return "price is not stuff"
+        return f"{obj.seller[0].price}" if obj.seller != [] else "price is not stuff",
 
     def count(self, obj: Product):
-        f = obj.seller_price.filter(archived=False, count_products__gt=0) # n + 1
-        if f:
-            return f"{f[0].count_products} шт."
-        return f"products are not have"
+        return f"{obj.seller[0].count_products} шт." if obj.seller != [] else "products are not have",
