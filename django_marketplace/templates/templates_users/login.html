@@ -19,8 +19,8 @@
             <div>
                 <input type="submit" value="Войти" />
             </div>
-            <a class="forgot-label" href="e-mail.html">Забыли пароль?</a>
-            <a class="registr" href="registr.html">
+            <a class="forgot-label" href="{% url 'user:password_reset' %}">Забыли пароль?</a>
+            <a class="registr" href={% url "user:register" %}>
                 Регистрация
             </a>
         </form>

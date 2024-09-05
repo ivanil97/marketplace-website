@@ -18,62 +18,13 @@
     <link rel="stylesheet" href="{% static 'css/extra.css' %}">
 </head>
 
-<body class="Site">
-    <header class="Header">
-        <div class="ControlPanel">
-            <div class="wrap">
-                <div class="row ControlPanel-row">
-                    <div class="row-block">
-                        <div class="row ControlPanel-rowSplit">
-                            <div class="row-block hide_700">
-                                <ul class="menu menu_img menu_smallImg ControlPanel-menu">
-                                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/tw.svg' %}" alt="tw.svg" /></a>
-                                    </li>
-                                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/in.svg' %}" alt="in.svg" /></a>
-                                    </li>
-                                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/pt.svg' %}" alt="pt.svg" /></a>
-                                    </li>
-                                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/mail.svg' %}" alt="mail.svg" /></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <nav class="row-block">
-                        {% if not request.user.is_authenticated %}
-                            <div class="row ControlPanel-rowSplit">
-                                <div class="row-block"><a class="ControlPanel-title" href="login.html">Вход</a>
-                                    <a class="ControlPanel-title" href="registr.html">Регистрация</a>
-                                </div>
-                            </div>
-                        {% endif %}
-                    </nav>
-                </div>
-            </div>
-            <!--+div.menuModal#navigate
-      //    +menu([
-      //        ['Главная','index.html'],
-      //        ['Портфолио','index.html'],
-      //        ['Мои проекты','index.html'],
-      //        ['Контакты','index.html']
-      //    ], page === 'article'? 'Портфолио': 'Главная')._main
+<body>
 
-        block
-        -->
-        </div>
-        <div class="wrap">
-            <div class="row Header-rowMain">
-                <div class="row-block Header-logo"><a class="logo" href="index.html"><img class="logo-image" src="{% static 'img/logo.png' %}" alt="logo.png" /></a>
-                </div>
-            </div>
-        </div>
+    {% include 'header.html' with simple_header=True %}
 
-
-        {% block content %}
+    {% block content %}
         <!-- Основное содержимое страницы -->
-        {% endblock %}
-
-    </header>
+    {% endblock %}
 
     {% include 'footer.html' %}
 
