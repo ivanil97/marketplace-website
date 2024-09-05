@@ -2,7 +2,7 @@ from django import forms
 from products.models.review import Review
 
 
-class FeedBackForm(forms.Form):
+class ReviewForm(forms.Form):
     class Meta:
         model = Review
-        fields = "comment",
+        fields = ["user", "comment"],
