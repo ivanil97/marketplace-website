@@ -10,24 +10,6 @@ from .models.product import Product
 from .models.review import Review
 
 
-class ReviewListView(ListView):
-    model = Review
-    template_name = 'product_detail.html'
-    context_object_name = 'reviews'
-    paginate_by = 5
-
-    def get_queryset(self):
-        product_id = self.kwargs['product_id']
-        page_number = self.request.GET.get('page', 1)
-        return get_reviews_for_product(product_id=product_id, page_number=page_number,
-                                       reviews_per_page=self.paginate_by)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['product_id'] = self.kwargs['product_id']
-        return context
-
-
 class ReviewCreateView(CreateView):
     model = Review
     form_class = ReviewForm
