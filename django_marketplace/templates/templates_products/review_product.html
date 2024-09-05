@@ -1,16 +1,4 @@
-{% extends 'templates/base.html' %}
-{% load static %}
-{% load mptt_tags %}
-{% load cache %}
-
-{% block title %} Review {% endblock %}
-
-{% block header %}
-<!-- Здесь будет header -->
-{% endblock %}
-
-{% block content %}
-<div class="reviews-tab">
+9 <div class="reviews-tab">
     <h3>Отзывы</h3>
 
     {% if reviews %}
@@ -40,8 +28,3 @@
     </div>
     {% endif %}
 </div>
-{% endblock %}
-
-{% block footer %}
-<!-- Здесь будет footer -->
-{% endblock %}
