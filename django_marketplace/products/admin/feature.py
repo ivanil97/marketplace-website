@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from products.models import Tag
+from products.models import Feature
 
 
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
+@admin.register(Feature)
+class FeatureAdmin(admin.ModelAdmin):
     list_display = "pk", "name",
     list_display_links = "pk", "name",
     ordering = "name",
