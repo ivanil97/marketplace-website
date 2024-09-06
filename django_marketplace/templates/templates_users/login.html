@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Авторизация
+{% endblock %}
+
+{% block content %}
+    <main class="Middle">
+      <div class="wrapper">
+        <div class="header">
+            <h3 class="sign-in">Вход</h3>
+        </div>
+        <div class="clear"></div>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <input class="user-input" type="text" name="username" id="name" placeholder="E-mail" />
+            </div>
+            <div>
+
+                <input type="password" name="password" id="name" placeholder="*********" />
+            </div>
+            <div>
+                <input type="submit" value="Войти" />
+            </div>
+            <a class="forgot-label" href="{% url 'user:password_reset' %}">Забыли пароль?</a>
+            <a class="registr" href={% url "user:register" %}>
+                Регистрация
+            </a>
+        </form>
+        {% if form.non_field_errors %}
+            <div class="form-error">Вы ввели неверные данные</div>
+        {% endif %}
+      </div>
+    </main>
+{% endblock %}
