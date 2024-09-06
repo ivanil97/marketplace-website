@@ -9,4 +9,3 @@ class ProductImageAdmin(admin.ModelAdmin):
     list_display_links = "pk", "product",
     ordering = "pk", "product",
     search_fields = "product",
-

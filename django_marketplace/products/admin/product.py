@@ -16,7 +16,7 @@ def mark_archived(
         modeladmin: admin.ModelAdmin,
         request: HttpRequest,
         query: QuerySet
-):
+) -> None:
     query.update(archived=True)
 
 
@@ -25,23 +25,19 @@ def mark_unarchived(
         modeladmin: admin.ModelAdmin,
         request: HttpRequest,
         query: QuerySet
-):
+) -> None:
     query.update(archived=False)
 
 
 class SellerFilter(admin.SimpleListFilter):
-    """Кастомный фильтр для фильтрации товаров по продавцу"""
-
     title = 'Sellers'
     parameter_name = 'sellers'
 
-    def lookups(self, request, model_admin):
+    def lookups(self, request, model_admin) -> list:
         return [(seller.pk, seller.name) for seller in Seller.objects.all()]
 
-    def queryset(self, request, queryset):
-        if self.value():
-            return queryset.filter(seller_price__seller__id=self.value())
-        return queryset
+    def queryset(self, request, queryset) -> QuerySet:
+        return queryset.filter(seller_price__seller__id=self.value()) if self.value() else queryset
 
 
 class TagInline(admin.TabularInline):
@@ -78,7 +74,16 @@ class ProductAdmin(admin.ModelAdmin):
         TagInline,
         ProductFeatureInline,
     ]
-    list_display = "pk", "name", "description", "count", "discount", "price", "category", "archived"
+    list_display = (
+        "pk",
+        "name",
+        "description",
+        "count",
+        "discount",
+        "price",
+        "category",
+        "archived",
+    )
     list_display_links = "pk", "name",
     list_filter = "category", "archived", SellerFilter,
     prepopulated_fields = {"slug": ("name",)}
@@ -86,7 +91,7 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = "name", "description",
     list_per_page = 40
 
-    def get_queryset(self, request):
+    def get_queryset(self, request) -> QuerySet:
         query = (
             super().get_queryset(request).
             select_related("category").
@@ -98,14 +103,14 @@ class ProductAdmin(admin.ModelAdmin):
     def description(self, obj: Product) -> str:
         return obj.description if len(obj.description) < 50 else obj.description[:50] + "..."
 
-    def category(self, obj: Product):
+    def category(self, obj: Product) -> str:
         return obj.category.name
 
-    def discount(self, obj: Product):
-        return f"{obj.discount[0].percent} %" if obj.discount != [] else "No discount",
+    def discount(self, obj: Product) -> str:
+        return f"{obj.discount[0].percent} %" if obj.discount != [] else "No discount"
 
-    def price(self, obj: Product):
-        return f"{obj.seller[0].price}" if obj.seller != [] else "price is not stuff",
+    def price(self, obj: Product) -> str:
+        return f"{obj.seller[0].price}" if obj.seller != [] else "price is not stuff"
 
-    def count(self, obj: Product):
-        return f"{obj.seller[0].count_products} шт." if obj.seller != [] else "products are not have",
+    def count(self, obj: Product) -> str:
+        return f"{obj.seller[0].count_products} шт." if obj.seller != [] else "products are not have"

@@ -13,9 +13,19 @@ def category_icon_directory_path(
 
 
 class Category(MPTTModel):
+    """
+    Модель категории товара.
+    Атрибуты:
+        name (str): Название категории.
+        slug (str): Слаг категории.
+        description (str): Описание категории.
+        icon (str): Изображение категории.
+        archived (bool): Указатель на архивацию категории.
+        parent: Древовидная структура связи с родительской категорией.
+    """
     name = models.CharField(
         max_length=100,
-        verbose_name='Название'
+        verbose_name='Name'
     )
     slug = models.SlugField(max_length=150)
     description = models.TextField(
@@ -32,7 +42,7 @@ class Category(MPTTModel):
         null=True, blank=True,
         related_name='children',
         db_index=True,
-        verbose_name='Родительская категория'
+        verbose_name='Parent category'
     )
 
     class MPTTMeta:
