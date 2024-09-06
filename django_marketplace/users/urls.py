@@ -19,6 +19,7 @@ urlpatterns = [
          LoginView.as_view(
              template_name='templates_users/login.html',
              redirect_authenticated_user=True,
+             extra_context={'simple_header': True},
          ),
          name="login"),
     path('logout/',
@@ -34,12 +35,16 @@ urlpatterns = [
         PasswordResetConfirmView.as_view(
             template_name="templates_users/password_reset_confirm.html",
             success_url=reverse_lazy("user:password_reset_complete"),
+            extra_context={'simple_header': True},
         ),
         name="password_reset_confirm",
     ),
     path(
         'password-reset-complete/',
-        PasswordResetCompleteView.as_view(template_name="templates_users/password_reset_complete.html"),
-        name="password_reset_complete"
+        PasswordResetCompleteView.as_view(
+            template_name="templates_users/password_reset_complete.html",
+            extra_context={'simple_header': True},
+        ),
+        name="password_reset_complete",
     ),
 ]

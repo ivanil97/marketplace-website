@@ -13,6 +13,7 @@ class RegisterView(CreateView):
     form_class = RegisterForm
     template_name = "templates_users/register.html"
     success_url = reverse_lazy("user:account")
+    extra_context = {'simple_header': True}
 
     def form_valid(self, form):
         response = super().form_valid(form)

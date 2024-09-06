@@ -1,4 +1,8 @@
-{% extends 'templates_users/base.html' %}
+{% extends 'base.html' %}
+
+{% block title %}
+	Авторизация
+{% endblock %}
 
 {% block content %}
     <main class="Middle">
@@ -25,7 +29,7 @@
             </a>
         </form>
         {% if form.non_field_errors %}
-            <p>Вы ввели неверные данные</p>
+            <div class="form-error">Вы ввели неверные данные</div>
         {% endif %}
       </div>
     </main>
