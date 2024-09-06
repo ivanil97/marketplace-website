@@ -2,4 +2,9 @@ from .category import Category
 from .product import Product
 from .tag import Tag
 from .productimage import ProductImage
+from .discount import Discount
+from .seller import Seller
+from .seller_price import SellerPrice
 from .review import Review
+from .product_feature import ProductFeature
+from .feature import Feature
