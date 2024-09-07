@@ -4,6 +4,15 @@ from django.urls import reverse
 
 
 class Product(models.Model):
+    """
+    Модель товара.
+    Атрибуты:
+        name (str): Название товара.
+        slug (str): Слаг товара.
+        description (str): Описание товара.
+        archived (bool): Указатель на архивацию товара.
+        category: Древовидная структура связи с родительской категорией.
+    """
     name = models.CharField(
         max_length=256,
         verbose_name="Наименование"

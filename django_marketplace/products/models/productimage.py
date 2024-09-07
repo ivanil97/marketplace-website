@@ -10,6 +10,12 @@ def productimage_image_directory_path(instance: "ProductImage", filename: str) -
 
 
 class ProductImage(models.Model):
+    """
+    Модель для хранения изображений товаров.
+    Атрибуты:
+        image (str): Изображение товара.
+        product (Product): Связь с моделью Product к которому принадлежит изображение товара.
+    """
     image = models.ImageField(
         null=True, blank=True,
         upload_to="productimage_image_directory_path",

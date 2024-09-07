@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Регистрация
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="header">
+            <h3 class="sign-in">Регистрация</h3>
+
+        </div>
+        <div class="clear"></div>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <input class="user-input" type="text" name="first_name" id="name" placeholder="Имя" />
+                <div class="form-error">
+                    <strong>{{ form.first_name.errors }}</strong>
+                </div>
+            </div>
+            <div>
+                <input class="user-input" type="email" name="email" id="name" placeholder="E-mail" />
+                <div class="form-error">
+                    <strong>{{ form.email.errors }}</strong>
+                </div>
+            </div>
+            <div>
+                <input type="password" name="password1" id="name" placeholder="Пароль" />
+            </div>
+            <div class="form-error">
+                <strong>{{ form.first_name.errors }}</strong>
+            </div>
+            <div>
+                <input type="password" name="password2" id="name" placeholder="Повторить пароль" />
+            </div>
+            <input type="submit" value="Зарегистрироваться" />
+
+
+            <a class="registr" href={% url 'user:login' %}>
+                Вход
+            </a>
+            <div class="clear"></div>
+        </form>
+        {% if form.non_field_errors %}
+            <div class="form-error">Вы ввели неверные данные</div>
+        {% endif %}
+  </div>
+{% endblock %}
