@@ -19,7 +19,7 @@ from django.db.models import Avg
 class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
     queryset = Product.objects.prefetch_related(
-        "tags", "images", "reviews",
+        "tags", "images",
         "sellerprices", "features").annotate(
         seller_price=Avg('sellerprices__price'
                          ))
@@ -27,7 +27,8 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context_new = product_context(self.object, **kwargs)
+        context_new = product_context(self.object, page_number=1, reviews_per_page=5)
+        # context_new = product_context(self.object, self.object_id, page_number=1, reviews_per_page=5)
         context.update(context_new)
         return context
 

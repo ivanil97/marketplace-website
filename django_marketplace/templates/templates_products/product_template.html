@@ -123,8 +123,7 @@
                                         <tr>
                                             <td>Тип товара
                                             </td>
-{#                                            Доработать категорию TreeForeignkey#}
-                                            <td>{{ product.category.name }}
+                                                <td>{{ product.category.name }}
                                             </td>
                                         </tr>
                                     </table>
@@ -185,47 +184,7 @@
                                 </div>
                             </div>
                             <div class="Tabs-block" id="reviews">
-                                <header class="Section-header">
-                                    <h3 class="Section-title">{{ product.reviews|length }} отзыв
-                                    </h3>
-                                </header>
-                                <div class="Comments">
-                                    <div class="Comment">
-                                        <div class="Comment-column Comment-column_pict">
-                                            <div class="Comment-avatar">
-                                            </div>
-                                        </div>
-                                        <div class="Comment-column">
-                                            {% for review in product.reviews %}
-                                               <header class="Comment-header">
-                                                    <div>
-                                                        <strong class="Comment-title">{{ review.user.first_name }}
-                                                        </strong><span class="Comment-date">{{ review.date }}</span>
-                                                    </div>
-                                                </header>
-                                                <div class="Comment-content">{{ review.comment }}
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </div>
-                                <header class="Section-header Section-header_product">
-                                    <h3 class="Section-title">Добавить отзыв
-                                    </h3>
-                                </header>
-                                <div class="Tabs-addComment">
-                                    <form class="form" action="#" method="post">
-{#                                        <div class="form-group">#}
-{#                                            <textarea class="form-textarea" name="review" id="review" placeholder="Отзыв"></textarea>#}
-{#                                        </div>#}
-                                        {% csrf_token %}
-                                        {{ form.as_p }}
-                                        <div class="form-group">
-                                            <button class="btn btn_muted" type="submit">Отправить отзыв
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
+                                {% include 'review_product.html' %}
                             </div>
                         </div>
                     </div>
