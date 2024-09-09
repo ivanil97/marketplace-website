@@ -3,7 +3,7 @@ from django.views.generic import DetailView
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.cache import cache
-from products.services import product_context
+from products.services.product_context import product_context
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .forms import ReviewForm
@@ -17,8 +17,8 @@ class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
     queryset = Product.objects.prefetch_related(
         "tags", "images",
-        "sellerprices", "features").annotate(
-        seller_price=Avg('sellerprices__price'
+        "seller_price", "features").annotate(
+        auto_seller_price=Avg('seller_price__price'
                          ))
     context_object_name = "product"
 
