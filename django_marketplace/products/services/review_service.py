@@ -4,9 +4,9 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 
 
-def get_reviews_for_product(product_id, page_number=1, reviews_per_page=5):
+def get_reviews_for_product(product_id, page_number=1):
     reviews = Review.objects.filter(product__id=product_id)
-    paginator = Paginator(reviews, reviews_per_page)
+    paginator = Paginator(reviews)
     page_obj = paginator.get_page(page_number)
     return page_obj
 
