@@ -3,14 +3,11 @@ from django.views.generic import DetailView
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.cache import cache
-from products.services import product_context
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, get_object_or_404
+from products.services.product_context import product_context
 from django.urls import reverse_lazy
-from django.views import View
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView
 from .forms import ReviewForm
-from .services.review_service import get_reviews_for_product, add_review_to_product
+from .services.review_service import add_review_to_product
 from .models.product import Product
 from .models.review import Review
 from django.db.models import Avg
@@ -20,15 +17,14 @@ class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
     queryset = Product.objects.prefetch_related(
         "tags", "images",
-        "sellerprices", "features").annotate(
-        seller_price=Avg('sellerprices__price'
+        "seller_price", "features").annotate(
+        auto_seller_price=Avg('seller_price__price'
                          ))
     context_object_name = "product"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context_new = product_context(self.object, page_number=1, reviews_per_page=5)
-        # context_new = product_context(self.object, self.object_id, page_number=1, reviews_per_page=5)
+        context_new = product_context(self.object, page_number=1)
         context.update(context_new)
         return context
 
@@ -42,7 +38,7 @@ def clear_cache(sender, instance, **kwargs):
 class ReviewCreateView(CreateView):
     model = Review
     form_class = ReviewForm
-    template_name = ''
+    template_name = 'templates_products/review_product.html'
 
     def form_valid(self, form):
         product_id = self.kwargs['product_id']
