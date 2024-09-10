@@ -20,7 +20,6 @@
                         <div class="ProductCard-photo">
                             <img src="{{ first_image.images.url }}" alt="{{ product.name }}">
                         </div>
-                        {% if product.images.all %}
                         {% for img in product.images.all %}
                         <div class="ProductCard-picts">
                             <a class="ProductCard-pict {% if forloop.first %} ProductCard-pict_ACTIVE{% endif %}"
@@ -29,7 +28,6 @@
                         {% empty %}
                         <p>No image yet</p>
                         {% endfor %}
-                        {% endif %}
                     </div>
                     <div class="ProductCard-desc">
                         <div class="ProductCard-header">
