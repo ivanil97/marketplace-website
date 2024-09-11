@@ -20,12 +20,19 @@ class ProductDetailView(DetailView):
         "seller_price", "features").annotate(
         auto_seller_price=Avg('seller_price__price'
                          ))
-    context_object_name = "product"
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context_new = product_context(self.object, page_number=1)
         context.update(context_new)
+        k = 0
+        count = 0
+        for p in self.object.seller_price.all():
+            k += p.price
+            count += 1
+        avg_price = k/count
+        context['avg_price'] = avg_price
+        for s in self.object.images.all():
+            print(s.image.url)
         return context
 
 
