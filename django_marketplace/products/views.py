@@ -1,5 +1,5 @@
 from django.core.cache.utils import make_template_fragment_key
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.cache import cache
@@ -24,15 +24,6 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context_new = product_context(self.object, page_number=1)
         context.update(context_new)
-        k = 0
-        count = 0
-        for p in self.object.seller_price.all():
-            k += p.price
-            count += 1
-        avg_price = k/count
-        context['avg_price'] = avg_price
-        for s in self.object.images.all():
-            print(s.image.url)
         return context
 
 
@@ -56,3 +47,16 @@ class ReviewCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('product_detail', kwargs={'product_id': self.kwargs['product_id']})
+
+
+class ProductsListView(TemplateView):
+    template_name = "templates_products/products_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.prefetch_related(
+        "tags", "images",
+        "seller_price", "features").annotate(
+        auto_seller_price=Avg('seller_price__price'
+                         )).all()
+        return context
