@@ -1,19 +1,19 @@
-9 <div class="reviews-tab">
+<div class="reviews-tab">
     <h3>Отзывы</h3>
 
     {% if reviews %}
-    <ul class="reviews-list">
-        {% for review in reviews %}
-        <li class="review-item">
-            <p><strong>{{ review.user.username }}</strong> оставил отзыв:</p>
-            <p>{{ review.comment }}</p>
-            <p><small>Дата: {{ review.created_at|date:"d.m.Y H:i" }}</small></p>
-        </li>
-        {% endfor %}
-    </ul>
+        <ul class="reviews-list">
+            {% for review in reviews %}
+                <li class="review-item">
+                    <p>оставил отзыв: {{ review.user }}</p>
+                    <p>{{ review.comment }}</p>
+                    <p><small>Дата: {{ review.date|date:"d.m.Y H:i" }}</small></p>
+                </li>
+            {% endfor %}
+        </ul>
 
-    {% if reviews.has_other_pages %}
-    <div class="pagination">
+        {% if reviews.has_other_pages %}
+            <div class="pagination">
                 <span class="step-links">
                     {% if reviews.has_previous %}
                         <a href="?page={{ reviews.previous_page_number }}">« Предыдущая</a>
@@ -25,6 +25,9 @@
                         <a href="?page={{ reviews.next_page_number }}">Следующая »</a>
                     {% endif %}
                 </span>
-    </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <p>Пока отзывов нет. Будьте первым, кто оставит отзыв!</p>
     {% endif %}
 </div>
