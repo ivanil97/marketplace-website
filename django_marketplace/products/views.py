@@ -6,10 +6,10 @@ from django.core.cache import cache
 from products.services.product_context import product_context
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from .forms import ReviewForm
-from .services.review_service import add_review_to_product
-from .models.product import Product
-from .models.review import Review
+from products.forms import ReviewForm
+from products.services.review_service import add_review_to_product
+from products.models.product import Product
+from products.models.review import Review
 from django.db.models import Avg
 
 
