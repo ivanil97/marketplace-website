@@ -12,6 +12,7 @@ from products.models.product import Product
 from products.models.review import Review
 from django.db.models import Avg
 
+from products.services.viewed_products_service import ViewedProductsService
 
 class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
@@ -24,6 +25,12 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context_new = product_context(self.object, page_number=1)
         context.update(context_new)
+
+        """Добавление товара в список просмотренных"""
+        user = self.request.user
+        if user.is_authenticated:
+            ViewedProductsService.add_to_viewed(user, self.object.id)
+
         return context
 
 

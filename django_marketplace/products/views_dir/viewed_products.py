@@ -1,13 +1,6 @@
 from django.http import JsonResponse
 from products.services.viewed_products_service import ViewedProductsService
 
-def add_product_to_viewed(request, product_id):
-    """
-    Обработчик для добавления товара в список просмотренных.
-    """
-    user = request.user
-    ViewedProductsService.add_to_viewed(user, product_id)
-    return JsonResponse({'status': 'success'})
 
 def remove_product_from_viewed(request, product_id):
     """
