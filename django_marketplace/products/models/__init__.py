@@ -8,3 +8,4 @@ from .seller_price import SellerPrice
 from .review import Review
 from .product_feature import ProductFeature
 from .feature import Feature
+from .viewed_products import ViewedProducts
