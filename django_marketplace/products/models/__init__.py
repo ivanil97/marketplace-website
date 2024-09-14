@@ -9,3 +9,5 @@ from .review import Review
 from .product_feature import ProductFeature
 from .feature import Feature
 from .viewed_products import ViewedProducts
+from .sliderbanner import SliderBanner
+from .staticbanner import StaticBanner

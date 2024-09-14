@@ -1,5 +1,5 @@
 from django.contrib import admin
-from adminpanel.models.sliderbanner import SliderBanner
+from products.models.sliderbanner import SliderBanner
 
 @admin.register(SliderBanner)
 class SliderBannerAdmin(admin.ModelAdmin):

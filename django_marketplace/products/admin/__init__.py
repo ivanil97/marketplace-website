@@ -6,5 +6,6 @@ from .feature import FeatureAdmin
 from .discount import DiscountAdmin
 from .seller import SellerAdmin
 from .review import ReviewAdmin
+from .seller_price import SellerPriceAdmin
 
 from .viewed_products import ViewedProductsAdmin
