@@ -25,7 +25,7 @@ class ReviewCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('product_detail', kwargs={'product_id': self.kwargs['product_id']})
 from django.views.generic import TemplateView
-from .banner_services import get_slider_banners, get_static_banners, get_popular_items
+from .index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
 
 
 class HomeView(TemplateView):
@@ -42,4 +42,6 @@ class HomeView(TemplateView):
         context['slider_banners'] = get_slider_banners()
         context['static_banners'] = get_static_banners()
         context['popular_items'] = get_popular_items()
+        context['limited_item_day'] = get_limited_items()[0]
+        context['limited_items'] = get_limited_items()[1]
         return context
