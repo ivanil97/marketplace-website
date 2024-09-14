@@ -11,13 +11,15 @@ from .services.review_service import add_review_to_product
 from .models.product import Product
 from .models.review import Review
 from django.db.models import Avg
+from django.db.models import Prefetch, QuerySet
+from django.core.paginator import Paginator
 
 
 class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
     queryset = Product.objects.prefetch_related(
         "tags", "images",
-        "seller_price", "features").annotate(
+        "seller_price", "features").prefetch_related(Prefetch("seller_price", to_attr="seller")).annotate(
         auto_seller_price=Avg('seller_price__price'
                          ))
     def get_context_data(self, **kwargs):
