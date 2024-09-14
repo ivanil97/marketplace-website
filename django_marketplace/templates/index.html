@@ -1,293 +1,209 @@
-{% extends 'products/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <body class="Site">
-        <div class="Middle">
-            <div class="Header-slider">
-                <div class="Slider Slider_main">
-                  <div class="Slider-box">
-                      {% for slider_banner in slider_banners %}
-                        <div class="Slider-item">
-                          <div class="Slider-content">
+    <div class="Header-slider">
+        <div class="Slider Slider_main">
+            <div class="Slider-box">
+                {% for slider_banner in slider_banners %}
+                    <div class="Slider-item">
+                        <div class="Slider-content">
                             <div class="row">
-                              <div class="row-block">
-                                <strong class="Slider-title">{{ slider_banner.title }}
-                                </strong>
-                                <div class="Slider-text">{{ slider_banner.description }}
+                                <div class="row-block">
+                                    <strong class="Slider-title">{{ slider_banner.title }}
+                                    </strong>
+                                    <div class="Slider-text">{{ slider_banner.description }}
+                                    </div>
+                                    <div class="Slider-footer"><a class="btn btn_primary" href="{{ slider_banner.link }}">Action
+                                        button</a>
+                                    </div>
                                 </div>
-                                <div class="Slider-footer"><a class="btn btn_primary" href="{{ slider_banner.link }}">Action button</a>
+                                <div class="row-block">
+                                    {% if slider_banner.image %}
+                                        <div class="Slider-img"><img src="{{ slider_banner.image.url }}"
+                                                                     alt="{{ slider_banner.title }}"/>
+                                        </div>
+                                    {% else %}
+                                        No image for this banner
+                                    {% endif %}
                                 </div>
-                              </div>
-                              <div class="row-block">
-                                  {% if slider_banner.image %}
-                                     <div class="Slider-img"><img src="{{ slider_banner.image }}" alt="{{ slider_banner.title }}"/>
-                                     </div>
-                                  {% else %}
-                                      No image for this banner
-                                  {% endif %}
-                              </div>
                             </div>
-                          </div>
                         </div>
-                      {% empty %}
-                        No products available at the moment
-                      {% endfor %}
-                  </div>
-                  <div class="Slider-navigateWrap">
-                    <div class="Slider-navigate">
                     </div>
-                  </div>
+                {% empty %}
+                    No products available at the moment
+                {% endfor %}
+            </div>
+            <div class="Slider-navigateWrap">
+                <div class="Slider-navigate">
                 </div>
             </div>
         </div>
-        <div class="Middle">
-            <div class="Section">
-                <div class="wrap">
-                    <div class="BannersHome">
-                        {% for static_banner in static_banners %}
-                            <a class="BannersHomeBlock" href="{% url static_banner.link %}">
-                                <div class="BannersHomeBlock-row">
-                                    <div class="BannersHomeBlock-block">
-                                        <strong class="BannersHomeBlock-title">{{ static_banner.name }}
-                                        </strong>
-                                        <div class="BannersHomeBlock-content">from&#32;<span class="BannersHomeBlock-price">${{ static_banner.price }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="BannersHomeBlock-block">
-                                        <div class="BannersHomeBlock-img"><img src="{{ static_banner.image }}" alt="{{ static_banner.title }}" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        {% empty %}
-                            No static banners available at the moment
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <div class="Section Section_column Section_columnLeft Section_columnDesktop">
-                <div class="wrap">
-                    <div class="Section-column">
-                        <div class="Section-columnSection Section-columnSection_mark">
-                          <header class="Section-columnHeader">
-                            <strong class="Section-columnTitle">limited offers
-                            </strong>
-                          </header>
-                          <div class="Card"><a class="Card-picture" href="#"><img src="assets/img/content/home/card.jpg" alt="card.jpg"/></a>
-                            <div class="Card-content">
-                              <strong class="Card-title"><a href="#">Limited offer item</a>
-                              </strong>
-                              <div class="Card-description">
-                                <div class="Card-cost"><span class="Card-priceOld">$115.00</span><span class="Card-price">$85.00</span>
-                                </div>
-                                <div class="Card-category">News / xbox
-                                </div>
-                              </div>
-                              <div class="CountDown" data-date="31.09.2020 03:59">
-                                <div class="CountDown-block">
-                                  <div class="CountDown-wrap">
-                                    <div class="CountDown-days">
-                                    </div><span class="CountDown-label">days</span>
-                                  </div>
-                                </div>
-                                <div class="CountDown-block">
-                                  <div class="CountDown-wrap">
-                                    <div class="CountDown-hours">
-                                    </div><span class="CountDown-label">hours</span>
-                                  </div>
-                                </div>
-                                <div class="CountDown-block">
-                                  <div class="CountDown-wrap">
-                                    <div class="CountDown-minutes">
-                                    </div><span class="CountDown-label">mins</span>
-                                  </div>
-                                </div>
-                                <div class="CountDown-block">
-                                  <div class="CountDown-wrap">
-                                    <div class="CountDown-secs">
-                                    </div><span class="CountDown-label">secs</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="Section-content">
-                        <header class="Section-header">
-                            <h2 class="Section-title">Popular items
-                            </h2>
-                        </header>
-                        <div class="Cards">
-                            <div class="Card"><a class="Card-picture" href="#"><img src="assets/img/content/home/card.jpg" alt="card.jpg" /></a>
-                                <div class="Card-content">
-                                    <strong class="Card-title"><a href="#">Popular item 1</a>
-                                    </strong>
-                                    <div class="Card-description">
-                                        <div class="Card-cost"><span class="Card-price">$85.00</span>
-                                        </div>
-                                        <div class="Card-category">Games / xbox
-                                        </div>
-                                        <div class="Card-hover"><a class="Card-btn" href="#"><img src="assets/img/icons/card/cart.svg" alt="cart.svg" /></a>
-                                        </div>
-                                    </div>
+    </div>
+    <div class="Middle">
+        <div class="Section">
+            <div class="wrap">
+                <div class="BannersHome">
+                    {% for static_banner in static_banners %}
+                    <a class="BannersHomeBlock" href="{{ static_banner.link }}">
+                        <div class="BannersHomeBlock-row">
+                            <div class="BannersHomeBlock-block">
+                                <strong class="BannersHomeBlock-title">{{ static_banner.title }}
+                                </strong>
+                                <div class="BannersHomeBlock-content">from&#32;<span class="BannersHomeBlock-price">${{ static_banner.price }}</span>
                                 </div>
                             </div>
-                            <div class="Card"><a class="Card-picture" href="#"><img src="assets/img/content/home/card.jpg" alt="card.jpg" /></a>
-                                <div class="Card-content">
-                                    <strong class="Card-title"><a href="#">Popular item 2</a>
-                                    </strong>
-                                    <div class="Card-description">
-                                        <div class="Card-cost"><span class="Card-price">$85.00</span>
-                                        </div>
-                                        <div class="Card-category">Games / xbox
-                                        </div>
-                                        <div class="Card-hover"><a class="Card-btn" href="#"><img src="assets/img/icons/card/cart.svg" alt="cart.svg" /></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="Card"><a class="Card-picture" href="#"><img src="assets/img/content/home/card.jpg" alt="card.jpg" /></a>
-                                <div class="Card-content">
-                                    <strong class="Card-title"><a href="#">Popular item 3</a>
-                                    </strong>
-                                    <div class="Card-description">
-                                        <div class="Card-cost"><span class="Card-price">$185.00</span>
-                                        </div>
-                                        <div class="Card-category">Digital / xbox
-                                        </div>
-                                        <div class="Card-hover"><a class="Card-btn" href="#"><img src="assets/img/icons/card/cart.svg" alt="cart.svg" /></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="Card"><a class="Card-picture" href="#"><img src="assets/img/content/home/card.jpg" alt="card.jpg" /></a>
-                                <div class="Card-content">
-                                    <strong class="Card-title"><a href="#">Popular item 4</a>
-                                    </strong>
-                                    <div class="Card-description">
-                                        <div class="Card-cost"><span class="Card-price">$210.00</span>
-                                        </div>
-                                        <div class="Card-category">Media / xbox
-                                        </div>
-                                        <div class="Card-hover"><a class="Card-btn" href="#"><img src="assets/img/icons/card/cart.svg" alt="cart.svg" /></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="Card hide_md"><a class="Card-picture" href="#"><img src="assets/img/content/home/card.jpg" alt="card.jpg" /></a>
-                                <div class="Card-content">
-                                    <strong class="Card-title"><a href="#">Popular item 5</a>
-                                    </strong>
-                                    <div class="Card-description">
-                                        <div class="Card-cost"><span class="Card-price">$85.00</span>
-                                        </div>
-                                        <div class="Card-category">Games / xbox
-                                        </div>
-                                        <div class="Card-hover"><a class="Card-btn" href="#"><img src="assets/img/icons/card/cart.svg" alt="cart.svg" /></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="Card hide_md"><a class="Card-picture" href="#"><img src="assets/img/content/home/card.jpg" alt="card.jpg" /></a>
-                                <div class="Card-content">
-                                    <strong class="Card-title"><a href="#">Popular item 6</a>
-                                    </strong>
-                                    <div class="Card-description">
-                                        <div class="Card-cost"><span class="Card-price">$85.00</span>
-                                        </div>
-                                        <div class="Card-category">Games / xbox
-                                        </div>
-                                        <div class="Card-hover"><a class="Card-btn" href="#"><img src="assets/img/icons/card/cart.svg" alt="cart.svg" /></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="Card hide_md hide_1450"><a class="Card-picture" href="#"><img src="assets/img/content/home/card.jpg" alt="card.jpg" /></a>
-                                <div class="Card-content">
-                                    <strong class="Card-title"><a href="#">Popular item 7</a>
-                                    </strong>
-                                    <div class="Card-description">
-                                        <div class="Card-cost"><span class="Card-price">$185.00</span>
-                                        </div>
-                                        <div class="Card-category">Digital / xbox
-                                        </div>
-                                        <div class="Card-hover"><a class="Card-btn" href="#"><img src="assets/img/icons/card/cart.svg" alt="cart.svg" /></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="Card hide_md hide_1450"><a class="Card-picture" href="#"><img src="assets/img/content/home/card.jpg" alt="card.jpg" /></a>
-                                <div class="Card-content">
-                                    <strong class="Card-title"><a href="#">Popular item 8</a>
-                                    </strong>
-                                    <div class="Card-description">
-                                        <div class="Card-cost"><span class="Card-price">$210.00</span>
-                                        </div>
-                                        <div class="Card-category">Media / xbox
-                                        </div>
-                                        <div class="Card-hover"><a class="Card-btn" href="#"><img src="assets/img/icons/card/cart.svg" alt="cart.svg" /></a><a class="Card-btn" href="compare.html"><img src="assets/img/icons/card/change.svg" alt="change.svg" /></a>
-                                        </div>
-                                    </div>
+                            <div class="BannersHomeBlock-block">
+                                <div class="BannersHomeBlock-img"><img src="{{ static_banner.image.url }}"
+                                                                       alt="{{ static_banner.title }}"/>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
+                    {% empty %}
+                        No static banners available at the moment
+                    {% endfor %}
                 </div>
             </div>
-            <div class="Section Section_column Section_columnRight">
-                <div class="wrap">
-                    <div class="Section-content">
-                        <div class="Slider Slider_carousel">
-                            <header class="Section-header Section-header_close">
-                                <h2 class="Section-title">Limited amount items
-                                </h2>
-                                <div class="Section-control">
-                                    <div class="Slider-navigate">
+        </div>
+                    <div class="Section Section_column Section_columnLeft Section_columnDesktop">
+                        <div class="wrap">
+                            <div class="Section-column">
+                                <div class="Section-columnSection Section-columnSection_mark">
+                                  <header class="Section-columnHeader">
+                                    <strong class="Section-columnTitle">limited offer
+                                    </strong>
+                                  </header>
+                                  <div class="Card"><a class="Card-picture" href="#"><img src="{{ limited_item_day.product.one_image.0.image.url }}" alt="No images available"/></a>
+                                    <div class="Card-content">
+                                      <strong class="Card-title"><a href="#">{{ limited_item_day.product.name }}</a>
+                                      </strong>
+                                      <div class="Card-description">
+                                        <div class="Card-cost"><span class="Card-priceOld">${{ limited_item_day.price }}</span><span class="Card-price">${{ limited_item_day.price }}</span>
+                                        </div>
+                                        <div class="Card-category">{{ limited_item_day.product.category }}
+                                        </div>
+                                      </div>
+                                      <div class="CountDown" data-date="31.09.2020 03:59">
+                                        <div class="CountDown-block">
+                                          <div class="CountDown-wrap">
+                                            <div class="CountDown-days">
+                                            </div><span class="CountDown-label">days</span>
+                                          </div>
+                                        </div>
+                                        <div class="CountDown-block">
+                                          <div class="CountDown-wrap">
+                                            <div class="CountDown-hours">
+                                            </div><span class="CountDown-label">hours</span>
+                                          </div>
+                                        </div>
+                                        <div class="CountDown-block">
+                                          <div class="CountDown-wrap">
+                                            <div class="CountDown-minutes">
+                                            </div><span class="CountDown-label">mins</span>
+                                          </div>
+                                        </div>
+                                        <div class="CountDown-block">
+                                          <div class="CountDown-wrap">
+                                            <div class="CountDown-secs">
+                                            </div><span class="CountDown-label">secs</span>
+                                          </div>
+                                        </div>
+                                      </div>
                                     </div>
+                                  </div>
                                 </div>
-                            </header>
-                            <div class="Slider-box Cards">
-                                {% for limited_item in limited_items %}
-                                    <div class="Slider-item">
-                                        <div class="Slider-content">
-                                            <div class="Card">
-                                                <a class="Card-picture" href="{% url 'products:product_details' pk=limited_item.pk %}">
-                                                    <img src="{{ limited_item.image }}" alt="{{ limited_item.name }}" />
-                                                </a>
-                                                <div class="Card-content">
-                                                    <strong class="Card-title">
-                                                        <a href="{% url 'products:product_details' pk=limited_item.pk %}">{{ limited_item.name }}</a>
-                                                    </strong>
-                                                    <div class="Card-description">
-                                                        <div class="Card-cost"><span class="Card-price">${{ limited_item.price }}</span>
-                                                        </div>
-                                                        <div class="Card-category">{{ limited_item.category }}
-                                                        </div>
-                                                        <div class="Card-hover">
-                                                            <a class="Card-btn" href="{% url 'products:product_details' pk=limited_item.pk %}">
-                                                                <img src="{{ limited_item.image }}" alt="{{ limited_item.name }}" />
-                                                            </a>
-                                                        </div>
-                                                    </div>
+                            </div>
+                            <div class="Section-content">
+                                <header class="Section-header">
+                                    <h2 class="Section-title">Popular items
+                                    </h2>
+                                </header>
+                                <div class="Cards">
+                                    {% for popular_item in popular_items %}
+                                        <div class="Card"><a class="Card-picture" href="#"><img src="{{ popular_item.product.one_image.0.image.url }}" alt="No images available" /></a>
+                                        <div class="Card-content">
+                                            <strong class="Card-title"><a href="#">{{ popular_item.product.name }}</a>
+                                            </strong>
+                                            <div class="Card-description">
+                                                <div class="Card-cost"><span class="Card-price">
+                                                    {% if popular_item.price %}
+                                                        ${{ popular_item.price }}
+                                                    {% else %}
+                                                        No prices available
+                                                    {% endif %}
+                                                </span>
+                                                </div>
+                                                <div class="Card-category">{{ popular_item.product.category }}
+                                                </div>
+                                                <div class="Card-hover"><a class="Card-btn" href="#"><img src="common_static/img/icons/card/cart.svg" alt="cart.svg" /></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                {% empty %}
-                                    No products available at the moment
-                                {% endfor %}
+                                    {% empty %}
+                                        No products available at the moment
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Section Section_column Section_columnRight">
+                        <div class="wrap">
+                            <div class="Section-content">
+                                <div class="Slider Slider_carousel">
+                                    <header class="Section-header Section-header_close">
+                                        <h2 class="Section-title">Limited amount items
+                                        </h2>
+                                        <div class="Section-control">
+                                            <div class="Slider-navigate">
+                                            </div>
+                                        </div>
+                                    </header>
+                                    <div class="Slider-box Cards">
+                                        {% for limited_item in limited_items %}
+                                            <div class="Slider-item">
+                                                <div class="Slider-content">
+                                                    <div class="Card">
+                                                        <a class="Card-picture" href="#">
+                                                            <img src="{{ limited_item.product.one_image.0.image.url }}" alt="{{ limited_item.product.name }}" />
+                                                        </a>
+                                                        <div class="Card-content">
+                                                            <strong class="Card-title">
+                                                                <a href="#">{{ limited_item.product.name }}</a>
+                                                            </strong>
+                                                            <div class="Card-description">
+                                                                <div class="Card-cost"><span class="Card-price">
+                                                                    {% if limited_item.price %}
+                                                                        ${{ limited_item.price }}
+                                                                    {% else %}
+                                                                        No prices available
+                                                                    {% endif %}
+                                                                </span>
+                                                                </div>
+                                                                <div class="Card-category">{{ limited_item.product.category }}
+                                                                </div>
+                                                                <div class="Card-hover"><a class="Card-btn" href="#"><img src="common_static/img/icons/card/cart.svg" alt="cart.svg" /></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% empty %}
+                                            No products available at the moment
+                                        {% endfor %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
         <script src="assets/plg/jQuery/jquery-3.5.0.slim.min.js"></script>
         <script src="assets/plg/form/jquery.form.js"></script>
         <script src="assets/plg/form/jquery.maskedinput.min.js"></script>
         <script src="assets/plg/range/ion.rangeSlider.min.js"></script>
         <script src="assets/plg/Slider/slick.min.js"></script>
         <script src="assets/js/scripts.js"></script>
+    </div>
     </body>
 {% endblock %}

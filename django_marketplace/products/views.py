@@ -1,17 +1,18 @@
 from django.core.cache.utils import make_template_fragment_key
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView, ListView
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.cache import cache
 from products.services.product_context import product_context
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from .forms import ReviewForm
-from .services.review_service import add_review_to_product
-from .models.product import Product
-from .models.review import Review
+from products.forms import ReviewForm
+from products.services.review_service import add_review_to_product
+from products.models.product import Product
+from products.models.review import Review
 from django.db.models import Avg
 
+from products.services.viewed_products_service import ViewedProductsService
 
 class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
@@ -20,12 +21,16 @@ class ProductDetailView(DetailView):
         "seller_price", "features").annotate(
         auto_seller_price=Avg('seller_price__price'
                          ))
-    context_object_name = "product"
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context_new = product_context(self.object, page_number=1)
         context.update(context_new)
+
+        """Добавление товара в список просмотренных"""
+        user = self.request.user
+        if user.is_authenticated:
+            ViewedProductsService.add_to_viewed(user, self.object.id)
+
         return context
 
 
@@ -49,3 +54,35 @@ class ReviewCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('product_detail', kwargs={'product_id': self.kwargs['product_id']})
+
+
+class ProductsListView(ListView):
+    template_name = "templates_products/products_list.html"
+    queryset = Product.objects.prefetch_related(
+        "tags", "images",
+        "seller_price", "features").annotate(
+        auto_seller_price=Avg('seller_price__price'
+                              ))
+    context_object_name = "products"
+
+from django.views.generic import TemplateView
+from .index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
+
+
+class HomeView(TemplateView):
+    """
+    Представление для главной страницы. Отображает баннеры слайдера и статические баннеры.
+    """
+    template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        """
+        Формирует контекст для передачи данных в шаблон.
+        """
+        context = super().get_context_data(**kwargs)
+        context['slider_banners'] = get_slider_banners()
+        context['static_banners'] = get_static_banners()
+        context['popular_items'] = get_popular_items()
+        context['limited_item_day'] = get_limited_items()[0]
+        context['limited_items'] = get_limited_items()[1]
+        return context

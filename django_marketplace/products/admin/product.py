@@ -58,6 +58,7 @@ class DiscountInline(admin.TabularInline):
 
 class SellerPriceInline(admin.TabularInline):
     model = SellerPrice
+    max_num = 1
     verbose_name = "Choice seller and price"
 
 
