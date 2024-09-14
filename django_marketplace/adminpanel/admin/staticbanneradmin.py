@@ -1,5 +1,5 @@
 from django.contrib import admin
-from adminpanel.models.staticbanner import StaticBanner
+from products.models.staticbanner import StaticBanner
 
 @admin.register(StaticBanner)
 class StaticBannerAdmin(admin.ModelAdmin):
