@@ -8,13 +8,7 @@ from products.models import (
     Discount,
     SellerPrice,
     ProductFeature,
-    ProductImage,
 )
-
-
-class ProductImageInline(admin.TabularInline):
-    fk_name = 'product'
-    model = ProductImage
 
 
 @admin.action(description="Archived products")
@@ -64,7 +58,7 @@ class DiscountInline(admin.TabularInline):
 
 class SellerPriceInline(admin.TabularInline):
     model = SellerPrice
-    # max_num = 1
+    max_num = 1
     verbose_name = "Choice seller and price"
 
 
@@ -79,7 +73,6 @@ class ProductAdmin(admin.ModelAdmin):
         SellerPriceInline,
         TagInline,
         ProductFeatureInline,
-        ProductImageInline,
     ]
     list_display = (
         "pk",
