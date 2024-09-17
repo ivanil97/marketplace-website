@@ -1,4 +1,5 @@
 from django.core.cache.utils import make_template_fragment_key
+from django.http import HttpResponseRedirect
 from django.views.generic import DetailView
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -35,15 +36,21 @@ class ReviewCreateView(CreateView):
     form_class = ReviewForm
     template_name = 'templates_products/review_create.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = Product.objects.get(slug=self.kwargs['slug'])
+        context['product'] = product
+        return context
+
     def form_valid(self, form):
         product_slug = self.kwargs['slug']
         user = self.request.user
         comment = form.cleaned_data['comment']
         add_review_to_product(slug=product_slug, user=user, comment=comment)
-        return super().form_valid(form)
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse_lazy('product_detail', kwargs={'slug': self.kwargs['slug']})
+        return reverse_lazy('products:product_detail', kwargs={'slug': self.kwargs['slug']})
 
 
 @receiver(post_save, sender=Product)
