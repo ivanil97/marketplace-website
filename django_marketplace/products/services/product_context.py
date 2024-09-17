@@ -1,7 +1,5 @@
 from products.models.product import Product
 from products.services.review_service import get_reviews_for_product
-# from .review_service import get_reviews_for_product
-
 
 
 def product_context(product: Product, **kwargs) -> dict:

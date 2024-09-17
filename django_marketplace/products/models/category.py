@@ -50,9 +50,8 @@ class Category(MPTTModel):
 
     def get_absolute_url(self):
         return reverse(
-            'post-by-category',
-            args=[str(self.slug)]
-        )
+            'category_detail',
+            kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name

@@ -1,5 +1,5 @@
 from django.core.cache.utils import make_template_fragment_key
-from django.views.generic import DetailView, TemplateView, ListView
+from django.views.generic import DetailView, ListView
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.cache import cache
@@ -11,10 +11,11 @@ from products.services.review_service import add_review_to_product
 from products.models.product import Product
 from products.models.review import Review
 from django.db.models import Avg
-from django.db.models import Prefetch, QuerySet
-from django.core.paginator import Paginator
+from django.db.models import Prefetch
 
 from products.services.viewed_products_service import ViewedProductsService
+import enum
+
 
 class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
@@ -59,13 +60,28 @@ class ReviewCreateView(CreateView):
 
 
 class ProductsListView(ListView):
+    model = Product
     template_name = "templates_products/products_list.html"
-    queryset = Product.objects.prefetch_related(
-        "tags", "images",
-        "seller_price", "features").annotate(
-        auto_seller_price=Avg('seller_price__price'
-                              ))
     context_object_name = "products"
+    paginate_by = 8
+
+    def get_queryset(self):
+        category_id = self.request.GET.get('category', None)
+        print(category_id)
+        if category_id:
+            queryset = self.model.objects.prefetch_related(
+            "tags", "images",
+            "seller_price", "features").annotate(
+            auto_seller_price=Avg('seller_price__price')).\
+                order_by('auto_seller_price').all().filter(category_id=category_id)
+        else:
+            queryset = self.model.objects.prefetch_related(
+            "tags", "images",
+            "seller_price", "features").annotate(
+            auto_seller_price=Avg('seller_price__price')).\
+                order_by('auto_seller_price').all()
+        return queryset
+
 
 from django.views.generic import TemplateView
 from .index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items

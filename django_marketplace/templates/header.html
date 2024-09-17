@@ -105,9 +105,9 @@
                         <div class="CategoriesButton-content">
                             {% recursetree list_categories %}
                                 <ul class="CategoriesButton-link">
-                                    <a href="#">
+                                    <a href="{% url 'products:products_list' %}">
                                         <div class="CategoriesButton-icon">
-                                            <img src="{{ node.icon.url}}" alt="{{ node.icon.name}}" />
+                                            <img src="{{ node.icon.url}}" alt="{{ node.icon.name}}" height="20px" width="20px" />
                                         </div>
                                         <span class="CategoriesButton-text">{{ node.name }}</span>
                                     </a>{% if not node.is_leaf_node %}<a class="CategoriesButton-arrow" href="#"></a>{% endif %}

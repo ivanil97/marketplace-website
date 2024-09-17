@@ -29,6 +29,7 @@ class Product(models.Model):
     sort_index = models.IntegerField(default=1)
     quantity_sold = models.IntegerField(default=0)
 
+
     def __str__(self):
         return self.name
 
