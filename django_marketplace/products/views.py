@@ -1,5 +1,5 @@
 from django.core.cache.utils import make_template_fragment_key
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, TemplateView, ListView
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.cache import cache
@@ -11,11 +11,10 @@ from products.services.review_service import add_review_to_product
 from products.models.product import Product
 from products.models.review import Review
 from django.db.models import Avg
-from django.db.models import Prefetch
+from django.db.models import Prefetch, QuerySet
+from django.core.paginator import Paginator
 
 from products.services.viewed_products_service import ViewedProductsService
-import enum
-
 
 class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
@@ -62,6 +61,11 @@ class ReviewCreateView(CreateView):
 class ProductsListView(ListView):
     model = Product
     template_name = "templates_products/products_list.html"
+    queryset = Product.objects.prefetch_related(
+        "tags", "images",
+        "seller_price", "features").annotate(
+        auto_seller_price=Avg('seller_price__price'
+                              ))
     context_object_name = "products"
     paginate_by = 8
 
