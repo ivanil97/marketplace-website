@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-{% cache 2 product_detail %}
+{% cache 1 product_detail %}
 <div class="Middle Middle_top">
     <div class="Section">
         <div class="wrap">
@@ -20,6 +20,7 @@
                         <div class="ProductCard-photo">
                             <img src="{{ first_image.image.url }}" alt="{{ product.name }}">
                         </div>
+                        {% for img in product.images.all %}
                         <div class="ProductCard-picts">
                             {% for img in product.images.all %}
                                 <a class="ProductCard-pict {% if forloop.first %} ProductCard-pict_ACTIVE{% endif %}"
@@ -28,6 +29,7 @@
                                 <p>No image yet</p>
                             {% endfor %}
                         </div>
+                        {% endfor %}
                     </div>
 
                     <div class="ProductCard-desc">
@@ -191,6 +193,13 @@
                         </div>
                         <div class="Tabs-block" id="reviews">
                             {% include 'templates_products/review_product.html' %}
+                            <div class="AddReview">
+                                <form method="post" action="{% url 'products:review_create' product.slug %}">
+                                    {% csrf_token %}
+                                    {{ review_form.as_p }}
+                                    <button type="submit" class="btn btn_primary">Submit Review</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
