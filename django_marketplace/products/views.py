@@ -28,7 +28,6 @@ class ProductDetailView(DetailView):
                               ))
     context_object_name = "product"
 
-                         ))
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         page_number = self.request.GET.get('page', 1)
@@ -41,12 +40,6 @@ class ProductDetailView(DetailView):
             ViewedProductsService.add_to_viewed(user, self.object.id)
 
         return context
-
-
-@receiver(post_save, sender=Product)
-def clear_cache(sender, instance, **kwargs):
-    key = make_template_fragment_key("product_detail",)
-    cache.delete(key)
 
 
 class ReviewCreateView(CreateView):
@@ -71,13 +64,6 @@ class ReviewCreateView(CreateView):
         return reverse_lazy('products:product_detail', kwargs={'slug': self.kwargs['slug']})
 
 
-@receiver(post_save, sender=Product)
-def clear_cache(sender, instance, **kwargs):
-    key = make_template_fragment_key("product_detail")
-    cache.delete(key)
-    print(f"Cache cleared for key: {key}")
-
-
 class ProductsListView(ListView):
     model = Product
     template_name = "templates_products/products_list.html"
@@ -89,15 +75,15 @@ class ProductsListView(ListView):
         print(category_id)
         if category_id:
             queryset = self.model.objects.prefetch_related(
-            "tags", "images",
-            "seller_price", "features").annotate(
-            auto_seller_price=Avg('seller_price__price')).\
+                "tags", "images",
+                "seller_price", "features").annotate(
+                auto_seller_price=Avg('seller_price__price')). \
                 order_by('auto_seller_price').all().filter(category_id=category_id)
         else:
             queryset = self.model.objects.prefetch_related(
-            "tags", "images",
-            "seller_price", "features").annotate(
-            auto_seller_price=Avg('seller_price__price')).\
+                "tags", "images",
+                "seller_price", "features").annotate(
+                auto_seller_price=Avg('seller_price__price')). \
                 order_by('auto_seller_price').all()
         return queryset
 
@@ -123,3 +109,10 @@ class HomeView(TemplateView):
         context['limited_item_day'] = get_limited_items()[0]
         context['limited_items'] = get_limited_items()[1]
         return context
+
+
+@receiver(post_save, sender=Product)
+def clear_cache(sender, instance, **kwargs):
+    key = make_template_fragment_key("product_detail")
+    cache.delete(key)
+    print(f"Cache cleared for key: {key}")
