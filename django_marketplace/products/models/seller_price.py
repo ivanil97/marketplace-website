@@ -35,9 +35,3 @@ class SellerPrice(models.Model):
 
     def __str__(self):
         return f"SellerPrice {self.pk}"
-
-    def display_price(self):
-        return f"{self.price}"
-
-    def total_price(self):
-        pass

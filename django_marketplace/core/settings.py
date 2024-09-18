@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'comparisons.apps.ComparisonsConfig',
     'adminpanel.apps.AdminpanelConfig',
-    'carts.apps.CartsConfig',
 
     'mptt',
     'django_cleanup.apps.CleanupConfig',
