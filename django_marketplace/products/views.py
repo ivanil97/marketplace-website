@@ -1,3 +1,5 @@
+import enum
+
 from django.core.cache.utils import make_template_fragment_key
 from django.views.generic import DetailView, TemplateView, ListView
 from django.db.models.signals import post_save
@@ -35,6 +37,13 @@ class ProductDetailView(DetailView):
 
         return context
 
+    def get_object(self, queryset=None):
+        obj = cache.get(f'product_detail_{self.kwargs["slug"]}')
+        if not obj:
+            obj = super().get_object(queryset=queryset)
+            cache.set(f'product_detail_{self.kwargs["slug"]}', obj, 60 * 15)  # 15 минут
+        return obj
+
 
 @receiver(post_save, sender=Product)
 def clear_cache(sender, instance, **kwargs):
@@ -58,6 +67,17 @@ class ReviewCreateView(CreateView):
         return reverse_lazy('product_detail', kwargs={'product_id': self.kwargs['product_id']})
 
 
+class ProductListEnum(enum.Enum):
+    POP_ASC = 'quantity_sold'
+    POP_DEC = '-quantity_sold'
+    PR_ASC = 'auto_seller_price'
+    PR_DEC = '-auto_seller_price'
+    REV_ASC = ''
+    REV_DEC = ''
+    DATE_ASC = 'created_at'
+    DATE_DEC = '-created_at'
+    NONE = '1'
+
 class ProductsListView(ListView):
     model = Product
     template_name = "templates_products/products_list.html"
@@ -69,21 +89,51 @@ class ProductsListView(ListView):
     context_object_name = "products"
     paginate_by = 8
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        curr_sort = self.request.GET.get('sort', 'auto_seller_price')
+        context['POP_ASC'] = ProductListEnum.POP_ASC
+        context['POP_DEC'] = ProductListEnum.POP_DEC
+        context['PR_ASC'] = ProductListEnum.PR_ASC
+        context['PR_DEC'] = ProductListEnum.PR_DEC
+        context['DATE_ASC'] = ProductListEnum.DATE_ASC
+        context['DATE_DEC'] = ProductListEnum.DATE_DEC
+        context['NONE'] = ProductListEnum.NONE
+        context_new = {
+            'curr_sort': curr_sort,
+        }
+        context.update(context_new)
+        return context
+
     def get_queryset(self):
         category_id = self.request.GET.get('category', None)
-        print(category_id)
+        curr_sort = self.request.GET.get('sort', 'auto_seller_price')
+        if curr_sort != '1':
+            if category_id:
+                queryset = self.model.objects.prefetch_related(
+                "tags", "images",
+                "seller_price", "features").annotate(
+                auto_seller_price=Avg('seller_price__price')).\
+                    all().filter(category_id=category_id).\
+                    order_by(curr_sort)
+            else:
+                queryset = self.model.objects.prefetch_related(
+                "tags", "images",
+                "seller_price", "features").annotate(
+                auto_seller_price=Avg('seller_price__price')).\
+                    all().order_by(curr_sort)
+            return queryset
         if category_id:
             queryset = self.model.objects.prefetch_related(
-            "tags", "images",
-            "seller_price", "features").annotate(
-            auto_seller_price=Avg('seller_price__price')).\
-                order_by('auto_seller_price').all().filter(category_id=category_id)
+                "tags", "images",
+                "seller_price", "features").annotate(
+                auto_seller_price=Avg('seller_price__price')).\
+                all().filter(category_id=category_id)
         else:
             queryset = self.model.objects.prefetch_related(
-            "tags", "images",
-            "seller_price", "features").annotate(
-            auto_seller_price=Avg('seller_price__price')).\
-                order_by('auto_seller_price').all()
+                "tags", "images",
+                "seller_price", "features").annotate(
+                auto_seller_price=Avg('seller_price__price')).all()
         return queryset
 
 

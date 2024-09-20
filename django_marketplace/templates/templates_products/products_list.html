@@ -68,13 +68,57 @@
                 </div>
                 <div class="Section-content">
                     <div class="Sort">
-                        <div class="Sort-title">Сортировать по:
+                        <div class="Sort-title">Сортировать :
                         </div>
                         <div class="Sort-variants">
-                            <a class="Sort-sortBy  Sort-sortBy_dec" href="#">Популярности</a>
-                            <a class="Sort-sortBy" href="#">Цене</a>
-                            <a class="Sort-sortBy" href="#">Отзывам</a>
-                            <a class="Sort-sortBy Sort-sortBy_inc" href="#">Новизне</a>
+                            <a class="Sort-sortBy {% if curr_sort and curr_sort == POP_ASC.value %}
+                                Sort-sortBy_dec
+                            {% elif curr_sort and curr_sort == POP_DEC.value %}
+                                Sort-sortBy_inc
+                            {% elif curr_sort and curr_sort == NONE.value %}
+
+                            {% endif %}"
+                                href="{% if curr_sort and curr_sort == POP_ASC.value %}?sort={{ POP_DEC.value }}
+                                {% elif curr_sort and curr_sort == POP_DEC.value %}?sort={{ NONE.value }}
+                                {% else %}?sort={{ POP_ASC.value }}
+                                {% endif %}">Популярности</a>
+
+                            <a class="Sort-sortBy {% if curr_sort and curr_sort == PR_ASC.value %}
+                                Sort-sortBy_dec
+                            {% elif curr_sort and curr_sort == PR_DEC.value %}
+                                Sort-sortBy_inc
+                            {% elif curr_sort and curr_sort == NONE.value %}
+
+                            {% endif %}"
+                                href="{% if curr_sort and curr_sort == PR_ASC.value %}?sort={{ PR_DEC.value }}
+                                {% elif curr_sort and curr_sort == PR_DEC.value %}?sort={{ NONE.value }}
+                                {% else %}?sort={{ PR_ASC.value }}
+                                {% endif %}">Цене</a>
+
+                            <a class="Sort-sortBy {% if curr_sort and curr_sort == DATE_ASC.value %}
+                                Sort-sortBy_dec
+                            {% elif curr_sort and curr_sort == DATE_DEC.value %}
+                                Sort-sortBy_inc
+                            {% elif curr_sort and curr_sort == NONE.value %}
+
+                            {% endif %}"
+                                href="{% if curr_sort and curr_sort == DATE_ASC.value %}?sort={{ DATE_DEC.value }}
+                                {% elif curr_sort and curr_sort == DATE_DEC.value %}?sort={{ NONE.value }}
+                                {% else %}?sort={{ DATE_ASC.value }}
+                                {% endif %}">Отзывам</a>
+
+                            <a class="Sort-sortBy {% if curr_sort and curr_sort == DATE_ASC.value %}
+                                Sort-sortBy_dec
+                            {% elif curr_sort and curr_sort == DATE_DEC.value %}
+                                Sort-sortBy_inc
+                            {% elif curr_sort and curr_sort == NONE.value %}
+
+                            {% endif %}"
+                                href="{% if curr_sort and curr_sort == DATE_ASC.value %}?sort={{ DATE_DEC.value }}
+                                {% elif curr_sort and curr_sort == DATE_DEC.value %}?sort={{ NONE.value }}
+                                {% else %}?sort={{ DATE_ASC.value }}
+                                {% endif %}">Новизне</a>
+
                         </div>
                     </div>
                     <div class="Cards">

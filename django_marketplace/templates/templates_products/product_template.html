@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load mptt_tags %}
-{% load cache %}
 
 {% block title %} Product {{ product.pk }} {% endblock %}
 
@@ -10,7 +9,6 @@
 {% endblock %}
 
 {% block content %}
-{% cache 2 product_detail %}
 <div class="Middle Middle_top">
     <div class="Section">
         <div class="wrap">
@@ -199,7 +197,6 @@
         </div>
     </div>
 </div>
-{% endcache %}
 {% endblock %}
 
 {% block footer %}
