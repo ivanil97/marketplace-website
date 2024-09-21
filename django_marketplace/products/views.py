@@ -1,6 +1,9 @@
 import enum
 
 from django.core.cache.utils import make_template_fragment_key
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
+from django.views import View
 from django.views.generic import DetailView, TemplateView, ListView
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -12,7 +15,7 @@ from products.forms import ReviewForm
 from products.services.review_service import add_review_to_product
 from products.models.product import Product
 from products.models.review import Review
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from django.db.models import Prefetch, QuerySet
 from django.core.paginator import Paginator
 
@@ -72,8 +75,8 @@ class ProductListEnum(enum.Enum):
     POP_DEC = '-quantity_sold'
     PR_ASC = 'auto_seller_price'
     PR_DEC = '-auto_seller_price'
-    REV_ASC = ''
-    REV_DEC = ''
+    REV_ASC = 'rev_count'
+    REV_DEC = '-rev_count'
     DATE_ASC = 'created_at'
     DATE_DEC = '-created_at'
     NONE = '1'
@@ -81,11 +84,6 @@ class ProductListEnum(enum.Enum):
 class ProductsListView(ListView):
     model = Product
     template_name = "templates_products/products_list.html"
-    queryset = Product.objects.prefetch_related(
-        "tags", "images",
-        "seller_price", "features").annotate(
-        auto_seller_price=Avg('seller_price__price'
-                              ))
     context_object_name = "products"
     paginate_by = 8
 
@@ -96,6 +94,8 @@ class ProductsListView(ListView):
         context['POP_DEC'] = ProductListEnum.POP_DEC
         context['PR_ASC'] = ProductListEnum.PR_ASC
         context['PR_DEC'] = ProductListEnum.PR_DEC
+        context['REV_ASC'] = ProductListEnum.REV_ASC
+        context['REV_DEC'] = ProductListEnum.REV_DEC
         context['DATE_ASC'] = ProductListEnum.DATE_ASC
         context['DATE_DEC'] = ProductListEnum.DATE_DEC
         context['NONE'] = ProductListEnum.NONE
@@ -108,33 +108,20 @@ class ProductsListView(ListView):
     def get_queryset(self):
         category_id = self.request.GET.get('category', None)
         curr_sort = self.request.GET.get('sort', 'auto_seller_price')
-        if curr_sort != '1':
-            if category_id:
-                queryset = self.model.objects.prefetch_related(
-                "tags", "images",
-                "seller_price", "features").annotate(
-                auto_seller_price=Avg('seller_price__price')).\
-                    all().filter(category_id=category_id).\
-                    order_by(curr_sort)
-            else:
-                queryset = self.model.objects.prefetch_related(
-                "tags", "images",
-                "seller_price", "features").annotate(
-                auto_seller_price=Avg('seller_price__price')).\
-                    all().order_by(curr_sort)
-            return queryset
+        queryset = self.model.objects.prefetch_related(
+            "tags", "images", "seller_price", "features"
+        ).annotate(
+            auto_seller_price=Avg('seller_price__price')
+        ).annotate(
+            rev_count=Count('review')
+        )
         if category_id:
-            queryset = self.model.objects.prefetch_related(
-                "tags", "images",
-                "seller_price", "features").annotate(
-                auto_seller_price=Avg('seller_price__price')).\
-                all().filter(category_id=category_id)
-        else:
-            queryset = self.model.objects.prefetch_related(
-                "tags", "images",
-                "seller_price", "features").annotate(
-                auto_seller_price=Avg('seller_price__price')).all()
-        return queryset
+            queryset = queryset.filter(category_id=category_id)
+
+        if curr_sort != '1':
+            queryset = queryset.order_by(curr_sort)
+
+        return queryset.all()
 
 
 from django.views.generic import TemplateView

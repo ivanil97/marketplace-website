@@ -68,7 +68,7 @@
                 </div>
                 <div class="Section-content">
                     <div class="Sort">
-                        <div class="Sort-title">Сортировать :
+                        <div class="Sort-title">Сортировать:
                         </div>
                         <div class="Sort-variants">
                             <a class="Sort-sortBy {% if curr_sort and curr_sort == POP_ASC.value %}
@@ -95,16 +95,16 @@
                                 {% else %}?sort={{ PR_ASC.value }}
                                 {% endif %}">Цене</a>
 
-                            <a class="Sort-sortBy {% if curr_sort and curr_sort == DATE_ASC.value %}
+                            <a class="Sort-sortBy {% if curr_sort and curr_sort == REV_ASC.value %}
                                 Sort-sortBy_dec
-                            {% elif curr_sort and curr_sort == DATE_DEC.value %}
+                            {% elif curr_sort and curr_sort == REV_DEC.value %}
                                 Sort-sortBy_inc
                             {% elif curr_sort and curr_sort == NONE.value %}
 
                             {% endif %}"
-                                href="{% if curr_sort and curr_sort == DATE_ASC.value %}?sort={{ DATE_DEC.value }}
-                                {% elif curr_sort and curr_sort == DATE_DEC.value %}?sort={{ NONE.value }}
-                                {% else %}?sort={{ DATE_ASC.value }}
+                                href="{% if curr_sort and curr_sort == REV_ASC.value %}?sort={{ REV_DEC.value }}
+                                {% elif curr_sort and curr_sort == REV_DEC.value %}?sort={{ NONE.value }}
+                                {% else %}?sort={{ REV_ASC.value }}
                                 {% endif %}">Отзывам</a>
 
                             <a class="Sort-sortBy {% if curr_sort and curr_sort == DATE_ASC.value %}
