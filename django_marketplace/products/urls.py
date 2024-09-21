@@ -4,21 +4,22 @@ from products.views_dir.viewed_products import (remove_product_from_viewed,
                                                 get_viewed_products,
                                                 get_viewed_count)
 
+from .views import *
 
-from .views import ProductDetailView, ReviewCreateView
-
-from .views import ProductDetailView, ProductsListView
 
 app_name = "products"
 
 urlpatterns = [
     path('<slug:slug>/', ProductDetailView.as_view(), name="product_detail"),
-    path('<slug:slug>/review/', ReviewCreateView.as_view(), name='review_create'),
+    path('<slug:slug>/add-review/', ReviewCreateView.as_view(), name='review_create'),
     path('viewed/remove/<int:product_id>/', remove_product_from_viewed, name='remove_product_from_viewed'),
     path('viewed/', get_viewed_products, name='get_viewed_products'),
     path('viewed/count/', get_viewed_count, name='get_viewed_count'),
     path('catalog/', ProductsListView.as_view(), name="products_list"),
     path('<slug:slug>/', ProductDetailView.as_view(), name="product_detail"),
+    path('<slug:slug>/comparison', AddComparisonView.as_view(), name='add_to_comparison'),
+    path('comparison/remove/', RemoveFromComparisonView.as_view(), name='remove_from_comparison'),
+    path('comparison/', ComparisonListView.as_view(), name='comparison_list'),
 
 ]
 

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<!-- Здесь будет header -->
+{% endblock %}
+
+{% block content %}
+<div class="Middle Middle_top">
+    <div class="Section">
+        <div class="wrap">
+            <div class="Product">
+                {% if products %}
+                <div class="ProductList">
+                    {% for product in products %}
+                    <div class="ProductCard">
+                        <div class="ProductCard-photo">
+                            <img src="{% static 'assets/img/content/home/bigGoods.png' %}" alt="{{ product.name }}"/>
+                        </div>
+                        <div class="ProductCard-desc">
+                            <h2 class="ProductCard-title">{{ product.name }}</h2>
+                            <div class="ProductCard-cost">
+                                <div class="ProductCard-price">${{ product.price }}</div>
+                            </div>
+                            <div class="ProductCard-text">
+                                <ul>
+                                    {% for feature in product.features %}
+                                    <li>{{ feature }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>No products in comparison list.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<!-- Здесь будет footer -->
+{% endblock %}

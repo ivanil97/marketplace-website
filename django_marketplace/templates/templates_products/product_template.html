@@ -23,10 +23,10 @@
                         {% for img in product.images.all %}
                         <div class="ProductCard-picts">
                             {% for img in product.images.all %}
-                                <a class="ProductCard-pict {% if forloop.first %} ProductCard-pict_ACTIVE{% endif %}"
-                                   href="{{ img.image.url }}"><img src="{{ img.image.url }}" alt="{{ product.name }}"/></a>
+                            <a class="ProductCard-pict {% if forloop.first %} ProductCard-pict_ACTIVE{% endif %}"
+                               href="{{ img.image.url }}"><img src="{{ img.image.url }}" alt="{{ product.name }}"/></a>
                             {% empty %}
-                                <p>No image yet</p>
+                            <p>No image yet</p>
                             {% endfor %}
                         </div>
                         {% endfor %}
@@ -67,6 +67,14 @@
                                     <span class="btn-content">Купить</span>
                                 </a>
                             </div>
+                            <div class="ProductCard-cartElement">
+                                <form method="post" action="{% url 'products:add_to_comparison' product.slug %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn_secondary">
+                                        Добавить в сравнение
+                                    </button>
+                                </form>
+                            </div>
                             <div id="modal_open" class="my_modal">
                                 <div class="my_modal-dialog">
                                     <div class="my_modal-content">
@@ -85,7 +93,7 @@
                             <div class="ProductCard-tags">
                                 <strong class="ProductCard-tagsTitle">Тэги:</strong>
                                 {% for tag in product.tags.all %}
-                                    <a href="#">{{ tag.name }}</a>
+                                <a href="#">{{ tag.name }}</a>
                                 {% endfor %}
                             </div>
                         </div>
