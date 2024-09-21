@@ -9,6 +9,7 @@ from django.contrib.auth.views import (
 
 
 from .views.account import AccountView
+from .views.profile import ProfileView
 from .views.register import RegisterView
 from .views.password_reset import UserPasswordResetView
 
@@ -29,6 +30,7 @@ urlpatterns = [
          name="logout"),
     path('register/', RegisterView.as_view(), name='register'),
     path('account/', AccountView.as_view(), name='account'),
+    path('account/profile/', ProfileView.as_view(), name='user_profile'),
     path('password-reset/', UserPasswordResetView.as_view(), name="password_reset"),
     path(
         'password-reset-confirm/<uidb64>/<token>/',
