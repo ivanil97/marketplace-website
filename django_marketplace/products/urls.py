@@ -5,12 +5,15 @@ from products.views_dir.viewed_products import (remove_product_from_viewed,
                                                 get_viewed_count)
 
 
+from .views import ProductDetailView, ReviewCreateView
 
 from .views import ProductDetailView, ProductsListView
 
 app_name = "products"
 
 urlpatterns = [
+    path('<slug:slug>/', ProductDetailView.as_view(), name="product_detail"),
+    path('<slug:slug>/review/', ReviewCreateView.as_view(), name='review_create'),
     path('viewed/remove/<int:product_id>/', remove_product_from_viewed, name='remove_product_from_viewed'),
     path('viewed/', get_viewed_products, name='get_viewed_products'),
     path('viewed/count/', get_viewed_count, name='get_viewed_count'),

@@ -4,12 +4,12 @@ from django.views.generic import TemplateView
 from users.models import User
 
 
-class AccountView(LoginRequiredMixin, TemplateView):
+class ProfileView(LoginRequiredMixin, TemplateView):
     """
-    View-функция для представления личного кабинета пользователя
+    View-функция для представления профиля пользователя
     """
     login_url = 'user:login'
-    template_name = 'templates_users/account.html'
+    template_name = 'templates_users/user_profile.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

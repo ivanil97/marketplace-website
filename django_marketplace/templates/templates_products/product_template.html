@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load mptt_tags %}
+{% load cache %}
 
 {% block title %} Product {{ product.pk }} {% endblock %}
 
@@ -9,6 +10,7 @@
 {% endblock %}
 
 {% block content %}
+{% cache 1 product_detail %}
 <div class="Middle Middle_top">
     <div class="Section">
         <div class="wrap">
@@ -34,7 +36,7 @@
                             </h2>
                             <div class="ProductCard-info">
                                 <div class="ProductCard-cost">
-                                    <div class="ProductCard-price">${{ product.auto_seller_price }}
+                                    <div class="ProductCard-price">${{ product.auto_seller_price|floatformat:0 }}
                                     </div>
                                 </div>
                             </div>
@@ -189,6 +191,13 @@
                         </div>
                         <div class="Tabs-block" id="reviews">
                             {% include 'templates_products/review_product.html' %}
+                            <div class="AddReview">
+                                <form method="post" action="{% url 'products:review_create' product.slug %}">
+                                    {% csrf_token %}
+                                    {{ review_form.as_p }}
+                                    <button type="submit" class="btn btn_primary">Submit Review</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -197,6 +206,7 @@
         </div>
     </div>
 </div>
+{% endcache %}
 {% endblock %}
 
 {% block footer %}

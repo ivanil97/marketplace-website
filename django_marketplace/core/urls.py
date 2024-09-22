@@ -27,7 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('product/', include('products.urls')),
     path('user/', include('users.urls')),
-    path('order/', include('carts.urls')),
     path('', HomeView.as_view(), name='home'),
 ]
 

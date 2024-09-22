@@ -5,6 +5,9 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import DetailView, TemplateView, ListView
+from django.http import HttpResponseRedirect
+from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.cache import cache
@@ -27,10 +30,13 @@ class ProductDetailView(DetailView):
         "tags", "images",
         "seller_price", "features").prefetch_related(Prefetch("seller_price", to_attr="seller")).annotate(
         auto_seller_price=Avg('seller_price__price'
-                         ))
+                              ))
+    context_object_name = "product"
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context_new = product_context(self.object, page_number=1)
+        page_number = self.request.GET.get('page', 1)
+        context_new = product_context(self.object, page_number=page_number)
         context.update(context_new)
 
         """Добавление товара в список просмотренных"""
@@ -48,26 +54,26 @@ class ProductDetailView(DetailView):
         return obj
 
 
-@receiver(post_save, sender=Product)
-def clear_cache(sender, instance, **kwargs):
-    key = make_template_fragment_key("product_detail",)
-    cache.delete(key)
-
-
 class ReviewCreateView(CreateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'templates_products/review_product.html'
+    template_name = 'templates_products/review_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = Product.objects.get(slug=self.kwargs['slug'])
+        context['product'] = product
+        return context
 
     def form_valid(self, form):
-        product_id = self.kwargs['product_id']
+        product_slug = self.kwargs['slug']
         user = self.request.user
         comment = form.cleaned_data['comment']
-        add_review_to_product(product_id=product_id, user=user, comment=comment)
-        return super().form_valid(form)
+        add_review_to_product(slug=product_slug, user=user, comment=comment)
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse_lazy('product_detail', kwargs={'product_id': self.kwargs['product_id']})
+        return reverse_lazy('products:product_detail', kwargs={'slug': self.kwargs['slug']})
 
 
 class ProductListEnum(enum.Enum):
@@ -145,3 +151,10 @@ class HomeView(TemplateView):
         context['limited_item_day'] = get_limited_items()[0]
         context['limited_items'] = get_limited_items()[1]
         return context
+
+
+@receiver(post_save, sender=Product)
+def clear_cache(sender, instance, **kwargs):
+    key = make_template_fragment_key("product_detail")
+    cache.delete(key)
+    print(f"Cache cleared for key: {key}")
