@@ -95,7 +95,7 @@ class ProductsListView(ListView):
 
 class ComparisonListView(View):
     def get(self, request):
-        limit = int(request.Get.get('limit', 3))
+        limit = int(request.GET.get('limit', 3))
         context = get_comparison_context(request, limit)
         return render(request, 'templates_products/comparison_list.html', context)
 

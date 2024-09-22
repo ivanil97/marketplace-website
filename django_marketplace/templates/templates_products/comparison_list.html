@@ -24,8 +24,8 @@
                             </div>
                             <div class="ProductCard-text">
                                 <ul>
-                                    {% for feature in product.features %}
-                                    <li>{{ feature }}</li>
+                                    {% for product_feature in product.features.all %}
+                                    <li>{{ product_feature.feature.name }}: {{ product_feature.value }}</li>
                                     {% endfor %}
                                 </ul>
                             </div>
