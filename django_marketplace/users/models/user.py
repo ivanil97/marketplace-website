@@ -24,6 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False, verbose_name='Персонал')
     is_superuser = models.BooleanField(default=False, verbose_name='Суперпользователь')
     role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Роль")
+    profile_picture = models.ImageField(null=True, upload_to='users/profile_pictures/', verbose_name="Фото")
 
     groups = models.ManyToManyField(Group, related_name='custom_user_groups', blank=True, verbose_name='Группы')
     user_permissions = models.ManyToManyField(Permission, related_name='custom_user_permissions', blank=True, verbose_name='Разрешения')
