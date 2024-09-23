@@ -9,14 +9,14 @@
                 <strong class="Footer-title">Навигация
                 </strong>
                 <ul class="menu menu_vt Footer-menu">
-                    <li class="menu-item"><a class="menu-link" href="index.html">Главная</a>
+                    <li class="menu-item"><a class="menu-link" href="{% url 'home' %}">Главная</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="catalog.html">Каталог</a>
+                    <li class="menu-item"><a class="menu-link" href="{% url 'products:products_list' %}">Каталог</a>
                     </li>
                     <li class="menu-item"><a class="menu-link" href="comparison.html">Сравнение</a>
                     </li>
                     {%  if request.user.is_authenticated %}
-                        <li class="menu-item"><a class="menu-link" href="account.html">Профиль</a>
+                        <li class="menu-item"><a class="menu-link" href="{% url 'user:account' %}">Профиль</a>
                         </li>
                     {% endif %}
                 </ul>

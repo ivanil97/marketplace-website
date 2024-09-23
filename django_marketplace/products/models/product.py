@@ -26,6 +26,9 @@ class Product(models.Model):
         related_name='products',
         verbose_name='Категория'
     )
+    sort_index = models.IntegerField(default=1)
+    quantity_sold = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
