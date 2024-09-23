@@ -53,10 +53,11 @@ INSTALLED_APPS = [
     'comparisons.apps.ComparisonsConfig',
     'adminpanel.apps.AdminpanelConfig',
 
+    'rest_framework',
     'mptt',
     'django_cleanup.apps.CleanupConfig',
-
     'debug_toolbar',
+
 ]
 
 MIDDLEWARE = [
@@ -177,6 +178,16 @@ if DEBUG:
     INTERNAL_IPS.extend(
         [ip[: ip.rfind(".")] + ".1" for ip in ips]
     )
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+}
+
+CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+
+
 
 # Вывод логов в консоли по SQL запросам
 # LOGGING = {
