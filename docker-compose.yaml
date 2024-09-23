@@ -1,0 +1,46 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "200k"
+    command:
+      - "python"
+      - "manage.py"
+      - "runserver"
+      - "0.0.0.0:8080"
+    ports:
+      - "8000:8080"
+    volumes:
+       - ./django_marketplace/db.sqlite3:/var/team42_app/db.sqlite3
+       - ./django_marketplace/import:/var/team42_app/import
+    depends_on:
+      - redis
+  celery:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "200k"
+    command: ["celery", "--app=core", "worker", "--loglevel=INFO"]
+    volumes_from:
+      - app:rw
+    depends_on:
+      - redis
+  redis:
+    image: redis:alpine
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "200k"
