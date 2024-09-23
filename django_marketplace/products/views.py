@@ -6,23 +6,30 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import DetailView, TemplateView, ListView
 from django.http import HttpResponseRedirect
-from django.views.generic import DetailView
+from django.shortcuts import render
+from django.views import View
 from django.views.generic import DetailView, ListView
-from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.cache import cache
 from products.services.product_context import product_context
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views.generic import TemplateView
+
 from products.forms import ReviewForm
-from products.services.review_service import add_review_to_product
+
+from django.db.models.signals import post_save
 from products.models.product import Product
 from products.models.review import Review
 from django.db.models import Avg, Count
 from django.db.models import Prefetch, QuerySet
 from django.core.paginator import Paginator
 
+from products.services.comparison_service import *
+from products.services.review_service import add_review_to_product
 from products.services.viewed_products_service import ViewedProductsService
+from .index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
+
 
 class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
@@ -130,8 +137,25 @@ class ProductsListView(ListView):
         return queryset.all()
 
 
-from django.views.generic import TemplateView
-from .index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
+class ComparisonListView(View):
+    def get(self, request):
+        limit = int(request.GET.get('limit', 3))
+        context = get_comparison_context(request, limit)
+        return render(request, 'templates_products/comparison_list.html', context)
+
+
+class AddComparisonView(View):
+    def post(self, request, *args, **kwargs):
+        slug = kwargs.get('slug')
+        add_to_comparison(request, slug)
+        return render(request, 'templates_products/comparison_list.html', get_comparison_context(request))
+
+
+class RemoveFromComparisonView(View):
+    def post(self, request, *args, **kwargs):
+        slug = kwargs.get('slug')
+        remove_from_comparison(request, slug)
+        return render(request, 'templates_products/comparison_list.html', get_comparison_context(request))
 
 
 class HomeView(TemplateView):

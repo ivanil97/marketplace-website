@@ -7,21 +7,32 @@ def get_comparison_list(request, limit=3):
     return products
 
 
-def add_to_comparison(request, product_id):
-    compare_list = get_comparison_list(request)
+def add_to_comparison(request, slug):
+    product = Product.objects.get(slug=slug)
+    compare_list = request.session.get('compare_list', [])
 
-    if product_id not in compare_list:
-        compare_list.append(product_id)
+    if product.id not in compare_list:
+        compare_list.append(product.id)
         request.session['compare_list'] = compare_list
 
 
-def remove_from_compare_list(request, product_id):
-    compare_list = get_comparison_list(request)
+def remove_from_comparison(request, slug):
+    product = Product.objects.get(slug=slug)
+    compare_list = request.session.get('compare_list', [])
 
-    if product_id in compare_list:
-        compare_list.remove(product_id)
+    if product.id in compare_list:
+        compare_list.remove(product.id)
         request.session['compare_list'] = compare_list
 
 
 def get_comparison_count(request):
     return len(request.session.get('compare_list', []))
+
+
+def get_comparison_context(request, limit=3):
+    products = get_comparison_list(request, limit)
+    context = {
+        'products': products,
+        'count': len(products)
+    }
+    return context
