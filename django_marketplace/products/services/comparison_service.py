@@ -16,11 +16,12 @@ def add_to_comparison(request, slug):
         request.session['compare_list'] = compare_list
 
 
-def remove_from_comparison(request, product_id):
-    compare_list = get_comparison_list(request)
+def remove_from_comparison(request, slug):
+    product = Product.objects.get(slug=slug)
+    compare_list = request.session.get('compare_list', [])
 
-    if product_id in compare_list:
-        compare_list.remove(product_id)
+    if product.id in compare_list:
+        compare_list.remove(product.id)
         request.session['compare_list'] = compare_list
 
 

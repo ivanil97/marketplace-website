@@ -106,11 +106,13 @@ class AddComparisonView(View):
         add_to_comparison(request, slug)
         return render(request, 'templates_products/comparison_list.html', get_comparison_context(request))
 
+
 class RemoveFromComparisonView(View):
     def post(self, request, *args, **kwargs):
-        product_id = request.POST.get('product_id')
-        remove_from_comparison(request, product_id)
+        slug = kwargs.get('slug')
+        remove_from_comparison(request, slug)
         return render(request, 'templates_products/comparison_list.html', get_comparison_context(request))
+
 
 class HomeView(TemplateView):
     """

@@ -15,12 +15,13 @@
                     {% for product in products %}
                     <div class="ProductCard">
                         <div class="ProductCard-photo">
-                            <img src="{% static 'assets/img/content/home/bigGoods.png' %}" alt="{{ product.name }}"/>
+                            <img src="{{ first_image.image.url }}" alt="{{ product.name }}">
                         </div>
                         <div class="ProductCard-desc">
                             <h2 class="ProductCard-title">{{ product.name }}</h2>
                             <div class="ProductCard-cost">
-                                <div class="ProductCard-price">${{ product.price }}</div>
+                                <div class="ProductCard-price">${{ product.auto_seller_price|floatformat:0 }}
+                                </div>
                             </div>
                             <div class="ProductCard-text">
                                 <ul>
@@ -31,6 +32,12 @@
                             </div>
                         </div>
                     </div>
+                    <form method="post"
+                          action="{% url 'products:remove_from_comparison' product.slug %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn_primary">Remove from comparison
+                        </button>
+                    </form>
                     {% endfor %}
                 </div>
                 {% else %}
