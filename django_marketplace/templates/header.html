@@ -76,7 +76,7 @@
                                 </form>
                             </div>
                         </div>
-                        <a class="CartBlock-block" href="cart.html"><img class="CartBlock-img" src="{% static 'img/icons/cart.svg' %}" alt="cart.svg" /><span class="CartBlock-amount">0</span></a>
+                        <a class="CartBlock-block" href="{% url 'carts:cart' %}"><img class="CartBlock-img" src="{% static 'img/icons/cart.svg' %}" alt="cart.svg" /><span class="CartBlock-amount">0</span></a>
                         <div class="CartBlock-block"><span class="CartBlock-price">0.00$</span>
 
 
@@ -107,7 +107,7 @@
                                 <ul class="CategoriesButton-link">
                                     <a href="{% url 'products:products_list' %}?category={{ node.id }}">
                                         <div class="CategoriesButton-icon">
-                                            <img src="{{ node.icon.url}}" alt="{{ node.icon.name}}" height="20px" width="20px" />
+                                            <p>OO</p>
                                         </div>
                                         <span class="CategoriesButton-text">{{ node.name }}</span>
                                     </a>{% if not node.is_leaf_node %}<a class="CategoriesButton-arrow" href=""{% url 'products:products_list' %}?category={{ node.id }}""></a>{% endif %}
