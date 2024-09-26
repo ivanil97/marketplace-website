@@ -1,9 +1,12 @@
 from products.models.product import Product
 
+from django.db.models import Avg
+
 
 def get_comparison_list(request, limit=3):
     product_id = request.session.get('compare_list', [])
-    products = Product.objects.filter(id__in=product_id)[:limit]
+    products = Product.objects.filter(id__in=product_id).prefetch_related('images', 'seller_price').annotate(
+        auto_seller_price=Avg('seller_price__price'))[:limit]
     return products
 
 

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<!-- Здесь будет header -->
+{% endblock %}
+
+{% block content %}
+<div class="Middle">
+    <div class="wrap">
+        <div class="Product">
+            <div class="ProductCard">
+                {% for product in products %}
+                <div class="ProductCard-desc">
+                    <div class="ProductCard-header">
+                        <h2 class="ProductCard-title">{{ product.name }}</h2>
+                        <div class="ProductCard-look">
+                            <div class="ProductCard-photo">
+                                <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}"/>
+                            </div>
+                        </div>
+
+                        <div class="Tabs Tabs_default">
+                            <div class="Tabs-wrap">
+                                <div class="Tabs-block" id="description">
+                                    <div class="table">
+                                        <table>
+                                            <tr>
+                                                <th class="hed">Характеристика</th>
+                                                <th class="hed">Значение</th>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Общие параметры</b></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="comparis">Тип</td>
+                                                <td class="comparis">{{ product.type }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Модель</td>
+                                                <td>{{ product.model }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Год релиза</td>
+                                                <td>{{ product.release_year }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Экран</b></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Диагональ экрана (дюйм)</td>
+                                                <td>{{ product.screen_size }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Разрешение экрана</td>
+                                                <td>{{ product.screen_resolution }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="comparis">Плотность пикселей</td>
+                                                <td class="comparis">{{ product.pixel_density }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Система</b></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="comparis">Операционная система</td>
+                                                <td class="comparis">{{ product.os }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Версия ОС</td>
+                                                <td>{{ product.os_version }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ProductCard-info">
+                        <div class="ProductCard-cost">
+                            <div class="ProductCard-price">${{ product.auto_seller_price|floatformat:0 }}</div>
+                        </div>
+                    </div>
+                    <div class="ProductCard-cart">
+                        <form method="post" action="{% url 'comparisons:remove_from_comparison' product.slug %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn_primary">Remove from comparison
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<!-- Здесь будет footer -->
+{% endblock %}
+

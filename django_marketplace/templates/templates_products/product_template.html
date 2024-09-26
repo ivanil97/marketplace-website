@@ -65,7 +65,7 @@
                                 </a>
                             </div>
                             <div class="ProductCard-cartElement">
-                                <form method="post" action="{% url 'products:add_to_comparison' slug=product.slug %}">
+                                <form method="post" action="{% url 'comparisons:add_to_comparison' slug=product.slug %}">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn_primary">
                                         Добавить в сравнение

@@ -9,10 +9,6 @@ from .views import *
 app_name = "products"
 
 urlpatterns = [
-    path('comparison/', ComparisonListView.as_view(), name='comparison_list'),
-    path('comparison/remove/<slug:slug>/', RemoveFromComparisonView.as_view(), name='remove_from_comparison'),
-    path('comparison/add/<slug:slug>/', AddComparisonView.as_view(), name='add_to_comparison'),
-
     path('viewed/remove/<int:product_id>/', remove_product_from_viewed, name='remove_product_from_viewed'),
     path('viewed/', get_viewed_products, name='get_viewed_products'),
     path('viewed/count/', get_viewed_count, name='get_viewed_count'),

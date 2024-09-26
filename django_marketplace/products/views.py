@@ -1,13 +1,7 @@
 import enum
 
 from django.core.cache.utils import make_template_fragment_key
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
-from django.views import View
-from django.views.generic import DetailView, TemplateView, ListView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.views import View
 from django.views.generic import DetailView, ListView
 from django.dispatch import receiver
 from django.core.cache import cache
@@ -19,13 +13,11 @@ from django.views.generic import TemplateView
 from products.forms import ReviewForm
 
 from django.db.models.signals import post_save
-from products.models.product import Product
 from products.models.review import Review
-from django.db.models import Avg, Count
-from django.db.models import Prefetch, QuerySet
-from django.core.paginator import Paginator
+from django.db.models import Count
+from django.db.models import Prefetch
 
-from products.services.comparison_service import *
+from comparisons.services.comparison_service import *
 from products.services.review_service import add_review_to_product
 from products.services.viewed_products_service import ViewedProductsService
 from .index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
@@ -56,7 +48,7 @@ class ProductDetailView(DetailView):
     def get_object(self, queryset=None):
         obj = cache.get(f'product_detail_{self.kwargs["slug"]}')
         if not obj:
-            obj = super().get_object(queryset=queryset)
+            obj = super().get_object()
             cache.set(f'product_detail_{self.kwargs["slug"]}', obj, 60 * 15)  # 15 минут
         return obj
 
@@ -93,6 +85,7 @@ class ProductListEnum(enum.Enum):
     DATE_ASC = 'created_at'
     DATE_DEC = '-created_at'
     NONE = '1'
+
 
 class ProductsListView(ListView):
     model = Product
@@ -135,27 +128,6 @@ class ProductsListView(ListView):
             queryset = queryset.order_by(curr_sort)
 
         return queryset.all()
-
-
-class ComparisonListView(View):
-    def get(self, request):
-        limit = int(request.GET.get('limit', 3))
-        context = get_comparison_context(request, limit)
-        return render(request, 'templates_products/comparison_list.html', context)
-
-
-class AddComparisonView(View):
-    def post(self, request, *args, **kwargs):
-        slug = kwargs.get('slug')
-        add_to_comparison(request, slug)
-        return render(request, 'templates_products/comparison_list.html', get_comparison_context(request))
-
-
-class RemoveFromComparisonView(View):
-    def post(self, request, *args, **kwargs):
-        slug = kwargs.get('slug')
-        remove_from_comparison(request, slug)
-        return render(request, 'templates_products/comparison_list.html', get_comparison_context(request))
 
 
 class HomeView(TemplateView):
