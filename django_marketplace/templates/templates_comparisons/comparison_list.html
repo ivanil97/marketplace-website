@@ -29,50 +29,12 @@
                                                 <th class="hed">Характеристика</th>
                                                 <th class="hed">Значение</th>
                                             </tr>
+                                            {% for feature in product.features.all %}
                                             <tr>
-                                                <td><b>Общие параметры</b></td>
-                                                <td></td>
+                                                <td>{{ feature.feature.name }}</td>
+                                                <td>{{ feature.value }}</td>
                                             </tr>
-                                            <tr>
-                                                <td class="comparis">Тип</td>
-                                                <td class="comparis">{{ product.type }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Модель</td>
-                                                <td>{{ product.model }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Год релиза</td>
-                                                <td>{{ product.release_year }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Экран</b></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Диагональ экрана (дюйм)</td>
-                                                <td>{{ product.screen_size }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Разрешение экрана</td>
-                                                <td>{{ product.screen_resolution }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="comparis">Плотность пикселей</td>
-                                                <td class="comparis">{{ product.pixel_density }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Система</b></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="comparis">Операционная система</td>
-                                                <td class="comparis">{{ product.os }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Версия ОС</td>
-                                                <td>{{ product.os_version }}</td>
-                                            </tr>
+                                            {% endfor %}
                                         </table>
                                     </div>
                                 </div>
