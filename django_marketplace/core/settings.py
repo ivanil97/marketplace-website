@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'comparisons.apps.ComparisonsConfig',
     'adminpanel.apps.AdminpanelConfig',
+    'carts.apps.CartsConfig',
 
     'rest_framework',
     'mptt',
