@@ -8,7 +8,6 @@ from django.core.cache import cache
 from products.services.product_context import product_context
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from django.views.generic import TemplateView
 
 from products.forms import ReviewForm
 
@@ -20,7 +19,9 @@ from django.db.models import Prefetch
 from comparisons.services.comparison_service import *
 from products.services.review_service import add_review_to_product
 from products.services.viewed_products_service import ViewedProductsService
-from .index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
+
+from django.views.generic import TemplateView
+from products.services.index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
 
 
 class ProductDetailView(DetailView):
