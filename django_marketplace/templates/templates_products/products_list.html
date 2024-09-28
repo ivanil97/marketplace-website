@@ -22,10 +22,12 @@
                             </strong>
                         </header>
                         <div class="Section-columnContent">
-                            <form class="form" action="#" method="post">
+                            <form class="form" action="{% url 'products:products_list' %}?price_min=data-from?price_max=data-to" method="get">
                                 <div class="form-group">
+{#                                    {% csrf_token %}#}
                                     <div class="range Section-columnRange">
-                                        <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="7" data-max="50" data-from="7" data-to="27" />
+{#                                        {{ form.as_p }}#}
+                                        <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="7" data-max="350" data-from="7" data-to="27" />
                                         <div class="range-price">Цена:&#32;
                                             <div class="rangePrice">
                                             </div>
@@ -33,24 +35,31 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+{#                                    {{ form1.as_p }}#}
                                     <input class="form-input form-input_full" id="title" name="title" type="text" placeholder="Название" />
                                 </div>
-                                <div class="form-group">
-                                    <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
-                                </div>
+{#                                <div class="form-group">#}
+{#                                    <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->#}
+{#                                </div>#}
                                 <div class="form-group">
                                     <label class="toggle">
-                                        <input type="checkbox" /><span class="toggle-box"></span><span class="toggle-text">Только товары в наличии</span>
+                                        <input type="checkbox" />
+                                        <span class="toggle-box"></span>
+                                        <span class="toggle-text">Только товары в наличии</span>
                                     </label>
                                 </div>
                                 <div class="form-group">
                                     <label class="toggle">
-                                        <input type="checkbox" /><span class="toggle-box"></span><span class="toggle-text">С бесплатной доставкой</span>
+                                        <input type="checkbox" />
+                                        <span class="toggle-box"></span>
+                                        <span class="toggle-text">С бесплатной доставкой</span>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <div class="buttons"><a class="btn btn_square btn_dark btn_narrow" href="#">Фильтр</a>
-                                    </div>
+                                    <button type="submit" class="buttons btn btn_square btn_dark btn_narrow">
+{#                                        <a class="btn btn_square btn_dark btn_narrow" href="{% url 'products:products_list' %}?name">Фильтр</a>#}
+                                        Фильтр
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -61,7 +70,20 @@
                             </strong>
                         </header>
                         <div class="Section-columnContent">
-                            <div class="buttons"><a class="btn btn_default btn_sm" href="#">Видео</a><a class="btn btn_default btn_sm" href="#">Разработка</a><a class="btn btn_default btn_sm" href="#">Игры</a><a class="btn btn_default btn_sm" href="#">Asus</a><a class="btn btn_default btn_sm" href="#">Разработка</a><a class="btn btn_default btn_sm" href="#">Видео</a>
+                            <div class="buttons">
+                                {% for product in products %}
+                                    {% for tag in product.tags.all %}
+                                        <a class="btn btn_default btn_sm" href="#">{{ tag }}</a>
+                                    {% endfor %}
+
+                                {% endfor %}
+
+                                <a class="btn btn_default btn_sm" href="#">Видео</a>
+                                <a class="btn btn_default btn_sm" href="#">Разработка</a>
+                                <a class="btn btn_default btn_sm" href="#">Игры</a>
+                                <a class="btn btn_default btn_sm" href="#">Asus</a>
+                                <a class="btn btn_default btn_sm" href="#">Разработка</a>
+                                <a class="btn btn_default btn_sm" href="#">Видео</a>
                             </div>
                         </div>
                     </div>
@@ -118,7 +140,6 @@
                                 {% elif curr_sort and curr_sort == DATE_DEC.value %}?sort={{ NONE.value }}
                                 {% else %}?sort={{ DATE_ASC.value }}
                                 {% endif %}">Новизне</a>
-
                         </div>
                     </div>
                     <div class="Cards">

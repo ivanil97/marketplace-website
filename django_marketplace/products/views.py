@@ -2,7 +2,7 @@ import enum
 
 from django.core.cache.utils import make_template_fragment_key
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import DetailView, TemplateView, ListView
 from django.http import HttpResponseRedirect
@@ -12,11 +12,11 @@ from django.views.generic import DetailView, ListView
 from django.dispatch import receiver
 from django.core.cache import cache
 from products.services.product_context import product_context
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 from django.views.generic import TemplateView
 
-from products.forms import ReviewForm
+from products.forms import ReviewForm, SearchForm, SearchForm1
 
 from django.db.models.signals import post_save
 from products.models.product import Product
@@ -96,6 +96,7 @@ class ProductListEnum(enum.Enum):
 
 class ProductsListView(ListView):
     model = Product
+    # form_class = SearchForm
     template_name = "templates_products/products_list.html"
     context_object_name = "products"
     paginate_by = 8
@@ -114,13 +115,19 @@ class ProductsListView(ListView):
         context['NONE'] = ProductListEnum.NONE
         context_new = {
             'curr_sort': curr_sort,
+            'form': SearchForm(),
+            'form1': SearchForm1(),
         }
         context.update(context_new)
         return context
 
+
     def get_queryset(self):
         category_id = self.request.GET.get('category', None)
         curr_sort = self.request.GET.get('sort', 'auto_seller_price')
+        title = self.request.GET.get('title')
+        price = self.request.GET.get('price')
+
         queryset = self.model.objects.prefetch_related(
             "tags", "images", "seller_price", "features"
         ).annotate(
@@ -133,7 +140,15 @@ class ProductsListView(ListView):
 
         if curr_sort != '1':
             queryset = queryset.order_by(curr_sort)
-
+        if title:
+            return queryset.filter(name__icontains=title).all()
+        if price:
+            print(price.split(';'))
+            price = price.split(';')
+            return queryset.filter(auto_seller_price__range=(price[0], price[1])).all()
+        if title and price:
+            price = price.split(';')
+            return queryset.filter(auto_seller_price__range=(price[0], price[1])).filter(name__icontains=title).all()
         return queryset.all()
 
 
