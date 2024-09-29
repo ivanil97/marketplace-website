@@ -145,8 +145,10 @@ class HomeView(TemplateView):
         context['slider_banners'] = get_slider_banners()
         context['static_banners'] = get_static_banners()
         context['popular_items'] = get_popular_items()
-        context['limited_item_day'] = get_limited_items()[0]
-        context['limited_items'] = get_limited_items()[1]
+        limited_items = get_limited_items()
+        if limited_items:
+            context['limited_item_day'] = limited_items[0]
+            context['limited_items'] = limited_items[1]
         return context
 
 

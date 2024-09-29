@@ -74,7 +74,9 @@
                                     <strong class="Section-columnTitle">limited offer
                                     </strong>
                                   </header>
-                                  <div class="Card"><a class="Card-picture" href="#"><img src="{{ limited_item_day.product.one_image.0.image.url }}" alt="No images available"/></a>
+                                  {% with limited_item_day.product.images.all|first as img %}
+                                    <div class="Card"><a class="Card-picture" href="#"><img src="{{ img.image.url }}" alt="No images available"/></a>
+                                  {% endwith %}
                                     <div class="Card-content">
                                       <strong class="Card-title"><a href="#">{{ limited_item_day.product.name }}</a>
                                       </strong>
@@ -121,8 +123,10 @@
                                 </header>
                                 <div class="Cards">
                                     {% for popular_item in popular_items %}
-                                        <div class="Card"><a class="Card-picture" href="#"><img src="{{ popular_item.product.one_image.0.image.url }}" alt="No images available" /></a>
-                                        <div class="Card-content">
+                                        {% with popular_item.product.images.all|first as img %}
+                                            <div class="Card"><a class="Card-picture" href="#"><img src="{{ img.image.url }}" alt="{{ popular_item.product.name }}" /></a>
+                                        {% endwith %}
+                                            <div class="Card-content">
                                             <strong class="Card-title"><a href="#">{{ popular_item.product.name }}</a>
                                             </strong>
                                             <div class="Card-description">
@@ -166,7 +170,9 @@
                                                 <div class="Slider-content">
                                                     <div class="Card">
                                                         <a class="Card-picture" href="#">
-                                                            <img src="{{ limited_item.product.one_image.0.image.url }}" alt="{{ limited_item.product.name }}" />
+                                                            {% with limited_item.product.images.all|first as img %}
+                                                                <img src="{{ img.image.url }}" alt="{{ limited_item.product.name }}"/>
+                                                            {% endwith %}
                                                         </a>
                                                         <div class="Card-content">
                                                             <strong class="Card-title">
