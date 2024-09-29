@@ -1,16 +1,18 @@
 from django.db.models import Prefetch
 from django.shortcuts import render
-from products.models import Product
+from products.models import Product, ProductImage, Discount
+from .models import Cart
 
 
 def users_cart(request):
-    product = (
-        Product.objects.
-        select_related("category").
-        prefetch_related(Prefetch("discounts", to_attr="discount")).
-        prefetch_related(Prefetch("seller_price", to_attr="seller")).
-        prefetch_related(Prefetch("images", to_attr="image")).
-        filter(id__gt=5)
+    """Сервис для просмотра списка товаров в корзине"""
+    one_image_queryset = ProductImage.objects.order_by('id')[:1]
+    one_discount_queryset = Discount.objects.order_by('id')[:1]
+    carts = Cart.objects.filter(user=request.user.id).prefetch_related(
+        Prefetch('sellerprice__product__images', queryset=one_image_queryset, to_attr='one_image'),
+        Prefetch('sellerprice__product__discounts', queryset=one_discount_queryset, to_attr='one_discount')
     )
-    context = {"products": product}
+    context = {
+        "carts": carts,
+    }
     return render(request, "templates_cart/cart.html", context)

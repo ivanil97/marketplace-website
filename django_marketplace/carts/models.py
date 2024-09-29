@@ -1,5 +1,15 @@
 from django.db import models
 
+from products.models import Discount
+
+
+class CartQuerySet(models.QuerySet):
+
+    def total_quantity(self):
+        if self:
+            return sum(cart.quantity for cart in self)
+        return 0
+
 
 class Cart(models.Model):
     """
@@ -24,6 +34,7 @@ class Cart(models.Model):
     )
     quantity = models.PositiveIntegerField(default=0, verbose_name="Количество")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Дата добавления")
+    objects = CartQuerySet.as_manager()
 
     class Meta:
         db_table: str = "basket"

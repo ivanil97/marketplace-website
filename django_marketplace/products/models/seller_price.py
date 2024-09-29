@@ -37,7 +37,4 @@ class SellerPrice(models.Model):
         return f"SellerPrice {self.pk}"
 
     def display_price(self):
-        return f"{self.price}"
-
-    def total_price(self):
-        pass
+        return f"{self.price}" # Вывести с учетом скидки!!!

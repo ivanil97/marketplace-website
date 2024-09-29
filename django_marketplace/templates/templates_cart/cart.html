@@ -2,6 +2,7 @@
 {% load static %}
 {% load mptt_tags %}
 {% load cache %}
+{% load carts_tags %}
 
 {% block title %}
 Basket
@@ -15,29 +16,38 @@ Basket
 <div class="Middle Middle_top">
     <div class="Section">
         <div class="wrap">
-            {% if products %}
-            <form class="form Cart" action="#" method="post">
-                {% for product in products %}
+            {% if carts %}
+            <form class="form Cart" action="{% url 'orders:order' %}" method="post">
+                {% for cart in carts %}
                 <div class="Cart-product">
                     <div class="Cart-block Cart-block_row">
                         <div class="Cart-block Cart-block_pict">
-                            <a class="Cart-pict" href="#">
-                                {% if product.image %}
-                                    <img class="Cart-img" src="product.image.url" alt="{{ product.name }}" />
+                            <a class="Cart-pict" href="{% url 'products:product_detail' slug=cart.sellerprice.product.slug %}">
+                                {% if cart.sellerprice.product.one_image %}
+                                    {% with cart.sellerprice.product.one_image|first as img %}
+                                    <img class="Cart-img" src="{{ img.image.url }}" alt="{{ cart.sellerprice.product.name }}" />
+                                    {% endwith %}
                                 {% else %}
-                                    <img class="Cart-img" src="#" alt="{{ product.name }}" />
+                                    <img class="Cart-img" src="#" alt="{{ cart.sellerprice.product.name }}" />
                                 {% endif %}
                             </a>
                         </div>
-                        <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">{{ product.name }}</a>
+                        <div class="Cart-block Cart-block_info">
+                            <a class="Cart-title" href="{% url 'products:product_detail' slug=cart.sellerprice.product.slug %}">
+                                {{ cart.sellerprice.product.name }}
+                            </a>
                             <div class="Cart-desc">
-                                {{ product.description }}
+                                {{ cart.sellerprice.product.description }}
                             </div>
                         </div>
-                        <div class="Cart-block Cart-block_price">
-                            <div class="Cart-price">
-                                {{ product.seller.0.display_price }} $
-                            </div>
+                        {% price_discount cart as res %}
+                        <div class="Cart-block Cart-block_price Cart-price">
+                            {% if res.price_discount %}
+                            <span class="Card-priceOld">{{ res.old_price }}$</span>
+                            <span class="Card-price">{{ res.price_discount }}$</span>
+                            {% else %}
+                            <span class="Card-price">{{ res.old_price }}$</span>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="Cart-block Cart-block_row">
@@ -69,9 +79,9 @@ Basket
                 <div class="Cart-total">
                     <div class="Cart-block Cart-block_total">
                         <strong class="Cart-title">Итого:
-                        </strong><span class="Cart-price">200.99$</span>
+                        </strong><span class="Cart-price">{% total_price request carts %}$</span>
                     </div>
-                    <div class="Cart-block"><a class="btn btn_success btn_lg" href="order.html">Оформить заказ</a>
+                    <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'orders:order' %}">Оформить заказ</a>
                     </div>
                 </div>
             </form>
