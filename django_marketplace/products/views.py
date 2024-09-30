@@ -101,52 +101,77 @@ class ProductsListView(ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        form = SearchForm(self.request.POST or None)
-        category_id = self.request.GET.get('category', None)
-        curr_sort = self.request.GET.get('sort', 'auto_seller_price')
-        queryset = queryset.prefetch_related(
-            "tags", "images", "seller_price", "features"
-        ).annotate(
-            auto_seller_price=Avg('seller_price__price')
-        ).annotate(
-            rev_count=Count('review')
-        )
-        if category_id:
-            queryset = queryset.filter(category_id=category_id)
-        if curr_sort != '1':
-            queryset = queryset.order_by(curr_sort)
-        if self.request.method == 'POST' and form.is_valid():
-            price = form.cleaned_data.get('price')
-            title = form.cleaned_data.get('name')
-            in_stock = form.cleaned_data.get('in_stock')
-            if title:
-                queryset = queryset.filter(name__icontains=title)
-            if price:
-                price = price.split(';')
-                queryset = queryset.filter(auto_seller_price__range=(price[0], price[1]))
-            if in_stock:
-                queryset = queryset.filter(in_stock=True)
-        return queryset.all()
+        try:
+            return self._filter_queryset()
+        except:
+            print('Произошла ошибка 1')
+
+    def post(self, request, *args, **kwargs):
+        try:
+            form = SearchForm(request.POST)
+            if form.is_valid():
+                return self._filter_queryset(form)
+            else:
+                return self.get(request, *args, **kwargs)
+        except:
+            print('Произошла ошибка 2')
+
+    def _filter_queryset(self, form=None):
+        try:
+            queryset = super().get_queryset().prefetch_related(
+                "tags", "images", "seller_price", "features"
+            ).annotate(
+                auto_seller_price=Avg('seller_price__price'),
+                rev_count=Count('review')
+            )
+            category_id = self.request.GET.get('category')
+            curr_sort = self.request.GET.get('sort', 'auto_seller_price')
+            if category_id:
+                queryset = queryset.filter(category_id=category_id)
+            if curr_sort != '1':
+                queryset = queryset.order_by(curr_sort)
+            if form and form.is_valid():
+                price = form.cleaned_data.get('price')
+                title = form.cleaned_data.get('name')
+                in_stock = form.cleaned_data.get('in_stock')
+                if title:
+                    queryset = queryset.filter(name__icontains=title)
+                    print(queryset)
+                if price:
+                    price_range = price.split(';')
+                    print(price_range)
+                    queryset = queryset.filter(auto_seller_price__range=(price_range[0], price_range[1]))
+                    print(queryset)
+                if in_stock:
+                    queryset = queryset.filter(in_stock=True)
+                    print(queryset)
+            print(queryset)
+            return queryset.all()
+        except:
+            print('Произошла ошибка 3')
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        curr_sort = self.request.GET.get('sort', 'auto_seller_price')
-        context['POP_ASC'] = ProductListEnum.POP_ASC
-        context['POP_DEC'] = ProductListEnum.POP_DEC
-        context['PR_ASC'] = ProductListEnum.PR_ASC
-        context['PR_DEC'] = ProductListEnum.PR_DEC
-        context['REV_ASC'] = ProductListEnum.REV_ASC
-        context['REV_DEC'] = ProductListEnum.REV_DEC
-        context['DATE_ASC'] = ProductListEnum.DATE_ASC
-        context['DATE_DEC'] = ProductListEnum.DATE_DEC
-        context['NONE'] = ProductListEnum.NONE
-        context_new = {
-            'curr_sort': curr_sort,
-        }
-        context.update(context_new)
-        context['form'] = SearchForm(self.request.POST or None)
-        return context
+        try:
+            context = super().get_context_data(**kwargs)
+            curr_sort = self.request.GET.get('sort', 'auto_seller_price')
+            context['POP_ASC'] = ProductListEnum.POP_ASC
+            context['POP_DEC'] = ProductListEnum.POP_DEC
+            context['PR_ASC'] = ProductListEnum.PR_ASC
+            context['PR_DEC'] = ProductListEnum.PR_DEC
+            context['REV_ASC'] = ProductListEnum.REV_ASC
+            context['REV_DEC'] = ProductListEnum.REV_DEC
+            context['DATE_ASC'] = ProductListEnum.DATE_ASC
+            context['DATE_DEC'] = ProductListEnum.DATE_DEC
+            context['NONE'] = ProductListEnum.NONE
+            context_new = {
+                'curr_sort': curr_sort,
+            }
+            context.update(context_new)
+            context['form'] = SearchForm(self.request.POST or None)
+            print(context)
+            return context
+        except:
+            print('Произошла ошибка 4')
 
 class ComparisonListView(View):
     def get(self, request):
