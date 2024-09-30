@@ -46,10 +46,9 @@ def get_popular_items():
     в контекст view-функции
     """
 
-    one_image_queryset = ProductImage.objects.order_by('id')[:1]
-    popular_items_raw = SellerPrice.objects.filter(archived=False).select_related('product').prefetch_related(
-        Prefetch('product__images', queryset=one_image_queryset, to_attr='one_image')).order_by(
-        'product__sort_index','-product__quantity_sold')
+    popular_items_raw = list(SellerPrice.objects.filter(archived=False)
+                             .prefetch_related('product__images')
+                             .order_by('product__sort_index', '-product__quantity_sold'))
 
     popular_items = popular_items_raw[:8]
 
@@ -65,23 +64,25 @@ def get_limited_items():
     кортеж из двух элементов для передачи во view-функцию:
     Товар для блока предложение дня, список товаров ограниченного тиража
     """
-    one_image_queryset = ProductImage.objects.order_by('id')[:1]
     limited_items_raw = list(SellerPrice.objects.filter(is_limited=True, archived=False)
-                             .prefetch_related(
-        Prefetch('product__images', queryset=one_image_queryset, to_attr='one_image')))
+                             .prefetch_related('product__images'))
 
-    limited_item_day = cache.get('limited_item_day')
-    if not limited_item_day:
-        limited_items = limited_items_raw[:17]
-        limited_item_day = random.sample(limited_items, 1)[0]
-        limited_items.remove(limited_item_day)
+    if limited_items_raw:
+        limited_item_day = cache.get('limited_item_day')
+        if not limited_item_day:
+            limited_items = limited_items_raw[:17]
+            limited_item_day = random.sample(limited_items, 1)[0]
+            limited_items.remove(limited_item_day)
 
-        now = datetime.now()
-        end_of_day = datetime.combine(now.date() + timedelta(days=1), datetime.min.time())
-        timeout = int((end_of_day - now).total_seconds())
-        cache.set('limited_item_day', limited_item_day, timeout=timeout)  # кеш до конца дня
+            now = datetime.now()
+            end_of_day = datetime.combine(now.date() + timedelta(days=1), datetime.min.time())
+            timeout = int((end_of_day - now).total_seconds())
+            cache.set('limited_item_day', limited_item_day, timeout=timeout)  # кеш до конца дня
+        else:
+            limited_items_raw.remove(limited_item_day)
+            limited_items = limited_items_raw[:16]
+
+        return limited_item_day, limited_items
+
     else:
-        limited_items_raw.remove(limited_item_day)
-        limited_items = limited_items_raw[:16]
-
-    return limited_item_day, limited_items
+        return None
