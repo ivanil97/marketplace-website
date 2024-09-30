@@ -16,7 +16,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 from django.views.generic import TemplateView
 
-from products.forms import ReviewForm, SearchForm, SearchForm1
+from products.forms import ReviewForm, SearchForm
 
 from django.db.models.signals import post_save
 from products.models.product import Product
@@ -96,10 +96,38 @@ class ProductListEnum(enum.Enum):
 
 class ProductsListView(ListView):
     model = Product
-    # form_class = SearchForm
     template_name = "templates_products/products_list.html"
     context_object_name = "products"
     paginate_by = 8
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        form = SearchForm(self.request.POST or None)
+        category_id = self.request.GET.get('category', None)
+        curr_sort = self.request.GET.get('sort', 'auto_seller_price')
+        queryset = queryset.prefetch_related(
+            "tags", "images", "seller_price", "features"
+        ).annotate(
+            auto_seller_price=Avg('seller_price__price')
+        ).annotate(
+            rev_count=Count('review')
+        )
+        if category_id:
+            queryset = queryset.filter(category_id=category_id)
+        if curr_sort != '1':
+            queryset = queryset.order_by(curr_sort)
+        if self.request.method == 'POST' and form.is_valid():
+            price = form.cleaned_data.get('price')
+            title = form.cleaned_data.get('name')
+            in_stock = form.cleaned_data.get('in_stock')
+            if title:
+                queryset = queryset.filter(name__icontains=title)
+            if price:
+                price = price.split(';')
+                queryset = queryset.filter(auto_seller_price__range=(price[0], price[1]))
+            if in_stock:
+                queryset = queryset.filter(in_stock=True)
+        return queryset.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -115,42 +143,10 @@ class ProductsListView(ListView):
         context['NONE'] = ProductListEnum.NONE
         context_new = {
             'curr_sort': curr_sort,
-            'form': SearchForm(),
-            'form1': SearchForm1(),
         }
         context.update(context_new)
+        context['form'] = SearchForm(self.request.POST or None)
         return context
-
-
-    def get_queryset(self):
-        category_id = self.request.GET.get('category', None)
-        curr_sort = self.request.GET.get('sort', 'auto_seller_price')
-        title = self.request.GET.get('title')
-        price = self.request.GET.get('price')
-
-        queryset = self.model.objects.prefetch_related(
-            "tags", "images", "seller_price", "features"
-        ).annotate(
-            auto_seller_price=Avg('seller_price__price')
-        ).annotate(
-            rev_count=Count('review')
-        )
-        if category_id:
-            queryset = queryset.filter(category_id=category_id)
-
-        if curr_sort != '1':
-            queryset = queryset.order_by(curr_sort)
-        if title:
-            return queryset.filter(name__icontains=title).all()
-        if price:
-            print(price.split(';'))
-            price = price.split(';')
-            return queryset.filter(auto_seller_price__range=(price[0], price[1])).all()
-        if title and price:
-            price = price.split(';')
-            return queryset.filter(auto_seller_price__range=(price[0], price[1])).filter(name__icontains=title).all()
-        return queryset.all()
-
 
 class ComparisonListView(View):
     def get(self, request):

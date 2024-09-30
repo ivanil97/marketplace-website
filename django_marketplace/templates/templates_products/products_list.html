@@ -22,12 +22,13 @@
                             </strong>
                         </header>
                         <div class="Section-columnContent">
-                            <form class="form" action="{% url 'products:products_list' %}?price_min=data-from?price_max=data-to" method="get">
+                            <form class="form" method="post">
+                                {% csrf_token %}
                                 <div class="form-group">
-{#                                    {% csrf_token %}#}
+
                                     <div class="range Section-columnRange">
-{#                                        {{ form.as_p }}#}
-                                        <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="7" data-max="350" data-from="7" data-to="27" />
+                                        {{ form.price }}
+{#                                        <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="7" data-max="350" data-from="7" data-to="27" />#}
                                         <div class="range-price">Цена:&#32;
                                             <div class="rangePrice">
                                             </div>
@@ -35,29 +36,30 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-{#                                    {{ form1.as_p }}#}
-                                    <input class="form-input form-input_full" id="title" name="title" type="text" placeholder="Название" />
+                                    {{ form.name }}
+{#                                    <input class="form-input form-input_full" id="title" name="title" type="text" placeholder="Название" />#}
                                 </div>
 {#                                <div class="form-group">#}
 {#                                    <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->#}
 {#                                </div>#}
                                 <div class="form-group">
                                     <label class="toggle">
-                                        <input type="checkbox" />
+{#                                        <input type="checkbox" />#}
+                                        {{ form.in_stock }}
                                         <span class="toggle-box"></span>
                                         <span class="toggle-text">Только товары в наличии</span>
                                     </label>
                                 </div>
-                                <div class="form-group">
-                                    <label class="toggle">
-                                        <input type="checkbox" />
-                                        <span class="toggle-box"></span>
-                                        <span class="toggle-text">С бесплатной доставкой</span>
-                                    </label>
-                                </div>
+{#                                <div class="form-group">#}
+{#                                    <label class="toggle">#}
+{#                                        <input type="checkbox" />#}
+{#                                        <span class="toggle-box"></span>#}
+{#                                        <span class="toggle-text">С бесплатной доставкой</span>#}
+{#                                    </label>#}
+{#                                </div>#}
                                 <div class="form-group">
                                     <button type="submit" class="buttons btn btn_square btn_dark btn_narrow">
-{#                                        <a class="btn btn_square btn_dark btn_narrow" href="{% url 'products:products_list' %}?name">Фильтр</a>#}
+{#                                        <a class="btn btn_square btn_dark btn_narrow" href="{% url 'products:products_list' %}">Фильтр</a>#}
                                         Фильтр
                                     </button>
                                 </div>

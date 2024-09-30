@@ -10,7 +10,7 @@ class ReviewForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    query = forms.CharField(
+    price = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 'class': 'range-line',
@@ -24,11 +24,9 @@ class SearchForm(forms.Form):
             },
         ),
         label='',
+        required=False,
     )
-
-
-class SearchForm1(forms.Form):
-    query1 = forms.CharField(
+    name = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 'class': 'form-input form-input_full',
@@ -39,5 +37,8 @@ class SearchForm1(forms.Form):
             },
         ),
         label='',
+        required=False,
+    )
+    in_stock = forms.BooleanField(
         required=False,
     )
