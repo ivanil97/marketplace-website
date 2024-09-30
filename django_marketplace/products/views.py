@@ -14,13 +14,15 @@ from products.forms import ReviewForm
 
 from django.db.models.signals import post_save
 from products.models.review import Review
-from django.db.models import Count
+from django.db.models import Count, Avg
 from django.db.models import Prefetch
 
 from comparisons.services.comparison_service import *
 from products.services.review_service import add_review_to_product
 from products.services.viewed_products_service import ViewedProductsService
-from .index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
+from products.services.index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
+
+from products.models import Product
 
 
 class ProductDetailView(DetailView):
