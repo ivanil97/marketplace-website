@@ -6,29 +6,26 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import DetailView, TemplateView, ListView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.views import View
 from django.views.generic import DetailView, ListView
 from django.dispatch import receiver
 from django.core.cache import cache
 from products.services.product_context import product_context
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
-from django.views.generic import TemplateView
 
 from products.forms import ReviewForm, SearchForm
 
 from django.db.models.signals import post_save
-from products.models.product import Product
 from products.models.review import Review
-from django.db.models import Avg, Count
-from django.db.models import Prefetch, QuerySet
-from django.core.paginator import Paginator
+from django.db.models import Count
+from django.db.models import Prefetch
 
-from products.services.comparison_service import *
+from comparisons.services.comparison_service import *
 from products.services.review_service import add_review_to_product
 from products.services.viewed_products_service import ViewedProductsService
-from .index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
+
+from django.views.generic import TemplateView
+from products.services.index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
 
 
 class ProductDetailView(DetailView):
@@ -56,7 +53,7 @@ class ProductDetailView(DetailView):
     def get_object(self, queryset=None):
         obj = cache.get(f'product_detail_{self.kwargs["slug"]}')
         if not obj:
-            obj = super().get_object(queryset=queryset)
+            obj = super().get_object()
             cache.set(f'product_detail_{self.kwargs["slug"]}', obj, 60 * 15)  # 15 минут
         return obj
 
@@ -93,6 +90,7 @@ class ProductListEnum(enum.Enum):
     DATE_ASC = 'created_at'
     DATE_DEC = '-created_at'
     NONE = '1'
+
 
 class ProductsListView(ListView):
     model = Product
@@ -154,6 +152,25 @@ class ProductsListView(ListView):
 
         return context
 
+    def get_queryset(self):
+        category_id = self.request.GET.get('category', None)
+        curr_sort = self.request.GET.get('sort', 'auto_seller_price')
+        queryset = self.model.objects.prefetch_related(
+            "tags", "images", "seller_price", "features"
+        ).annotate(
+            auto_seller_price=Avg('seller_price__price')
+        ).annotate(
+            rev_count=Count('review')
+        )
+        if category_id:
+            queryset = queryset.filter(category_id=category_id)
+
+        if curr_sort != '1':
+            queryset = queryset.order_by(curr_sort)
+
+        return queryset.all()
+
+
 class ComparisonListView(View):
     def get(self, request):
         limit = int(request.GET.get('limit', 3))
@@ -189,8 +206,10 @@ class HomeView(TemplateView):
         context['slider_banners'] = get_slider_banners()
         context['static_banners'] = get_static_banners()
         context['popular_items'] = get_popular_items()
-        context['limited_item_day'] = get_limited_items()[0]
-        context['limited_items'] = get_limited_items()[1]
+        limited_items = get_limited_items()
+        if limited_items:
+            context['limited_item_day'] = limited_items[0]
+            context['limited_items'] = limited_items[1]
         return context
 
 
