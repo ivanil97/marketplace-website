@@ -57,12 +57,16 @@ Basket
                         </div>
                         <div class="Cart-block Cart-block_amount">
                             <div class="Cart-amount">
-                                <div class="Amount">
-                                    <button class="Amount-remove" type="button">
-                                    </button>
-                                    <input class="Amount-input form-input" name="amount" type="text" value="1" />
-                                    <button class="Amount-add" type="button">
-                                    </button>
+                                <div id="update_quantity" class="Amount">
+                                    <button class="Amount-remove" type="button"
+                                            data-cart-id="{{ cart.id }}"
+                                            data-cart-change-url="{% url 'carts:edit_cart' %}"
+                                    > {% csrf_token %} </button>
+                                    <input class="Amount-input form-input" name="amount" type="text" value="{{ cart.quantity }}"/>
+                                    <button class="Amount-add" type="button"
+                                            data-cart-id="{{ cart.id }}"
+                                            data-cart-change-url="{% url 'carts:edit_cart' %}"
+                                    > {% csrf_token %} </button>
                                 </div>
                             </div>
                         </div>

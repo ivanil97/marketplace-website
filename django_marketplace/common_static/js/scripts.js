@@ -649,25 +649,55 @@ var Cart = function(){
         }
     };
 };
+
 Cart().init();
 var Amount = function(){
     var $amount = $('.Amount');
     var $add = $('.Amount-add');
     var $input = $('.Amount-input');
     var $remove = $('.Amount-remove');
+    function getQuery(cartID, value, url) {
+    fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                'X-CSRFToken': $("[name=csrfmiddlewaretoken]").val(),
+              },
+              body: JSON.stringify({
+                cart_id: cartID,
+                quantity: value
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+             document.getElementById("get-page").innerHTML = data;
+        })
+    }
     return {
         init: function(){
             $add.on('click', function(e){
                 e.preventDefault();
                 var $inputThis = $(this).siblings($input).filter($input);
                 var value = parseFloat($inputThis.val());
+                var url = $(this).data("cart-change-url");
+                var cartID = $(this).data("cart-id");
                 $inputThis.val( value + 1);
+                const element = document.querySelector('#update_quantity');
+                if (element) {
+                    getQuery(cartID, value + 1, url);
+                }
             });
             $remove.on('click', function(e){
                 e.preventDefault();
                 var $inputThis = $(this).siblings($input).filter($input);
                 var value = parseFloat($inputThis.val());
+                var url = $(this).data("cart-change-url");
+                var cartID = $(this).data("cart-id");
                 $inputThis.val(value>0?value - 1:0);
+                const element = document.querySelector('#update_quantity');
+                if (element) {
+                    getQuery(cartID, value - 1, url);
+                }
             });
         }
     };
