@@ -29,7 +29,8 @@ urlpatterns = [
     path('user/', include('users.urls')),
     path('cart/', include('carts.urls')),
     path('', HomeView.as_view(), name='home'),
-    path('comparison/', include('comparisons.urls'))
+    path('comparison/', include('comparisons.urls')),
+    path('order/', include('orders.urls')),
 ]
 
 if settings.DEBUG:
