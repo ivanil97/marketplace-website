@@ -22,6 +22,7 @@ class Cart(models.Model):
     """
     user = models.ForeignKey(
         "users.User",
+        blank=True, null=True,
         on_delete=models.CASCADE,
         related_name="user_cart",
         verbose_name="Пользователь"
@@ -34,6 +35,7 @@ class Cart(models.Model):
     )
     quantity = models.PositiveIntegerField(default=0, verbose_name="Количество")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Дата добавления")
+    session_key = models.CharField(max_length=32, blank=True, null=True)
     objects = CartQuerySet.as_manager()
 
     class Meta:
@@ -42,4 +44,6 @@ class Cart(models.Model):
         verbose_name_plural: str = "Carts"
 
     def __str__(self):
-        return f"Корзина № {self.pk} - {self.user.first_name}"
+        if self.user:
+            return f"Корзина № {self.pk} - {self.user.first_name}"
+        return f"Корзина № {self.pk} - Анонимный пользователь"
