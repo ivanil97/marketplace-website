@@ -24,11 +24,6 @@
                         <div class="Section-columnContent">
                             <form class="form" action="{% url 'products:products_list' %}" method="post">
                                 {% csrf_token %}
-                                {% if form.errors %}
-                                    <div class="alert alert-danger">
-                                        {{ form.errors }}
-                                    </div>
-                                {% endif %}
                                 <div class="form-group">
                                     <div class="range Section-columnRange">
                                         {{ form.price }}
