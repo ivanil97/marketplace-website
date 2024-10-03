@@ -1,10 +1,7 @@
 from django.urls import path, include, reverse_lazy
 from django.contrib.auth.views import (
-    LoginView,
-    LogoutView,
     PasswordResetConfirmView,
     PasswordResetCompleteView,
-
 )
 
 
@@ -12,19 +9,21 @@ from .views.account import AccountView
 from .views.profile import ProfileView
 from .views.register import RegisterView
 from .views.password_reset import UserPasswordResetView
+from .views.login_user import LoginUser
+from .views.logout_user import LogoutUser
 
 app_name = "user"
 
 urlpatterns = [
     path('login/',
-         LoginView.as_view(
+         LoginUser.as_view(
              template_name='templates_users/login.html',
              redirect_authenticated_user=True,
              extra_context={'simple_header': True},
          ),
          name="login"),
     path('logout/',
-         LogoutView.as_view(
+         LogoutUser.as_view(
              next_page=reverse_lazy("home"),
          ),
          name="logout"),
