@@ -1,5 +1,5 @@
 import enum
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Sum
 from products.models import Product
 from products.forms import SearchForm
 
@@ -28,7 +28,8 @@ def filter_queryset(request, form=None):
         "tags", "images", "seller_price", "features"
     ).annotate(
         auto_seller_price=Avg('seller_price__price'),
-        rev_count=Count('review')
+        rev_count=Count('review'),
+        quantity=Sum('seller_price__count_products'),
     )
 
     category_id = request.GET.get('category')
@@ -38,18 +39,19 @@ def filter_queryset(request, form=None):
         price = form.cleaned_data.get('price')
         title = form.cleaned_data.get('name')
         in_stock = form.cleaned_data.get('in_stock')
-
         if title:
             queryset = queryset.filter(name__icontains=title)
 
         if price:
             price_range = price.split(';')
+            form.fields['price'].widget.attrs['data-from'] = price_range[0]
+            form.fields['price'].widget.attrs['data-to'] = price_range[1]
             queryset = queryset.filter(
                 auto_seller_price__range=(price_range[0], price_range[1])
             )
-
+            print(form['price'])
         if in_stock:
-            queryset = queryset.filter(quantity_sold__gt=0)
+            queryset = queryset.filter(quantity__gt=0)
 
     if category_id:
         queryset = queryset.filter(category_id=category_id)
