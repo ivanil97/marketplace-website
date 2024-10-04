@@ -138,7 +138,7 @@ var form = function(){
                 $radio.on('change', function(){
                     changeTitle($this, $(this));
                 });
-                
+
             });
             $(document).on('click', function(e){
                 var $this = $(e.target);
@@ -152,7 +152,7 @@ var form = function(){
                     $('.selectList').removeClass('selectList_OPEN');
                 }
             });
-            
+
             // Валидация полей
             $input.on('blur', function(){
                 var $this = $(this),
@@ -176,7 +176,7 @@ var form = function(){
                                 error = true;
                             }
                             break;
-                            
+
                     }
                     if (error) {
                         if ($this.hasClass('form-input')){
@@ -196,13 +196,13 @@ var form = function(){
                         $this.data('errorinput', false);
                     }
                     message = '';
-                
+
                 });
             });
             $form.on('submit', function(e){
                 var $this = $(this),
                     $validate = $this.find('[data-validate]');
-                
+
                 $validate.each(function(){
                     var $this = $(this);
                     $this.trigger('blur');
@@ -288,7 +288,7 @@ var range = function(){
         init: function(){
             var $range = $('.range'),
                 $line = $range.find('.range-line');
-            
+
             $line.ionRangeSlider({
                 onStart: function(data){
                     $('.rangePrice').text(
@@ -374,7 +374,7 @@ var Slider = function(){
                             }
                         ]
                     });
-    
+
                 } else {
                     $this.slick({
                         appendArrows: $navigate,
@@ -407,7 +407,7 @@ var Slider = function(){
                             }
                         ]
                     });
-                
+
                 }
             });
 
@@ -614,18 +614,18 @@ var Profile = function(){
                     ext = file.name.split('.').pop();
                     if (ext==='png' || ext==='jpg' || ext==='gif') {
                         var reader = new FileReader();
-    
+
                         reader.onload = function(e) {
                             $(input).closest($avatar).find('.Profile-img img').attr('src', e.target.result);
                         }
-    
+
                         reader.readAsDataURL(file);
                         return true;
                     }
                     return false;
                 }
             }
-            
+
             $avatarfile.change(function() {
                 var $thisAvatar = $(this).closest($avatar);
                 if(readURL(this)){
@@ -649,25 +649,55 @@ var Cart = function(){
         }
     };
 };
+
 Cart().init();
 var Amount = function(){
     var $amount = $('.Amount');
     var $add = $('.Amount-add');
     var $input = $('.Amount-input');
     var $remove = $('.Amount-remove');
+    function getQuery(cartID, value, url) {
+    fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                'X-CSRFToken': $("[name=csrfmiddlewaretoken]").val(),
+              },
+              body: JSON.stringify({
+                cart_id: cartID,
+                quantity: value
+            })
+        })
+//        .then(response => response.text())
+//        .then(data => {
+//             document.getElementById("get-page").innerHTML = data;
+//        })
+    }
     return {
         init: function(){
             $add.on('click', function(e){
                 e.preventDefault();
                 var $inputThis = $(this).siblings($input).filter($input);
                 var value = parseFloat($inputThis.val());
+                var url = $(this).data("cart-change-url");
+                var cartID = $(this).data("cart-id");
                 $inputThis.val( value + 1);
+                const element = document.querySelector('#update_quantity');
+                if (element) {
+                    getQuery(cartID, value + 1, url);
+                }
             });
             $remove.on('click', function(e){
                 e.preventDefault();
                 var $inputThis = $(this).siblings($input).filter($input);
                 var value = parseFloat($inputThis.val());
+                var url = $(this).data("cart-change-url");
+                var cartID = $(this).data("cart-id");
                 $inputThis.val(value>0?value - 1:0);
+                const element = document.querySelector('#update_quantity');
+                if (element) {
+                    getQuery(cartID, value - 1, url);
+                }
             });
         }
     };
@@ -704,7 +734,7 @@ var Order = function(){
                         .closest('.menu-item')
                         .addClass('menu-item_ACTIVE');
                 }
-                
+
             });
         }
     };
@@ -735,7 +765,7 @@ var Payment = function(){
             $('.Payment-pay .btn').on('click', function(e){
                 var $this = $(this),
                     $validate = $this.closest('.form').find('[data-validate]');
-    
+
                 $validate.each(function(){
                     var $this = $(this);
                     $this.trigger('blur');

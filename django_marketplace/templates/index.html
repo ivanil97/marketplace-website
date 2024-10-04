@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
     <body class="Site">
     <div class="Header-slider">
@@ -75,10 +75,16 @@
                                     </strong>
                                   </header>
                                   {% with limited_item_day.product.images.all|first as img %}
-                                    <div class="Card"><a class="Card-picture" href="#"><img src="{{ img.image.url }}" alt="No images available"/></a>
+                                    <div class="Card">
+                                        <a class="Card-picture" href="{% url 'products:product_detail' slug=limited_item_day.product.slug %}">
+                                            <img src="{{ img.image.url }}" alt="No images available"/>
+                                        </a>
                                   {% endwith %}
                                     <div class="Card-content">
-                                      <strong class="Card-title"><a href="#">{{ limited_item_day.product.name }}</a>
+                                      <strong class="Card-title">
+                                          <a href="{% url 'products:product_detail' slug=limited_item_day.product.slug %}">
+                                              {{ limited_item_day.product.name }}
+                                          </a>
                                       </strong>
                                       <div class="Card-description">
                                         <div class="Card-cost"><span class="Card-priceOld">${{ limited_item_day.price }}</span><span class="Card-price">${{ limited_item_day.price }}</span>
@@ -124,10 +130,16 @@
                                 <div class="Cards">
                                     {% for popular_item in popular_items %}
                                         {% with popular_item.product.images.all|first as img %}
-                                            <div class="Card"><a class="Card-picture" href="#"><img src="{{ img.image.url }}" alt="{{ popular_item.product.name }}" /></a>
+                                            <div class="Card">
+                                                <a class="Card-picture" href="{% url 'products:product_detail' slug=popular_item.product.slug %}">
+                                                <img src="{{ img.image.url }}" alt="{{ popular_item.product.name }}" />
+                                                </a>
                                         {% endwith %}
                                             <div class="Card-content">
-                                            <strong class="Card-title"><a href="#">{{ popular_item.product.name }}</a>
+                                            <strong class="Card-title">
+                                                <a href="{% url 'products:product_detail' slug=popular_item.product.slug %}">
+                                                    {{ popular_item.product.name }}
+                                                </a>
                                             </strong>
                                             <div class="Card-description">
                                                 <div class="Card-cost"><span class="Card-price">
@@ -140,7 +152,10 @@
                                                 </div>
                                                 <div class="Card-category">{{ popular_item.product.category }}
                                                 </div>
-                                                <div class="Card-hover"><a class="Card-btn" href="#"><img src="common_static/img/icons/card/cart.svg" alt="cart.svg" /></a>
+                                                <div class="Card-hover">
+                                                    <a class="Card-btn" href="{% url 'carts:add_cart' popular_item.product.seller_price.first.id %}">
+                                                    <img src="{% static 'img/icons/card/cart.svg' %}" alt="cart.svg" />
+                                                </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,14 +184,14 @@
                                             <div class="Slider-item">
                                                 <div class="Slider-content">
                                                     <div class="Card">
-                                                        <a class="Card-picture" href="#">
+                                                        <a class="Card-picture" href="{% url 'products:product_detail' slug=limited_item.product.slug %}">
                                                             {% with limited_item.product.images.all|first as img %}
                                                                 <img src="{{ img.image.url }}" alt="{{ limited_item.product.name }}"/>
                                                             {% endwith %}
                                                         </a>
                                                         <div class="Card-content">
                                                             <strong class="Card-title">
-                                                                <a href="#">{{ limited_item.product.name }}</a>
+                                                                <a href="{% url 'products:product_detail' slug=product.slug %}">{{ limited_item.product.name }}</a>
                                                             </strong>
                                                             <div class="Card-description">
                                                                 <div class="Card-cost"><span class="Card-price">
@@ -189,7 +204,10 @@
                                                                 </div>
                                                                 <div class="Card-category">{{ limited_item.product.category }}
                                                                 </div>
-                                                                <div class="Card-hover"><a class="Card-btn" href="#"><img src="common_static/img/icons/card/cart.svg" alt="cart.svg" /></a>
+                                                                <div class="Card-hover">
+                                                                    <a class="Card-btn" href="{% url 'carts:add_cart' limited_item.product.seller_price.first.id %}">
+                                                                    <img src="{% static 'img/icons/card/cart.svg' %}" alt="cart.svg" />
+                                                                    </a>
                                                             </div>
                                                         </div>
                                                     </div>
