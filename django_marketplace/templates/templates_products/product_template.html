@@ -48,29 +48,28 @@
                             </ul>
                         </div>
                         <div class="ProductCard-cart">
-                            <div class="ProductCard-cartElement ProductCard-cartElement_amount">
-                                <div class="Amount Amount_product">
-                                    <button class="Amount-remove" type="button">
-                                    </button>
-                                    <input class="Amount-input form-input" name="amount" type="text" value="1"/>
-                                    <button class="Amount-add" type="button">
+                            <form action="{% url 'carts:add_cart' product.seller_price.first.id %}" method="post" style="display: flex; margin-right: 15px;">
+                                {% csrf_token %}
+                                <div class="ProductCard-cartElement ProductCard-cartElement_amount">
+                                    <div class="Amount Amount_product">
+                                        <button class="Amount-remove" type="button"></button>
+                                        <input class="Amount-input form-input" name="amount" type="text" value="1"/>
+                                        <button class="Amount-add" type="button"></button>
+                                    </div>
+                                </div>
+                                <div class="ProductCard-cartElement">
+                                    <button class="btn btn_primary Amount-input form-input" type="submit">
+                                        <img class="btn-icon" src="{% static 'img/icons/card/cart_white.svg' %}" alt="cart_white.svg"/>
+                                        <span class="btn-content">Купить</span>
                                     </button>
                                 </div>
-                            </div>
-                            <div class="ProductCard-cartElement">
-                                <a class="btn btn_primary" href="#modal_open">
-                                    <img class="btn-icon" src="{% static 'img/icons/card/cart_white.svg' %}"
-                                         alt="cart_white.svg"/>
-                                    <span class="btn-content">Купить</span>
-                                </a>
-                            </div>
+                            </form>
                             <div class="ProductCard-cartElement">
                                 <form method="post" action="{% url 'comparisons:add_to_comparison' slug=product.slug %}">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn_primary">
                                         Добавить в сравнение
                                     </button>
-
                                 </form>
                             </div>
                             <div id="modal_open" class="my_modal">
@@ -141,6 +140,7 @@
                                 </table>
                             </div>
                         </div>
+
                         <div class="Tabs-block" id="sellers">
                             <div class="Section-content">
                                 <div class="Orders">
@@ -153,7 +153,7 @@
                                                         Имя продавца: {{ sp.seller.name }}
                                                     </a>
                                                     <div class="ProductCard-cartElement" style="margin-top: 10px;">
-                                                        <a class="btn btn_primary" href="#modal_open">
+                                                        <a class="btn btn_primary" href="{% url 'carts:add_cart' sp.id %}">
                                                             <img class="btn-icon"
                                                                  src="{% static 'img/icons/card/cart_white.svg' %}"
                                                                  alt="cart_white.svg"/>

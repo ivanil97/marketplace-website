@@ -8,20 +8,21 @@ from django.core.cache import cache
 from products.services.product_context import product_context
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views.generic import TemplateView
 
 from products.forms import ReviewForm
 
 from django.db.models.signals import post_save
 from products.models.review import Review
-from django.db.models import Count
+from django.db.models import Count, Avg
 from django.db.models import Prefetch
 
 from comparisons.services.comparison_service import *
 from products.services.review_service import add_review_to_product
 from products.services.viewed_products_service import ViewedProductsService
-
-from django.views.generic import TemplateView
 from products.services.index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
+
+from products.models import Product
 
 
 class ProductDetailView(DetailView):
@@ -145,10 +146,8 @@ class HomeView(TemplateView):
         context['slider_banners'] = get_slider_banners()
         context['static_banners'] = get_static_banners()
         context['popular_items'] = get_popular_items()
-        limited_items = get_limited_items()
-        if limited_items:
-            context['limited_item_day'] = limited_items[0]
-            context['limited_items'] = limited_items[1]
+        context['limited_item_day'] = get_limited_items()[0]
+        context['limited_items'] = get_limited_items()[1]
         return context
 
 

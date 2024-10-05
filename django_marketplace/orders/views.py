@@ -1,8 +1,13 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from .models import Order
+from django.http import HttpResponse
 from django.shortcuts import render
 
+
+def add_order(request):
+    return HttpResponse("Оформление заказа")
 
 class OrderDetailView(TemplateView):
     template_name = 'templates_order/order_detail.html'
@@ -14,3 +19,6 @@ class OrderDetailView(TemplateView):
         context['order'] = order
         context['products'] = order.products.all()
         return context
+
+def add_order(request):
+    return HttpResponse("Оформление заказа")

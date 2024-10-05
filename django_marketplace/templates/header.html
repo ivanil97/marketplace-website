@@ -1,5 +1,6 @@
 {%  load static %}
 {% load mptt_tags %}
+{% load carts_tags %}
 
 <header class="Header">
     <div class="ControlPanel">
@@ -76,10 +77,14 @@
                                 </form>
                             </div>
                         </div>
-                        <a class="CartBlock-block" href="{% url 'carts:cart' %}"><img class="CartBlock-img" src="{% static 'img/icons/cart.svg' %}" alt="cart.svg" /><span class="CartBlock-amount">0</span></a>
-                        <div class="CartBlock-block"><span class="CartBlock-price">0.00$</span>
-
-
+                        <a class="CartBlock-block" href="{% url 'carts:cart' %}">
+                            <img class="CartBlock-img" src="{% static 'img/icons/cart.svg' %}" alt="cart.svg" />
+                            <span class="CartBlock-amount">
+                                {% quantity_products request %}
+                            </span>
+                        </a>
+                        <div class="CartBlock-block">
+                            <span class="CartBlock-price">{% total_price request carts %}$</span>
                         </div>
                     </div>
                 </div>
