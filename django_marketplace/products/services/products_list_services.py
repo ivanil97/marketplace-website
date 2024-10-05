@@ -1,6 +1,6 @@
 import enum
-from django.db.models import Avg, Count, Sum
-from products.models import Product
+from django.db.models import Avg, Count, Sum, Min, Max
+from products.models import Product, SellerPrice
 from products.forms import SearchForm
 
 
@@ -44,8 +44,6 @@ def filter_queryset(request, form=None):
 
         if price:
             price_range = price.split(';')
-            form.fields['price'].widget.attrs['data-from'] = price_range[0]
-            form.fields['price'].widget.attrs['data-to'] = price_range[1]
             queryset = queryset.filter(
                 auto_seller_price__range=(price_range[0], price_range[1])
             )
@@ -71,6 +69,9 @@ def get_context_data(request, products):
     :return: Словарь с контекстом для шаблона.
     """
     curr_sort = request.GET.get('sort', 'auto_seller_price')
+    price_range = SellerPrice.objects.aggregate(Min('price'), Max('price'))
+    min_price = price_range['price__min'] or 0
+    max_price = price_range['price__max'] or 0
     context = {
         'products': products,
         'POP_ASC': ProductListEnum.POP_ASC,
@@ -84,5 +85,12 @@ def get_context_data(request, products):
         'NONE': ProductListEnum.NONE,
         'curr_sort': curr_sort,
         'form': SearchForm(request.POST or None),
+        'min_price': min_price,
+        'max_price': max_price,
     }
+    if 'form' in context and context['form'].is_valid():
+        price = context['form'].cleaned_data.get('price')
+        price_range = price.split(';')
+        context['price_from'] = price_range[0]
+        context['price_to'] = price_range[1]
     return context

@@ -26,7 +26,8 @@
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <div class="range Section-columnRange">
-                                        {{ form.price }}
+{#                                        {{ form.price }}#}
+                                        <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="{{ min_price }}" data-max="{{ max_price }}" data-from="{{ price_from }}" data-to="{{ price_to }}" />
                                         <div class="range-price">Цена:&#32;
                                             <div class="rangePrice">
                                             </div>

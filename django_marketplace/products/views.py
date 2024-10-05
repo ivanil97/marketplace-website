@@ -9,6 +9,8 @@ from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, ListView
 from django.dispatch import receiver
 from django.core.cache import cache
+
+from products.models import SellerPrice
 from products.services.product_context import product_context
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
@@ -17,7 +19,7 @@ from products.forms import ReviewForm, SearchForm
 
 from django.db.models.signals import post_save
 from products.models.review import Review
-from django.db.models import Count
+from django.db.models import Count, Min, Max
 from django.db.models import Prefetch
 
 from comparisons.services.comparison_service import *
