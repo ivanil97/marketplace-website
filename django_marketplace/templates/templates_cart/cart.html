@@ -2,6 +2,7 @@
 {% load static %}
 {% load mptt_tags %}
 {% load cache %}
+{% load carts_tags %}
 
 {% block title %}
 Basket
@@ -15,69 +16,88 @@ Basket
 <div class="Middle Middle_top">
     <div class="Section">
         <div class="wrap">
-            {% if products %}
-            <form class="form Cart" action="#" method="post">
-                {% for product in products %}
-                <div class="Cart-product">
-                    <div class="Cart-block Cart-block_row">
-                        <div class="Cart-block Cart-block_pict">
-                            <a class="Cart-pict" href="#">
-                                {% if product.image %}
-                                    <img class="Cart-img" src="product.image.url" alt="{{ product.name }}" />
-                                {% else %}
-                                    <img class="Cart-img" src="#" alt="{{ product.name }}" />
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">{{ product.name }}</a>
-                            <div class="Cart-desc">
-                                {{ product.description }}
+                {% if carts %}
+                <form class="form Cart" action="{% url 'orders:order' %}" method="post">
+                    {% for cart in list_data %}
+                    <div class="Cart-product">
+                        <div class="Cart-block Cart-block_row">
+                            <div class="Cart-block Cart-block_pict">
+                                <a class="Cart-pict" href="{% url 'products:product_detail' slug=cart.sellerprice.product.slug %}">
+                                    {% if cart.image %}
+                                        {% with cart.image|first as img %}
+                                        <img class="Cart-img" src="{{ img.image.url }}" alt="{{ cart.sellerprice.product.name }}" />
+                                        {% endwith %}
+                                    {% else %}
+                                        <img class="Cart-img" src="#" alt="{{ cart.sellerprice.product.name }}" />
+                                    {% endif %}
+                                </a>
                             </div>
-                        </div>
-                        <div class="Cart-block Cart-block_price">
-                            <div class="Cart-price">
-                                {{ product.seller.0.display_price }} $
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Cart-block Cart-block_row">
-                        <div class="Cart-block Cart-block_seller">
-                            <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
-
-                        </div>
-                        <div class="Cart-block Cart-block_amount">
-                            <div class="Cart-amount">
-                                <div class="Amount">
-                                    <button class="Amount-remove" type="button">
-                                    </button>
-                                    <input class="Amount-input form-input" name="amount" type="text" value="1" />
-                                    <button class="Amount-add" type="button">
-                                    </button>
+                            <div class="Cart-block Cart-block_info">
+                                <a class="Cart-title" href="{% url 'products:product_detail' slug=cart.sellerprice.product.slug %}">
+                                    {{ cart.sellerprice.product.name }}
+                                </a>
+                                <div class="Cart-desc">
+                                    {{ cart.sellerprice.product.description }}
                                 </div>
                             </div>
+                            {% price_discount request cart as res %}
+                            <div class="Cart-block Cart-block_price Cart-price">
+                                {% if res.price_discount %}
+                                <span class="Card-priceOld">{{ res.old_price }}$</span>
+                                <span class="Card-price">{{ res.price_discount }}$</span>
+                                {% else %}
+                                <span class="Card-price">{{ res.old_price }}$</span>
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="Cart-block Cart-block_delete">
-                            <a class="Cart-delete" href="#">
-                            <svg fill="#555" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-                                <path d="M13.594 4l-.313.281-.719.719H6v2h1v18c0 1.645 1.355 3 3 3h12c1.645 0 3-1.355 3-3V7h1V5h-6.563l-.718-.719L18.406 4zm.844 2h3.124l.72.719.312.281H23v18c0 .555-.445 1-1 1H10c-.555 0-1-.445-1-1V7h4.406l.313-.281zM11 11v11h2V11zm4 0v11h2V11zm4 0v11h2V11z"/>
-                            </svg>
-                            </a>
+                        <div class="Cart-block Cart-block_row">
+                            <div class="Cart-block Cart-block_seller">
+                                <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
+
+                            </div>
+                            <div class="Cart-block Cart-block_amount">
+                                <div class="Cart-amount">
+                                    <div id="update_quantity" class="Amount">
+                                        <button class="Amount-remove" type="button"
+                                                data-cart-id="{{ cart.id }}"
+                                                data-cart-change-url="{% url 'carts:edit_cart' %}"
+                                        > {% csrf_token %} </button>
+                                        {% if request.user.is_authenticated %}
+                                            <input class="Amount-input form-input" name="amount" type="text" value="{{ cart.quantity }}"/>
+                                        {% else %}
+                                            {% get_quantity request cart as session_quantity %}
+                                            <input class="Amount-input form-input" name="amount" type="text"
+                                               value="{{ session_quantity }}"/>
+                                        {% endif %}
+                                        <button class="Amount-add" type="button"
+                                                data-cart-id="{{ cart.id }}"
+                                                data-cart-change-url="{% url 'carts:edit_cart' %}"
+                                        > {% csrf_token %} </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="Cart-block Cart-block_delete">
+                                <a class="Cart-delete" href="{% url 'carts:delete_cart' cart.id %}">
+                                <svg fill="#555" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                                    <path d="M13.594 4l-.313.281-.719.719H6v2h1v18c0 1.645 1.355 3 3 3h12c1.645 0 3-1.355 3-3V7h1V5h-6.563l-.718-.719L18.406 4zm.844 2h3.124l.72.719.312.281H23v18c0 .555-.445 1-1 1H10c-.555 0-1-.445-1-1V7h4.406l.313-.281zM11 11v11h2V11zm4 0v11h2V11zm4 0v11h2V11z"/>
+                                </svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {% endfor %}
-                <div class="Cart-total">
-                    <div class="Cart-block Cart-block_total">
-                        <strong class="Cart-title">Итого:
-                        </strong><span class="Cart-price">200.99$</span>
+                    {% endfor %}
+                    <div class="Cart-total">
+                        <div class="Cart-block Cart-block_total">
+                            <strong class="Cart-title">Итого:
+                            </strong><span class="Cart-price">{% total_price request carts %}$</span>
+                        </div>
+                        <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'orders:order' %}">Оформить заказ</a>
+                        </div>
                     </div>
-                    <div class="Cart-block"><a class="btn btn_success btn_lg" href="order.html">Оформить заказ</a>
-                    </div>
-                </div>
-            </form>
-            {% else %}
-            <h1>Ваша корзина пуста</h1>
-            {% endif %}
+                </form>
+                {% else %}
+                <h1>Ваша корзина пуста</h1>
+                {% endif %}
         </div>
     </div>
 </div>

@@ -14,6 +14,7 @@ from products.models import SellerPrice
 from products.services.product_context import product_context
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
+from django.views.generic import TemplateView
 
 from products.forms import ReviewForm, SearchForm
 
@@ -26,9 +27,9 @@ from comparisons.services.comparison_service import *
 from products.services.products_list_services import filter_queryset, get_context_data
 from products.services.review_service import add_review_to_product
 from products.services.viewed_products_service import ViewedProductsService
-
-from django.views.generic import TemplateView
 from products.services.index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
+
+from products.models import Product
 
 
 class ProductDetailView(DetailView):
@@ -170,4 +171,4 @@ class HomeView(TemplateView):
 def clear_cache(sender, instance, **kwargs):
     key = make_template_fragment_key("product_detail")
     cache.delete(key)
-    # print(f"Cache cleared for key: {key}")
+    print(f"Cache cleared for key: {key}")
