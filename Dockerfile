@@ -10,4 +10,4 @@ RUN pip install -r requirements.txt
 
 COPY django_marketplace .
 
-#RUN ["python", "manage.py", "runserver"]
+RUN ["python", "manage.py", "collectstatic", "--noinput"]
