@@ -91,7 +91,7 @@ Basket
                             <strong class="Cart-title">Итого:
                             </strong><span class="Cart-price">{% total_price request carts %}$</span>
                         </div>
-                        <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'orders:order' %}">Оформить заказ</a>
+                        <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'orders:order_detail' 1 %}">Оформить заказ</a>
                         </div>
                     </div>
                 </form>
