@@ -1,0 +1,139 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-10 10:24+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\core\settings.py:147
+msgid "Английский"
+msgstr "English"
+
+#: .\core\settings.py:148
+msgid "Русский"
+msgstr "Russian"
+
+#: .\templates\base.html:9
+msgid "Описание страницы"
+msgstr "Description page"
+
+#: .\templates\footer.html:13 .\templates\header.html:105
+msgid "Навигация"
+msgstr "Navigation"
+
+#: .\templates\footer.html:16 .\templates\header.html:60
+msgid "Главная"
+msgstr "Main"
+
+#: .\templates\footer.html:19 .\templates\header.html:64
+msgid "Каталог"
+msgstr "Catalog"
+
+#: .\templates\footer.html:22 .\templates\header.html:67
+msgid "Сравнение"
+msgstr "Comparison"
+
+#: .\templates\footer.html:26
+msgid "Профиль"
+msgstr "Profile"
+
+#: .\templates\footer.html:32
+msgid "Контакты"
+msgstr "Contacts"
+
+#: .\templates\footer.html:33
+msgid "Телефон"
+msgstr "Phone"
+
+#: .\templates\header.html:63
+msgid "Скидки"
+msgstr "Discounts"
+
+#: .\templates\header.html:81
+msgid "Личный кабинет"
+msgstr "Account"
+
+#: .\templates\header.html:82
+msgid "Административный раздел"
+msgstr "Admin panel"
+
+#: .\templates\header.html:85
+msgid "Выход"
+msgstr "Exit"
+
+#: .\templates\header.html:121
+msgid "Все категории"
+msgstr "All categories"
+
+#: .\templates\header.html:155
+msgid "Поиск"
+msgstr "Search"
+
+#: .\templates\index.html:19
+msgid "Кнопка действия"
+msgstr "Action button"
+
+#: .\templates\index.html:29
+msgid "Нет изображения"
+msgstr "No image"
+
+#: .\templates\index.html:36
+msgid "В данный момент нет доступных товаров"
+msgstr "No products available at the moment"
+
+#: .\templates\index.html:63
+msgid "На данный момент статичные баннеры недоступны"
+msgstr "Static banners are not available at the moment"
+
+#: .\templates\index.html:73
+msgid "Ограниченное предложение"
+msgstr "Limited offer"
+
+#: .\templates\index.html:78
+msgid "нет доступных изображений"
+msgstr "no available images"
+
+#: .\templates\index.html:100
+msgid "дни"
+msgstr "days"
+
+#: .\templates\index.html:106
+msgid "часы"
+msgstr "hours"
+
+#: .\templates\index.html:112
+msgid "минуты"
+msgstr "mins"
+
+#: .\templates\index.html:118
+msgid "секунды"
+msgstr "secs"
+
+#: .\templates\index.html:128
+msgid "Популярные товары"
+msgstr "Popular items"
+
+#: .\templates\index.html:164 .\templates\index.html:215
+msgid "На данный момент в наличии нет товаров"
+msgstr "No products available at the moment"
+
+#: .\templates\index.html:175
+msgid "Количество товаров ограничено"
+msgstr "Products are limited"
+
+#: .\templates\index.html:200
+msgid "нет доступных цен"
+msgstr "no available prices"
