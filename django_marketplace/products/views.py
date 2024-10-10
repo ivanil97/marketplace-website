@@ -20,7 +20,7 @@ from products.forms import ReviewForm, SearchForm
 
 from django.db.models.signals import post_save
 from products.models.review import Review
-from django.db.models import Count, Min, Max
+from django.db.models import Count, Min, Max, Avg
 from django.db.models import Prefetch
 
 from comparisons.services.comparison_service import *

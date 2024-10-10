@@ -2,7 +2,7 @@ from django.urls import path, include
 from django.conf import settings
 from products.views_dir.viewed_products import (remove_product_from_viewed,
                                                 get_viewed_products,
-                                                get_viewed_count)
+                                                get_viewed_count,)
 
 from .views import *
 
@@ -14,7 +14,7 @@ urlpatterns = [
     path('viewed/count/', get_viewed_count, name='get_viewed_count'),
 
     path('catalog/', ProductsListView.as_view(), name="products_list"),
-
+    path('viewed-products/', get_viewed_products, name='viewed_products'),
     path('<slug:slug>/', ProductDetailView.as_view(), name="product_detail"),
     path('<slug:slug>/add-review/', ReviewCreateView.as_view(), name='review_create'),
 ]

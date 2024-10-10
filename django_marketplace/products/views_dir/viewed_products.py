@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.shortcuts import render
 from products.services.viewed_products_service import ViewedProductsService
 
 
@@ -15,10 +16,14 @@ def get_viewed_products(request):
     Обработчик для получения списка просмотренных товаров.
     """
     user = request.user
-    limit = int(request.GET.get('limit', 20))  # Учитываем параметр limit из запроса
+    # limit = int(request.GET.get('limit', 20))  # Учитываем параметр limit из запроса
+    limit = 20
     products = ViewedProductsService.get_viewed_products(user, limit)
-    products_list = list(products.values('product__id', 'product__name'))  # Определяем поля, которые нужно вернуть
-    return JsonResponse({'products': products_list})
+    products_list = list(products.values('product__slug', 'product__name'))  # Определяем поля, которые нужно вернуть
+
+    return render(request, 'templates_products/products_history.html', {'products': products_list})
+
+
 
 def get_viewed_count(request):
     """
