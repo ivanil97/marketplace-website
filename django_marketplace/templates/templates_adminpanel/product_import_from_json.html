@@ -1,8 +1,9 @@
 {% extends 'admin/base.html' %}
+{% load i18n %}
 
 {% block content %}
   <div class="content-main">
-    Продукты будут импортированы из json-файлов размещенных в каталоге import проекта.
+    {% translate "Продукты будут импортированы из json-файлов размещенных в каталоге import проекта." %}
   </div>
   <form action="." method="post">
     {% csrf_token %}

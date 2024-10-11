@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load mptt_tags %}
+{% load i18n %}
 {% load cache %}
 {% load carts_tags %}
 
 {% block title %}
-Basket
+{% translate "Корзина" %}
 {% endblock %}
 
 {% block header %}
@@ -88,15 +89,15 @@ Basket
                     {% endfor %}
                     <div class="Cart-total">
                         <div class="Cart-block Cart-block_total">
-                            <strong class="Cart-title">Итого:
+                            <strong class="Cart-title">{% translate "Итого" %}:
                             </strong><span class="Cart-price">{% total_price request carts %}$</span>
                         </div>
-                        <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'orders:order_detail' 1 %}">Оформить заказ</a>
+                        <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'orders:order_detail' 1 %}">{% translate "Оформить заказ" %}</a>
                         </div>
                     </div>
                 </form>
                 {% else %}
-                <h1>Ваша корзина пуста</h1>
+                <h1>{% translate "Ваша корзина пуста" %}</h1>
                 {% endif %}
         </div>
     </div>
