@@ -55,18 +55,27 @@
             </div>
             <div class="Section-content">
                 <h1>История просмотров товаров</h1>
-                <ul>
-                    {% if products %}
-                        {% for product in products %}
-                            <li>
-                                <a href="{% url 'products:product_detail' slug=product.product__slug %}">
-                                    {{ product.product__name }}</a>
-                            </li>
-                        {% endfor %}
-                    {% else %}
-                        <li>История просмотров пуста.</li>
-                    {% endif %}
-                </ul>
+                <div class="Cards">
+                    <ul>
+                        {% if products %}
+                            {% for product in products %}
+                                <li>
+                                    <div class="Card-content">
+                                        <strong class="Card-title"><a href="{% url 'products:product_detail' slug=product.productslug %}">{{ product.productname }}</a>
+                                        </strong>
+                                        {% with product.images.all|first as img %}
+                                            <div class="Card"><a class="Card-picture" href="{% url 'products:product_detail' slug=product.productslug %}"><img src="{{ img.image.url }}" alt="card.jpg" /></a>
+                                        {% endwith %}
+                                        <div class="Card-description">
+                                            <div class="Card-category">{{ product.productcategory }}</div>
+                                        </div>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li>История просмотров пуста.</li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
