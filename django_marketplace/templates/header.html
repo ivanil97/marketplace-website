@@ -100,6 +100,20 @@
                                 {% total_price request carts %}$
                             </span>
                         </div>
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as AVAILABLE_LANGUAGES %}
+                        <div class="dropdown CartBlock-block">
+                            <button class="dropbtn" style="display: flex;">
+                                <img class="CartBlock-img" src="{% static 'img/icons/lan.svg' %}" alt="lan.svg"/>
+                            </button>
+                            <div class="dropdown-content">
+                                {% for lang in AVAILABLE_LANGUAGES %}
+                                    <a class="dropdown-content-a" href="{% get_url request lang.0 %}" {% if lang.0 == CURRENT_LANGUAGE %} class="active" {% endif %}>
+                                        {{ lang.1 }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row-block Header-trigger"><a class="menuTrigger" href="#navigate">
