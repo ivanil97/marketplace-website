@@ -3,8 +3,10 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-
-
+from .views_dir.viewed_products import (remove_product_from_viewed,
+                                        get_viewed_products,
+                                        get_viewed_count, )
+from .views_dir.viewed_products import get_viewed_products
 from .views.account import AccountView
 from .views.profile import ProfileView
 from .views.register import RegisterView
@@ -48,4 +50,7 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
+    path('viewed/remove/<int:product_id>/', remove_product_from_viewed, name='remove_product_from_viewed'),
+    path('viewed/count/', get_viewed_count, name='get_viewed_count'),
+    path('viewed-products/', get_viewed_products, name='viewed_products'),
 ]
