@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+# from products.services.viewed_products_service import ViewedProductsService
 from users.services.viewed_products_service import ViewedProductsService
 
 

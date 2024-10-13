@@ -1,18 +1,16 @@
 {% extends 'base.html' %}
-{% load i18n %}
 
 {% block content %}
     <div class="Middle Middle_top">
         <div class="Middle-top">
             <div class="wrap">
                 <div class="Middle-header">
-                    <h1 class="Middle-title">{% translate "Профиль" %}</h1>
+                    <h1 class="Middle-title">Профиль
+                    </h1>
                     <ul class="breadcrumbs Middle-breadcrumbs">
-                        <li class="breadcrumbs-item">
-                            <a href="{% url 'home' %}">{% translate "Главная" %}</a>
+                        <li class="breadcrumbs-item"><a href="{% url 'home' %}">home</a>
                         </li>
-                        <li class="breadcrumbs-item breadcrumbs-item_current">
-                            <span>{% translate "Профиль" %}</span>
+                        <li class="breadcrumbs-item breadcrumbs-item_current"><span>Профиль</span>
                         </li>
                     </ul>
                 </div>
@@ -23,24 +21,19 @@
                 <div class="Section-column">
                     <div class="Section-columnSection">
                         <header class="Section-header">
-                            <strong class="Section-title">{% translate "Навигация" %}</strong>
+                            <strong class="Section-title">Навигация
+                            </strong>
                         </header>
                         <div class="Section-columnContent">
                             <div class="NavigateProfile">
                                 <ul class="menu menu_vt">
-                                    <li class="menu-item">
-                                        <a class="menu-link" href="{% url 'user:account' %}">
-                                            {% translate "Личный кабинет" %}
-                                        </a>
+                                    <li class="menu-item"><a class="menu-link" href="{% url 'user:account' %}">Личный кабинет</a>
                                     </li>
-                                    <li class="menu-item">
-                                        <a class="menu-link" href="{% url 'user:user_profile' %}">
-                                            {% translate "Профиль" %}
-                                        </a>
+                                    <li class="menu-item"><a class="menu-link" href="{% url 'user:user_profile' %}">Профиль</a>
                                     </li>
-                                    <li class="menu-item">
-                                        <a class="menu-link" href="historyorder.html">{% translate "История заказов" %}</a>
+                                    <li class="menu-item"><a class="menu-link" href="historyorder.html">История заказов</a>
                                     </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -53,17 +46,14 @@
                             <div class="row">
                                 <div class="row-block">
                                     <div class="form-group">
-                                        <label class="form-label" for="profile_picture">
-                                            {% translate "Фото профиля" %}
+                                        <label class="form-label" for="profile_picture">Фото профиля
                                         </label>
                                         <div class="Profile-avatar">
                                             {% if user.profile_picture %}
-                                                <div class="Profile-img">
-                                                    <img src="{{ user.profile_picture.url }}" alt="profile_picture" />
+                                                <div class="Profile-img"><img src="{{ user.profile_picture.url }}" alt="profile_picture" />
                                                 </div>
                                             {% else %}
-                                                <label class="Profile-fileLabel" for="profile_picture">
-                                                    {% translate "Выберите фото профиля" %}
+                                                <label class="Profile-fileLabel" for="profile_picture">Выберите фото профиля
                                                 </label>
                                                 <input class="Profile-file form-input" id="profile_picture" name="profile_picture" type="file" />
                                             {% endif %}
@@ -71,8 +61,7 @@
                                     </div>
                                     {% if user.profile_picture %}
                                         <div class="form-group">
-                                            <label class="form-label" for="profile_picture_change">
-                                                {% translate "Сменить фото профиля" %}
+                                            <label class="form-label" for="profile_picture_change">Сменить фото профиля
                                             </label>
                                             <input class="" id="profile_picture_change" name="profile_picture" type="file" />
                                             <div style="color: red">
@@ -81,17 +70,16 @@
                                         </div>
                                     {% endif %}
                                     <div class="form-group">
-                                        <label class="form-label" for="first_name">
-                                            {% translate "Имя" %}
+                                        <label class="form-label" for="first_name">Имя
                                         </label>
                                         <input class="form-input" id="first_name" name="first_name" type="text" value="{{ user.first_name }}" />
                                         <div style="color: red">
                                             {{ form.errors.first_name|join:", " }}
                                         </div>
+
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="last_name">
-                                            {% translate "Фамилия" %}
+                                        <label class="form-label" for="last_name">Фамилия
                                         </label>
                                         <input class="form-input" id="last_name" name="last_name" type="text" value="{{ user.last_name }}" />
                                         <div style="color: red">
@@ -101,33 +89,21 @@
                                 </div>
                                 <div class="row-block">
                                     <div class="form-group">
-                                        <label class="form-label" for="phone">
-                                            {% translate "Телефон" %}
+                                        <label class="form-label" for="phone">Телефон
                                         </label>
                                         {% if user.phone_number %}
                                             {% with phone_prefix="+7" %}
-                                                <input class="form-input"
-                                                       id="phone"
-                                                       name="phone_number"
-                                                       type="text"
-                                                       value="{{ phone_prefix }}{{ user.phone_number }}"
-                                                       placeholder="{{ form.phone_number.field.widget.attrs.placeholder }}"/>
+                                                <input class="form-input" id="phone" name="phone_number" type="text" value="{{ phone_prefix }}{{ user.phone_number }}" placeholder="{{ form.phone_number.field.widget.attrs.placeholder }}" />
                                             {% endwith %}
                                         {% else %}
-                                            <input
-                                                    class="form-input" id="phone_placeholder"
-                                                    name="phone_number"
-                                                    type="text"
-                                                    value=""
-                                                    placeholder="{{ form.phone_number.field.widget.attrs.placeholder }}"/>
+                                            <input class="form-input" id="phone_placeholder" name="phone_number" type="text" value="" placeholder="{{ form.phone_number.field.widget.attrs.placeholder }}" />
                                         {% endif %}
                                         <div style="color: red">
                                             {{ form.errors.phone_number|join:", " }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="mail">
-                                            E-mail
+                                        <label class="form-label" for="mail">E-mail
                                         </label>
                                         <input class="form-input" id="mail" name="email" type="text" value="{{ user.email }}"/>
                                         <div style="color: red">
@@ -135,24 +111,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="password">
-                                            {% translate "Пароль" %}
+                                        <label class="form-label" for="password">Пароль
                                         </label>
-                                        <input class="form-input"
-                                               id="password"
-                                               name="password"
-                                               type="password"
-                                               placeholder="{{ form.password.field.widget.attrs.placeholder }}"/>
+                                        <input class="form-input" id="password" name="password" type="password" placeholder="{{ form.password.field.widget.attrs.placeholder }}" />
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="password_reply">
-                                            {% translate "Подтверждение пароля" %}
+                                        <label class="form-label" for="password_reply">Подтверждение пароля
                                         </label>
-                                        <input class="form-input"
-                                               id="password_reply"
-                                               name="password_reply"
-                                               type="password"
-                                               placeholder="{{ form.password_reply.field.widget.attrs.placeholder }}"/>
+                                        <input class="form-input" id="password_reply" name="password_reply" type="password" placeholder="{{ form.password_reply.field.widget.attrs.placeholder }}" />
                                         <div style="color: red">
                                             {{ form.errors.password|join:", " }}
                                             {{ form.errors.password_reply|join:", " }}
@@ -160,13 +126,11 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="Profile-btn">
-                                            <button class="btn btn_success">
-                                                {% translate "Сохранить" %}
+                                            <button class="btn btn_success">Сохранить
                                             </button>
                                         </div>
                                         {% if form_submitted %}
-                                            <div class="Profile-success">
-                                                {% translate "Профиль успешно сохранен" %}
+                                            <div class="Profile-success">Профиль успешно сохранен
                                             </div>
                                         {% endif %}
                                     </div>
