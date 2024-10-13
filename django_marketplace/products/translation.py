@@ -1,6 +1,15 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from products.models import Product, Category, Discount, Feature, SliderBanner, StaticBanner, Tag
+from products.models import (
+    Product,
+    Category,
+    Discount,
+    Feature,
+    SliderBanner,
+    StaticBanner,
+    Tag,
+    ProductFeature
+)
 
 
 @register(Product)
@@ -36,3 +45,8 @@ class StaticBannerTranslation(TranslationOptions):
 @register(Tag)
 class TagTranslation(TranslationOptions):
     fields = "name",
+
+
+@register(ProductFeature)
+class ProductFeatureTranslation(TranslationOptions):
+    fields = "value",

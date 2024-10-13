@@ -5,8 +5,6 @@ from django.db.models import Prefetch, QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import path
-from modeltranslation.admin import TranslationAdmin
-from ..translation import ProductTranslation
 from core.settings import BASE_DIR
 from core.task import task_is_active, create_task_load_file
 from products.models import (
@@ -77,7 +75,7 @@ class SellerPriceInline(admin.TabularInline):
 
 
 @admin.register(Product)
-class ProductAdmin(TranslationAdmin):
+class ProductAdmin(admin.ModelAdmin):
     actions = [
         mark_archived,
         mark_unarchived,
