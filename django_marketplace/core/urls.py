@@ -25,9 +25,7 @@ from django.conf.urls.i18n import i18n_patterns
 from products.views import HomeView
 
 
-urlpatterns = []
-
-urlpatterns += i18n_patterns(
+urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('product/', include('products.urls')),
     path('user/', include('users.urls')),
