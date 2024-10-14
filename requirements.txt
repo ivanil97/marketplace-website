@@ -31,3 +31,4 @@ vine==5.1.0
 wcwidth==0.2.13
 pydantic==2.9.2
 python-dotenv==1.0.1
+django-modeltranslation==0.19.9

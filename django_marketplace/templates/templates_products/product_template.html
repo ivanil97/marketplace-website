@@ -2,6 +2,7 @@
 {% load static %}
 {% load mptt_tags %}
 {% load cache %}
+{% load i18n %}
 
 {% block title %} Product {{ product.pk }} {% endblock %}
 
@@ -25,18 +26,16 @@
                             <a class="ProductCard-pict {% if forloop.first %} ProductCard-pict_ACTIVE{% endif %}"
                                href="{{ img.image.url }}"><img src="{{ img.image.url }}" alt="{{ product.name }}"/></a>
                             {% empty %}
-                            <p>No image yet</p>
+                            <p>{% translate "Еще нету изображения" %}</p>
                             {% endfor %}
                         </div>
                     </div>
                     <div class="ProductCard-desc">
                         <div class="ProductCard-header">
-                            <h2 class="ProductCard-title">{{ product.name }}
-                            </h2>
+                            <h2 class="ProductCard-title">{{ product.name }}</h2>
                             <div class="ProductCard-info">
                                 <div class="ProductCard-cost">
-                                    <div class="ProductCard-price">${{ product.auto_seller_price|floatformat:0 }}
-                                    </div>
+                                    <div class="ProductCard-price">${{ product.auto_seller_price|floatformat:0 }}</div>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +59,7 @@
                                 <div class="ProductCard-cartElement">
                                     <button class="btn btn_primary Amount-input form-input" type="submit">
                                         <img class="btn-icon" src="{% static 'img/icons/card/cart_white.svg' %}" alt="cart_white.svg"/>
-                                        <span class="btn-content">Купить</span>
+                                        <span class="btn-content">{% translate "Купить" %}</span>
                                     </button>
                                 </div>
                             </form>
@@ -68,7 +67,7 @@
                                 <form method="post" action="{% url 'comparisons:add_to_comparison' slug=product.slug %}">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn_primary">
-                                        Добавить в сравнение
+                                        {% translate "Добавить в сравнение" %}
                                     </button>
                                 </form>
                             </div>
@@ -76,11 +75,11 @@
                                 <div class="my_modal-dialog">
                                     <div class="my_modal-content">
                                         <div class="my_modal-header">
-                                            <p class="my_modal-title">Поздравляем!</p>
-                                            <a href="#" title="Закрыть модальное окно" class="close">×</a>
+                                            <p class="my_modal-title">{% translate "Поздравляем!" %}</p>
+                                            <a href="#" title="{% translate 'Закрыть модальное окно' %}" class="close">×</a>
                                         </div>
                                         <div class="my_modal-body">
-                                            <p>Товар успешно добавлен в корзину!</p>
+                                            <p>{% translate "Товар успешно добавлен в корзину!" %}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -88,7 +87,7 @@
                         </div>
                         <div class="ProductCard-footer">
                             <div class="ProductCard-tags">
-                                <strong class="ProductCard-tagsTitle">Тэги:</strong>
+                                <strong class="ProductCard-tagsTitle">{% translate "Тэги" %}:</strong>
                                 {% for tag in product.tags.all %}
                                 <a href="#">{{ tag.name }}</a>
                                 {% endfor %}
@@ -99,43 +98,39 @@
                 <div class="Tabs Tabs_default">
                     <div class="Tabs-links">
                         <a class="Tabs-link_ACTIVE Tabs-link" href="#description">
-                            <span>Описание</span>
+                            <span>{% translate "Описание" %}</span>
                         </a>
                         <a class="Tabs-link" href="#sellers">
-                            <span>Продавцы</span>
+                            <span>{% translate "Продавцы" %}</span>
                         </a>
                         <a class="Tabs-link" href="#addit">
-                            <span>Характеристика</span>
+                            <span>{% translate "Характеристика" %}</span>
                         </a>
                         <a class="Tabs-link" href="#reviews">
-                            <span>Отзывы</span>
+                            <span>{% translate "Отзывы" %}</span>
                         </a>
                     </div>
                     <div class="Tabs-wrap">
                         <div class="Tabs-block" id="description">
                             <h2>{{ product.name }}</h2>
-                            <p><img class="pict pict_right" src="{{ first_image.image.url }}" alt="{{ product.name }}">
+                            <p>
+                                <img class="pict pict_right" src="{{ first_image.image.url }}" alt="{{ product.name }}">
                             </p>
                             <ul>
                                 {% for des in description_full %}
                                 <li>{{ des }}</li>
                                 {% endfor %}
                             </ul>
-                            <div class="clearfix">
-                            </div>
+                            <div class="clearfix"></div>
                             <div class="table">
                                 <table>
                                     <tr>
-                                        <th>Характеристика
-                                        </th>
-                                        <th>Значение
-                                        </th>
+                                        <th>{% translate "Характеристика" %}</th>
+                                        <th>{% translate "Значение" %}</th>
                                     </tr>
                                     <tr>
-                                        <td>Тип товара
-                                        </td>
-                                        <td>{{ product.category.name }}
-                                        </td>
+                                        <td>{% translate "Тип товара" %}</td>
+                                        <td>{{ product.category.name }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -150,34 +145,30 @@
                                             <div class="row">
                                                 <div class="row-block">
                                                     <a class="Order-title" href="#">
-                                                        Имя продавца: {{ sp.seller.name }}
+                                                        {% translate "Имя продавца" %}: {{ sp.seller.name }}
                                                     </a>
                                                     <div class="ProductCard-cartElement" style="margin-top: 10px;">
                                                         <a class="btn btn_primary" href="{% url 'carts:add_cart' sp.id %}">
                                                             <img class="btn-icon"
                                                                  src="{% static 'img/icons/card/cart_white.svg' %}"
                                                                  alt="cart_white.svg"/>
-                                                            <span class="btn-content">Купить</span>
+                                                            <span class="btn-content">{% translate "Купить" %}</span>
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="row-block">
                                                     <div class="Order-info Order-info_delivery">
-                                                        <div class="Order-infoType">Тип доставки:
-                                                        </div>
-                                                        <div class="Order-infoContent">Обычная доставка
-                                                        </div>
+                                                        <div class="Order-infoType">{% translate "Тип доставки" %}:</div>
+                                                        <div class="Order-infoContent">{% translate "Обычная доставка" %}</div>
                                                     </div>
                                                     <div class="Order-info Order-info_pay">
-                                                        <div class="Order-infoType">Оплата:
-                                                        </div>
-                                                        <div class="Order-infoContent">Онлайн картой
-                                                        </div>
+                                                        <div class="Order-infoType">{% translate "Оплата" %}:</div>
+                                                        <div class="Order-infoContent">{% translate "Онлайн картой" %}</div>
                                                     </div>
                                                     <div class="Order-info">
-                                                        <div class="Order-infoType">Стоимость:
-                                                        </div>
-                                                        <div class="Order-infoContent"><span class="Order-price">{{ sp.price }}$</span>
+                                                        <div class="Order-infoType">{% translate "Стоимость" %}:</div>
+                                                        <div class="Order-infoContent">
+                                                            <span class="Order-price">{{ sp.price }}$</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -203,14 +194,15 @@
                                 <form method="post" action="{% url 'products:review_create' product.slug %}">
                                     {% csrf_token %}
                                     {{ review_form.as_p }}
-                                    <button type="submit" class="btn btn_primary">Добавть отзыв</button>
+                                    <button type="submit" class="btn btn_primary">
+                                        {% translate "Добавть отзыв" %}
+                                    </button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
