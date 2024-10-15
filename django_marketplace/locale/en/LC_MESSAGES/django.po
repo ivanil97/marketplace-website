@@ -1,0 +1,584 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-11 09:27+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\core\settings.py:147
+msgid "Английский"
+msgstr "English"
+
+#: .\core\settings.py:148
+msgid "Русский"
+msgstr "Russian"
+
+#: .\templates\base.html:9
+msgid "Описание страницы"
+msgstr "Description page"
+
+#: .\templates\footer.html:13 .\templates\header.html:106
+#: .\templates\templates_users\account.html:26
+#: .\templates\templates_users\user_profile.html:26
+msgid "Навигация"
+msgstr "Navigation"
+
+#: .\templates\footer.html:16 .\templates\header.html:61
+#: .\templates\templates_users\account.html:12
+#: .\templates\templates_users\user_profile.html:12
+msgid "Главная"
+msgstr "Main"
+
+#: .\templates\footer.html:19 .\templates\header.html:65
+msgid "Каталог"
+msgstr "Catalog"
+
+#: .\templates\footer.html:22 .\templates\header.html:68
+msgid "Сравнение"
+msgstr "Comparison"
+
+#: .\templates\footer.html:26 .\templates\templates_users\account.html:38
+#: .\templates\templates_users\user_profile.html:9
+#: .\templates\templates_users\user_profile.html:15
+#: .\templates\templates_users\user_profile.html:38
+msgid "Профиль"
+msgstr "Profile"
+
+#: .\templates\footer.html:32
+msgid "Контакты"
+msgstr "Contacts"
+
+#: .\templates\footer.html:33 .\templates\templates_order\order_detail.html:37
+#: .\templates\templates_order\order_filling_from.html:57
+#: .\templates\templates_order\order_filling_from.html:152
+#: .\templates\templates_users\user_profile.html:105
+msgid "Телефон"
+msgstr "Phone"
+
+#: .\templates\header.html:30 .\templates\templates_users\login.html:12
+#: .\templates\templates_users\password_reset.html:35
+#: .\templates\templates_users\password_reset_complete.html:14
+#: .\templates\templates_users\register.html:39
+msgid "Вход"
+msgstr "Login"
+
+#: .\templates\header.html:31 .\templates\templates_users\login.html:27
+#: .\templates\templates_users\register.html:5
+#: .\templates\templates_users\register.html:11
+msgid "Регистрация"
+msgstr "Registration"
+
+#: .\templates\header.html:64
+msgid "Скидки"
+msgstr "Discounts"
+
+#: .\templates\header.html:82 .\templates\templates_users\account.html:9
+#: .\templates\templates_users\account.html:15
+#: .\templates\templates_users\account.html:33
+#: .\templates\templates_users\user_profile.html:33
+msgid "Личный кабинет"
+msgstr "Account"
+
+#: .\templates\header.html:83
+msgid "Административный раздел"
+msgstr "Admin panel"
+
+#: .\templates\header.html:86
+msgid "Выход"
+msgstr "Exit"
+
+#: .\templates\header.html:122
+msgid "Все категории"
+msgstr "All categories"
+
+#: .\templates\header.html:156
+msgid "Поиск"
+msgstr "Search"
+
+#: .\templates\index.html:19
+msgid "Кнопка действия"
+msgstr "Action button"
+
+#: .\templates\index.html:29
+msgid "Нет изображения"
+msgstr "No image"
+
+#: .\templates\index.html:36
+msgid "В данный момент нет доступных товаров"
+msgstr "No products available at the moment"
+
+#: .\templates\index.html:63
+msgid "На данный момент статичные баннеры недоступны"
+msgstr "Static banners are not available at the moment"
+
+#: .\templates\index.html:73
+msgid "Ограниченное предложение"
+msgstr "Limited offer"
+
+#: .\templates\index.html:78
+msgid "нет доступных изображений"
+msgstr "no available images"
+
+#: .\templates\index.html:100
+msgid "дни"
+msgstr "days"
+
+#: .\templates\index.html:106
+msgid "часы"
+msgstr "hours"
+
+#: .\templates\index.html:112
+msgid "минуты"
+msgstr "mins"
+
+#: .\templates\index.html:118
+msgid "секунды"
+msgstr "secs"
+
+#: .\templates\index.html:128
+msgid "Популярные товары"
+msgstr "Popular items"
+
+#: .\templates\index.html:164 .\templates\index.html:215
+msgid "На данный момент в наличии нет товаров"
+msgstr "No products available at the moment"
+
+#: .\templates\index.html:175
+msgid "Количество товаров ограничено"
+msgstr "Products are limited"
+
+#: .\templates\index.html:200
+msgid "нет доступных цен"
+msgstr "no available prices"
+
+#: .\templates\templates_adminpanel\product_change_list.html:8
+msgid "Импорт"
+msgstr "Import"
+
+#: .\templates\templates_adminpanel\product_import_from_json.html:6
+msgid "Продукты будут импортированы из json-файлов размещенных в каталоге import проекта."
+msgstr "The products will be imported from json files located in the import directory of the project."
+
+#: .\templates\templates_cart\cart.html:9
+msgid "Корзина"
+msgstr "Cart"
+
+#: .\templates\templates_cart\cart.html:92
+#: .\templates\templates_order\order_detail.html:93
+#: .\templates\templates_order\order_filling_from.html:247
+#: .\templates\templates_users\account.html:98
+msgid "Итого"
+msgstr "Total price"
+
+#: .\templates\templates_cart\cart.html:95
+msgid "Оформить заказ"
+msgstr "Place an order"
+
+#: .\templates\templates_cart\cart.html:100
+msgid "Ваша корзина пуста"
+msgstr "Your cart is empty"
+
+#: .\templates\templates_comparisons\comparison_list.html:30
+#: .\templates\templates_products\product_template.html:107
+#: .\templates\templates_products\product_template.html:128
+msgid "Характеристика"
+msgstr "Feature"
+
+#: .\templates\templates_comparisons\comparison_list.html:31
+#: .\templates\templates_products\product_template.html:129
+msgid "Значение"
+msgstr "Value"
+
+#: .\templates\templates_comparisons\comparison_list.html:54
+msgid "Исключить из сравнения"
+msgstr "Remove from comparison"
+
+#: .\templates\templates_order\order_detail.html:4
+#: .\templates\templates_order\order_detail.html:15
+#: .\templates\templates_users\account.html:77
+msgid "Заказ"
+msgstr "Order"
+
+#: .\templates\templates_order\order_detail.html:29
+msgid "Дата заказа"
+msgstr "Order date"
+
+#: .\templates\templates_order\order_detail.html:33
+#: .\templates\templates_order\order_filling_from.html:53
+#: .\templates\templates_order\order_filling_from.html:148
+msgid "ФИО"
+msgstr "Fullname"
+
+#: .\templates\templates_order\order_detail.html:47
+#: .\templates\templates_order\order_filling_from.html:162
+#: .\templates\templates_products\product_template.html:161
+#: .\templates\templates_users\account.html:90
+msgid "Тип доставки"
+msgstr "Type of delivery"
+
+#: .\templates\templates_order\order_detail.html:51
+#: .\templates\templates_order\order_filling_from.html:104
+#: .\templates\templates_order\order_filling_from.html:166
+msgid "Город"
+msgstr "City"
+
+#: .\templates\templates_order\order_detail.html:55
+#: .\templates\templates_order\order_filling_from.html:108
+#: .\templates\templates_order\order_filling_from.html:170
+msgid "Адрес"
+msgstr "Adress"
+
+#: .\templates\templates_order\order_detail.html:59
+#: .\templates\templates_order\order_filling_from.html:174
+#: .\templates\templates_products\product_template.html:165
+#: .\templates\templates_users\account.html:94
+msgid "Оплата"
+msgstr "Payment"
+
+#: .\templates\templates_order\order_detail.html:63
+#: .\templates\templates_users\account.html:102
+msgid "Статус"
+msgstr "Status"
+
+#: .\templates\templates_order\order_detail.html:87
+msgid "шт"
+msgstr "piece"
+
+#: .\templates\templates_order\order_detail.html:98
+#: .\templates\templates_order\order_filling_from.html:252
+msgid "Оплатить"
+msgstr "Pay"
+
+#: .\templates\templates_order\order_filling_from.html:11
+msgid "Прогресс заполнения"
+msgstr "Filling progress"
+
+#: .\templates\templates_order\order_filling_from.html:18
+#: .\templates\templates_order\order_filling_from.html:48
+msgid "Шаг 1. Параметры пользователя"
+msgstr "Step 1. User options"
+
+#: .\templates\templates_order\order_filling_from.html:23
+#: .\templates\templates_order\order_filling_from.html:85
+msgid "Шаг 2. Способ доставки"
+msgstr "Step 2. Type of delivery"
+
+#: .\templates\templates_order\order_filling_from.html:28
+#: .\templates\templates_order\order_filling_from.html:117
+msgid "Шаг 3. Способ оплаты"
+msgstr "Step 3. Type of payment"
+
+#: .\templates\templates_order\order_filling_from.html:33
+#: .\templates\templates_order\order_filling_from.html:141
+msgid "Шаг 4. Подтверждение заказа"
+msgstr "Step 4. Confirmation of order"
+
+#: .\templates\templates_order\order_filling_from.html:67
+#: .\templates\templates_users\register.html:29
+#: .\templates\templates_users\user_profile.html:139
+msgid "Пароль"
+msgstr "Password"
+
+#: .\templates\templates_order\order_filling_from.html:71
+#: .\templates\templates_users\user_profile.html:149
+msgid "Подтверждение пароля"
+msgstr "Confirmation of password"
+
+#: .\templates\templates_order\order_filling_from.html:75
+msgid "Я уже зарегистрирован"
+msgstr "I am already registered"
+
+#: .\templates\templates_order\order_filling_from.html:80
+#: .\templates\templates_order\order_filling_from.html:112
+#: .\templates\templates_order\order_filling_from.html:136
+msgid "Дальше"
+msgstr "Next"
+
+#: .\templates\templates_order\order_filling_from.html:92
+#: .\templates\templates_order\order_filling_from.html:163
+#: .\templates\templates_products\product_template.html:162
+#: .\templates\templates_users\account.html:91
+msgid "Обычная доставка"
+msgstr "Regular-delivery"
+
+#: .\templates\templates_order\order_filling_from.html:99
+msgid "Экспресс доставка"
+msgstr "Express-delivery"
+
+#: .\templates\templates_order\order_filling_from.html:124
+#: .\templates\templates_order\order_filling_from.html:175
+#: .\templates\templates_products\product_template.html:166
+#: .\templates\templates_users\account.html:95
+msgid "Онлайн картой"
+msgstr "Online Credit-cart"
+
+#: .\templates\templates_order\order_filling_from.html:131
+msgid "Онлайн со случайного чужого счета"
+msgstr "Online from a random credit-cart"
+
+#: .\templates\templates_products\product_template.html:29
+msgid "Еще нету изображения"
+msgstr "No image"
+
+#: .\templates\templates_products\product_template.html:62
+#: .\templates\templates_products\product_template.html:155
+msgid "Купить"
+msgstr "Buy"
+
+#: .\templates\templates_products\product_template.html:70
+msgid "Добавить в сравнение"
+msgstr "Compare"
+
+#: .\templates\templates_products\product_template.html:78
+msgid "Поздравляем!"
+msgstr "Congratulate!"
+
+#: .\templates\templates_products\product_template.html:79
+msgid "Закрыть модальное окно"
+msgstr "Close modal window"
+
+#: .\templates\templates_products\product_template.html:82
+msgid "Товар успешно добавлен в корзину!"
+msgstr "The product has been successfully added to the cart!"
+
+#: .\templates\templates_products\product_template.html:90
+msgid "Тэги"
+msgstr "Tags"
+
+#: .\templates\templates_products\product_template.html:101
+msgid "Описание"
+msgstr "Description"
+
+#: .\templates\templates_products\product_template.html:104
+msgid "Продавцы"
+msgstr "Sellers"
+
+#: .\templates\templates_products\product_template.html:110
+msgid "Отзывы"
+msgstr "Reviews"
+
+#: .\templates\templates_products\product_template.html:132
+msgid "Тип товара"
+msgstr "Type of product"
+
+#: .\templates\templates_products\product_template.html:148
+msgid "Имя продавца"
+msgstr "Name"
+
+#: .\templates\templates_products\product_template.html:169
+msgid "Стоимость"
+msgstr "Cost"
+
+#: .\templates\templates_products\product_template.html:198
+msgid "Добавть отзыв"
+msgstr "Add review"
+
+#: .\templates\templates_products\products_list.html:21
+#: .\templates\templates_products\products_list.html:56
+msgid "Фильтр"
+msgstr "Filter"
+
+#: .\templates\templates_products\products_list.html:38
+msgid "Цена"
+msgstr "Price"
+
+#: .\templates\templates_products\products_list.html:50
+msgid "Только товары в наличии"
+msgstr "Available products"
+
+#: .\templates\templates_products\products_list.html:63
+msgid "Популярные тэги"
+msgstr "Popular tags"
+
+#: .\templates\templates_products\products_list.html:74
+#: .\templates\templates_products\products_list.html:78
+msgid "Видео"
+msgstr "Video"
+
+#: .\templates\templates_products\products_list.html:75
+#: .\templates\templates_products\products_list.html:77
+msgid "Разработка"
+msgstr "Development"
+
+#: .\templates\templates_products\products_list.html:76
+msgid "Игры"
+msgstr "Games"
+
+#: .\templates\templates_products\products_list.html:85
+msgid "Сортировать"
+msgstr "Sort"
+
+#: .\templates\templates_products\products_list.html:97
+msgid "Популярности"
+msgstr "Popular"
+
+#: .\templates\templates_products\products_list.html:109
+msgid "Цене"
+msgstr "Price"
+
+#: .\templates\templates_products\products_list.html:121
+msgid "Отзывам"
+msgstr "Reviews"
+
+#: .\templates\templates_products\products_list.html:133
+msgid "Новизне"
+msgstr "New"
+
+#: .\templates\templates_products\products_list.html:198
+msgid "Пока товаров нет."
+msgstr "There are no products yet."
+
+#: .\templates\templates_products\review_create.html:7
+msgid "Добавить отзыв для"
+msgstr "Add review"
+
+#: .\templates\templates_products\review_create.html:12
+msgid "Отправить отзыв"
+msgstr "Send review"
+
+#: .\templates\templates_products\review_product.html:7
+msgid "оставил отзыв"
+msgstr "added review"
+
+#: .\templates\templates_products\review_product.html:9
+msgid "Дата"
+msgstr "Date"
+
+#: .\templates\templates_products\review_product.html:18
+msgid "Предыдущая"
+msgstr "Previous"
+
+#: .\templates\templates_products\review_product.html:21
+msgid "Страница"
+msgstr "Page"
+
+#: .\templates\templates_products\review_product.html:21
+msgid "из"
+msgstr "from"
+
+#: .\templates\templates_products\review_product.html:24
+msgid "Следующая"
+msgstr "Next"
+
+#: .\templates\templates_products\review_product.html:30
+msgid "Пока отзывов нет. Будьте первым, кто оставит отзыв!"
+msgstr "There are no reviews yet. Be the first to leave a review!"
+
+#: .\templates\templates_users\account.html:43
+#: .\templates\templates_users\account.html:84
+#: .\templates\templates_users\user_profile.html:42
+msgid "История заказов"
+msgstr "History orders"
+
+#: .\templates\templates_users\account.html:60
+msgid "Изображение не доступно"
+msgstr "Image is not available"
+
+#: .\templates\templates_users\account.html:66
+msgid "Редактировать профиль"
+msgstr "Edit a profile"
+
+#: .\templates\templates_users\account.html:79
+msgid "от"
+msgstr "from"
+
+#: .\templates\templates_users\account.html:103
+msgid "Не оплачен"
+msgstr "Not payed"
+
+#: .\templates\templates_users\login.html:5
+msgid "Авторизация"
+msgstr "Authorization"
+
+#: .\templates\templates_users\login.html:24
+msgid "Войти"
+msgstr "Login"
+
+#: .\templates\templates_users\login.html:26
+msgid "Забыли пароль"
+msgstr "Forget password"
+
+#: .\templates\templates_users\login.html:30
+#: .\templates\templates_users\password_reset_confirm.html:32
+#: .\templates\templates_users\register.html:44
+msgid "Вы ввели неверные данные"
+msgstr "You entered incorrect data"
+
+#: .\templates\templates_users\password_reset.html:5
+#: .\templates\templates_users\password_reset.html:21
+#: .\templates\templates_users\password_reset_complete.html:5
+#: .\templates\templates_users\password_reset_complete.html:11
+#: .\templates\templates_users\password_reset_confirm.html:5
+#: .\templates\templates_users\password_reset_confirm.html:11
+msgid "Восстановление пароля"
+msgstr "Password recovery"
+
+#: .\templates\templates_users\password_reset.html:23
+msgid "Для восстановления пароля введите адрес электронной почты, на которую зарегистрирована учетная запись"
+msgstr "To restore the password, enter the email address to which the account is registered"
+
+#: .\templates\templates_users\password_reset.html:32
+msgid "Получить ссылку для восстановления"
+msgstr "Get link for recovery"
+
+#: .\templates\templates_users\password_reset_complete.html:13
+msgid "Новый пароль установлен. Вы можете пройти по ссылке"
+msgstr "A new password has been set. You can follow the link"
+
+#: .\templates\templates_users\password_reset_confirm.html:12
+msgid "Придумайте новый пароль для учетной записи"
+msgstr "Create a new password for your account"
+
+#: .\templates\templates_users\password_reset_confirm.html:24
+#: .\templates\templates_users\register.html:35
+msgid "Повторить пароль"
+msgstr "Repeat password"
+
+#: .\templates\templates_users\password_reset_confirm.html:27
+msgid "Сохранить пароль"
+msgstr "Save password"
+
+#: .\templates\templates_users\register.html:37
+msgid "Зарегистрироваться"
+msgstr "Make register"
+
+#: .\templates\templates_users\user_profile.html:57
+msgid "Фото профиля"
+msgstr "Photo"
+
+#: .\templates\templates_users\user_profile.html:66
+msgid "Выберите фото профиля"
+msgstr "Choice photo"
+
+#: .\templates\templates_users\user_profile.html:75
+msgid "Сменить фото профиля"
+msgstr "Change photo"
+
+#: .\templates\templates_users\user_profile.html:85
+msgid "Имя"
+msgstr "Firstname"
+
+#: .\templates\templates_users\user_profile.html:94
+msgid "Фамилия"
+msgstr "Lastname"
+
+#: .\templates\templates_users\user_profile.html:164
+msgid "Сохранить"
+msgstr "Save"
+
+#: .\templates\templates_users\user_profile.html:169
+msgid "Профиль успешно сохранен"
+msgstr "The profile has been saved successfully"

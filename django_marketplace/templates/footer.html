@@ -1,48 +1,46 @@
 {% load static %}
+{% load i18n %}
+
 <footer class="Footer">
     <div class="wrap">
         <div class="row Footer-main">
-            <div class="row-block"><a class="logo Footer-logo" href="index.html"><img class="logo-image"
-                                                                                      src="{% static 'img/logo_footer.png' %}"
-                                                                                      alt="logo_footer.png"/></a>
+            <div class="row-block">
+                <a class="logo Footer-logo" href="index.html">
+                    <img class="logo-image" src="{% static 'img/logo_footer.png' %}" alt="logo_footer.png" />
+                </a>
             </div>
             <div class="row-block">
-                <strong class="Footer-title">Навигация
-                </strong>
+                <strong class="Footer-title">{% translate "Навигация" %}</strong>
                 <ul class="menu menu_vt Footer-menu">
-                    <li class="menu-item"><a class="menu-link" href="{% url 'home' %}">Главная</a>
+                    <li class="menu-item">
+                        <a class="menu-link" href="{% url 'home' %}">{% translate "Главная" %}</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="{% url 'products:products_list' %}">Каталог</a>
+                    <li class="menu-item">
+                        <a class="menu-link" href="{% url 'products:products_list' %}">{% translate "Каталог" %}</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="{% url 'comparisons:comparison_list' %}">
-                        Сравнение</a>
+                    <li class="menu-item">
+                        <a class="menu-link" href="{% url 'comparisons:comparison_list' %}">{% translate "Сравнение" %}</a>
                     </li>
-                    {% if request.user.is_authenticated %}
-                    <li class="menu-item"><a class="menu-link" href="{% url 'user:account' %}">Профиль</a>
-                    </li>
+                    {%  if request.user.is_authenticated %}
+                        <li class="menu-item">
+                            <a class="menu-link" href="{% url 'user:account' %}">{% translate "Профиль" %}</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>
             <div class="row-block">
-                <strong class="Footer-title">Контакты
-                </strong>
-                <p>Phone: 8.800.200.600<br>Email: xxx@meg.com<br>
-                </p>
+                <strong class="Footer-title">{% translate "Контакты" %}</strong>
+                <p>{% translate "Телефон" %}: 8.800.200.600<br>Email: xxx@meg.com<br></p>
                 <ul class="menu menu_img menu_smallImg Footer-menuSoc">
-                    <li class="menu-item"><a class="menu-link" href="#"><img
-                            src="{% static 'img/icons/socialFooter/fb.svg' %}" alt="fb.svg"/></a>
+                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialFooter/fb.svg' %}" alt="fb.svg" /></a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="#"><img
-                            src="{% static 'img/icons/socialFooter/tw.svg' %}" alt="tw.svg"/></a>
+                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialFooter/tw.svg' %}" alt="tw.svg" /></a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="#"><img
-                            src="{% static 'img/icons/socialFooter/in.svg' %}" alt="in.svg"/></a>
+                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialFooter/in.svg' %}" alt="in.svg" /></a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="#"><img
-                            src="{% static 'img/icons/socialFooter/pt.svg' %}" alt="pt.svg"/></a>
+                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialFooter/pt.svg' %}" alt="pt.svg" /></a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="#"><img
-                            src="{% static 'img/icons/socialFooter/mail.svg' %}" alt="mail.svg"/></a>
+                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialFooter/mail.svg' %}" alt="mail.svg" /></a>
                     </li>
                 </ul>
             </div>

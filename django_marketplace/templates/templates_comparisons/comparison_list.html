@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load mptt_tags %}
+{% load i18n %}
 
 {% block header %}
 <!-- Здесь будет header -->
@@ -44,8 +45,8 @@
                                     <div class="table">
                                         <table>
                                             <tr>
-                                                <th class="hed">Характеристика</th>
-                                                <th class="hed">Значение</th>
+                                                <th class="hed">{% translate "Характеристика" %}</th>
+                                                <th class="hed">{% translate "Значение" %}</th>
                                             </tr>
                                             {% for feature in product.features.all %}
                                             <tr>
@@ -68,10 +69,9 @@
                         </div>
                     </div>
                     <div class="ProductCard-cart">
-                        <form method="post" action="{% url 'comparisons:remove_from_comparison' slug=product.slug %}">
+                        <form method="post" action="{% url 'comparisons:remove_from_comparison' product.slug %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn_primary">Убрать
-                            </button>
+                            <button type="submit" class="btn btn_primary">{% translate "Исключить из сравнения" %}</button>
                         </form>
                     </div>
                 </div>
