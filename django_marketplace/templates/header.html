@@ -65,7 +65,7 @@
                                 <a class="menu-link" href="{% url 'products:products_list' %}">{% translate "Каталог" %}</a>
                             </li>
                             <li class="menu-item">
-                                <a class="menu-link" href="comparison.html">{% translate "Сравнение" %}</a>
+                                <a class="menu-link" href="{% url 'comparisons:comparison_list' %}">{% translate "Сравнение" %}</a>
                                 {% if comparison_count > 0 %}
                                 <samp class="comparison-count">{{ comparison_count }}</samp>
                                 {% endif %}

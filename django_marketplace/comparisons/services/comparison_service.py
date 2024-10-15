@@ -16,7 +16,7 @@ def add_to_comparison(request, slug):
     message = ""
 
     if product.id in compare_list:
-        message = f"Товар '{product.name}' уже добавлен в список для сравнения."
+        message = f"Этот товар уже добавлен в список для сравнения."
     elif len(compare_list) >= 3:
         message = "Вы уже добавили 3 товара для сравнения."
     else:
