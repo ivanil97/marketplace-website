@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load mptt_tags %}
 
 {% block header %}
 <!-- Здесь будет header -->
@@ -8,6 +9,23 @@
 {% block content %}
 <div class="Middle">
     <div class="wrap">
+        {% if request.session.message %}
+        <div class="alert alert-warning">
+            {{ request.session.message }}
+        </div>
+        {% comment %} Очищаем сообщение после отображения, чтобы оно не отображалось повторно {% endcomment %}
+        {% with request.session.message as msg %}
+        {% if msg %}
+        {% comment %} Удаляем сообщение из сессии {% endcomment %}
+        {% for key in request.session.keys %}
+        {% if key == 'message' %}
+        {% comment %} Элемент в сессии будет удален {% endcomment %}
+        {% if msg %}{% comment %} Элемент в сессии будет удален {% endcomment %}{% endif %}
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% endif %}
         <div class="Product">
             <div class="ProductCard">
                 {% for product in products %}
@@ -32,7 +50,9 @@
                                             {% for feature in product.features.all %}
                                             <tr>
                                                 <td>{{ feature.feature.name }}</td>
-                                                <td>{{ feature.value }}</td>
+                                                <td>
+                                                    {{ feature.value }}
+                                                </td>
                                             </tr>
                                             {% endfor %}
                                         </table>
@@ -48,9 +68,9 @@
                         </div>
                     </div>
                     <div class="ProductCard-cart">
-                        <form method="post" action="{% url 'comparisons:remove_from_comparison' product.slug %}">
+                        <form method="post" action="{% url 'comparisons:remove_from_comparison' slug=product.slug %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn_primary">Remove from comparison
+                            <button type="submit" class="btn btn_primary">Убрать
                             </button>
                         </form>
                     </div>

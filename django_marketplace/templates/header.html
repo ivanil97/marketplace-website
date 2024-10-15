@@ -10,13 +10,17 @@
                     <div class="row ControlPanel-rowSplit">
                         <div class="row-block hide_700">
                             <ul class="menu menu_img menu_smallImg ControlPanel-menu">
-                                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/tw.svg' %}" alt="tw.svg" /></a>
+                                <li class="menu-item"><a class="menu-link" href="#"><img
+                                        src="{% static 'img/icons/socialHeader/tw.svg' %}" alt="tw.svg"/></a>
                                 </li>
-                                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/in.svg' %}" alt="in.svg" /></a>
+                                <li class="menu-item"><a class="menu-link" href="#"><img
+                                        src="{% static 'img/icons/socialHeader/in.svg' %}" alt="in.svg"/></a>
                                 </li>
-                                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/pt.svg' %}" alt="pt.svg" /></a>
+                                <li class="menu-item"><a class="menu-link" href="#"><img
+                                        src="{% static 'img/icons/socialHeader/pt.svg' %}" alt="pt.svg"/></a>
                                 </li>
-                                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/mail.svg' %}" alt="mail.svg" /></a>
+                                <li class="menu-item"><a class="menu-link" href="#"><img
+                                        src="{% static 'img/icons/socialHeader/mail.svg' %}" alt="mail.svg"/></a>
                                 </li>
                             </ul>
                         </div>
@@ -24,11 +28,11 @@
                 </div>
                 <nav class="row-block">
                     {% if not request.user.is_authenticated %}
-                        <div class="row ControlPanel-rowSplit">
-                            <div class="row-block"><a class="ControlPanel-title" href = {% url 'user:login' %}>Вход</a>
-                                <a class="ControlPanel-title" href = {% url 'user:register' %}>Регистрация</a>
-                            </div>
+                    <div class="row ControlPanel-rowSplit">
+                        <div class="row-block"><a class="ControlPanel-title" href={% url 'user:login' %}>Вход</a>
+                            <a class="ControlPanel-title" href={% url 'user:register' %}>Регистрация</a>
                         </div>
+                    </div>
                     {% endif %}
                 </nav>
             </div>
@@ -46,100 +50,116 @@
     </div>
     <div class="wrap">
         <div class="row Header-rowMain">
-            <div class="row-block Header-logo"><a class="logo" href="index.html"><img class="logo-image" src="{% static 'img/logo.png' %}" alt="logo.png" /></a>
+            <div class="row-block Header-logo"><a class="logo" href="index.html"><img class="logo-image"
+                                                                                      src="{% static 'img/logo.png' %}"
+                                                                                      alt="logo.png"/></a>
             </div>
             {% if not simple_header %}
-                <nav class="row-block row-block_right Header-menu">
-                    <div class="menuModal" id="navigate">
-                        <ul class="menu menu_main">
-                            <li class="menu-item"><a class="menu-link" href="index.html">Главная</a>
-                            </li>
-                            <li class="menu-item"><span class="menu-label menu-label_success">Скидки</span><a class="menu-link" href="{% url 'products:products_list' %}">Каталог</a>
-                            </li>
-                            <li class="menu-item"><a class="menu-link" href="comparison.html">Сравнение</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-                <div class="row-block">
-
-                    <div class="CartBlock">
-                        <div class="dropdown">
-                            {%  if request.user.is_authenticated %}
-                                <button class="dropbtn"><img class="CartBlock-img" src="{% static 'img/icons/loon-icon.svg' %}" alt="loon-icon.svg" /></button>
+            <nav class="row-block row-block_right Header-menu">
+                <div class="menuModal" id="navigate">
+                    <ul class="menu menu_main">
+                        <li class="menu-item"><a class="menu-link" href="index.html">Главная</a>
+                        </li>
+                        <li class="menu-item"><span class="menu-label menu-label_success">Скидки</span><a
+                                class="menu-link" href="{% url 'products:products_list' %}">Каталог</a>
+                        </li>
+                        <li class="menu-item"><a class="menu-link" href="{% url 'comparisons:comparison_list' %}">
+                            Сравнение
+                        </a>
+                            {% if comparison_count > 0 %}
+                            <samp class="comparison-count">{{ comparison_count }}</samp>
                             {% endif %}
-                            <div class="dropdown-content">
-                                <a class="dropdown-content-a" href={% url 'user:account' %}>Личный кабинет</a>
-                                <a class="dropdown-content-a" href="account.html">Административный раздел</a>
-                                <form id="logout-form" action="{% url 'user:logout' %}" method="post">
-                                    <a class="dropdown-content-a" href="#" onclick="document.getElementById('logout-form').submit(); return false;">Выход</a>
-                                    {% csrf_token %}
-                                </form>
-                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="row-block">
+
+                <div class="CartBlock">
+                    <div class="dropdown">
+                        {% if request.user.is_authenticated %}
+                        <button class="dropbtn"><img class="CartBlock-img" src="{% static 'img/icons/loon-icon.svg' %}"
+                                                     alt="loon-icon.svg"/></button>
+                        {% endif %}
+                        <div class="dropdown-content">
+                            <a class="dropdown-content-a" href={% url 'user:account' %}>Личный кабинет</a>
+                            <a class="dropdown-content-a" href="account.html">Административный раздел</a>
+                            <form id="logout-form" action="{% url 'user:logout' %}" method="post">
+                                <a class="dropdown-content-a" href="#"
+                                   onclick="document.getElementById('logout-form').submit(); return false;">Выход</a>
+                                {% csrf_token %}
+                            </form>
                         </div>
-                        <a class="CartBlock-block" href="{% url 'carts:cart' %}">
-                            <img class="CartBlock-img" src="{% static 'img/icons/cart.svg' %}" alt="cart.svg" />
-                            <span class="CartBlock-amount">
+                    </div>
+                    <a class="CartBlock-block" href="{% url 'carts:cart' %}">
+                        <img class="CartBlock-img" src="{% static 'img/icons/cart.svg' %}" alt="cart.svg"/>
+                        <span class="CartBlock-amount">
                                 {% quantity_products request %}
                             </span>
-                        </a>
-                        <div class="CartBlock-block">
-                            <span class="CartBlock-price">{% total_price request carts %}$</span>
-                        </div>
+                    </a>
+                    <div class="CartBlock-block">
+                        <span class="CartBlock-price">{% total_price request carts %}$</span>
                     </div>
                 </div>
-                <div class="row-block Header-trigger"><a class="menuTrigger" href="#navigate">
-                        <div class="menuTrigger-content">Показать навигацию
-                        </div><span></span><span></span><span></span>
-                    </a>
+            </div>
+            <div class="row-block Header-trigger"><a class="menuTrigger" href="#navigate">
+                <div class="menuTrigger-content">Показать навигацию
                 </div>
+                <span></span><span></span><span></span>
+            </a>
+            </div>
             {% endif %}
         </div>
     </div>
     {% if not simple_header %}
-        <div class="Header-searchWrap">
-            <div class="wrap">
-                <div class="Header-categories">
-                    <div class="CategoriesButton">
-                        <div class="CategoriesButton-title">
-                            <div class="CategoriesButton-icon"><img src="{% static 'img/icons/allDep.svg' %}" alt="allDep.svg" />
-                            </div><span class="CategoriesButton-text">Все категории</span>
-                            <div class="CategoriesButton-arrow">
-                            </div>
+    <div class="Header-searchWrap">
+        <div class="wrap">
+            <div class="Header-categories">
+                <div class="CategoriesButton">
+                    <div class="CategoriesButton-title">
+                        <div class="CategoriesButton-icon"><img src="{% static 'img/icons/allDep.svg' %}"
+                                                                alt="allDep.svg"/>
                         </div>
-                        <div class="CategoriesButton-content">
-                            {% recursetree list_categories %}
-                                <ul class="CategoriesButton-link">
-                                    <a href="{% url 'products:products_list' %}?category={{ node.id }}">
-                                        <div class="CategoriesButton-icon">
-                                            <p>OO</p>
-                                        </div>
-                                        <span class="CategoriesButton-text">{{ node.name }}</span>
-                                    </a>{% if not node.is_leaf_node %}<a class="CategoriesButton-arrow" href=""{% url 'products:products_list' %}?category={{ node.id }}""></a>{% endif %}
-                                    {% if not node.is_leaf_node %}
-                                        <ul class="CategoriesButton-submenu">
-                                            {{ children }}
-                                        </ul>
-                                    {% endif %}
-                                </ul>
-                            {% endrecursetree %}
-
+                        <span class="CategoriesButton-text">Все категории</span>
+                        <div class="CategoriesButton-arrow">
                         </div>
                     </div>
-                </div>
-                <div class="Header-searchLink"><img src="{% static 'img/icons/search.svg' %}" alt="search.svg" />
-                </div>
-                <div class="Header-search">
-                    <div class="search">
-                        <form class="form form_search" action="#" method="post">
-                            {% csrf_token %}
-                            <input class="search-input" id="query" name="query" type="text" placeholder="NVIDIA GeForce RTX 3060" />
-                            <button class="search-button" type="submit" name="search" id="search"><img src="{% static 'img/icons/search.svg' %}" alt="search.svg" />Поиск
-                            </button>
-                        </form>
+                    <div class="CategoriesButton-content">
+                        {% recursetree list_categories %}
+                        <ul class="CategoriesButton-link">
+                            <a href="{% url 'products:products_list' %}?category={{ node.id }}">
+                                <div class="CategoriesButton-icon">
+                                    <p>OO</p>
+                                </div>
+                                <span class="CategoriesButton-text">{{ node.name }}</span>
+                            </a>{% if not node.is_leaf_node %}<a class="CategoriesButton-arrow" href="" {% url
+                            'products:products_list' %}?category={{ node.id }}""></a>{% endif %}
+                            {% if not node.is_leaf_node %}
+                            <ul class="CategoriesButton-submenu">
+                                {{ children }}
+                            </ul>
+                            {% endif %}
+                        </ul>
+                        {% endrecursetree %}
+
                     </div>
                 </div>
             </div>
+            <div class="Header-searchLink"><img src="{% static 'img/icons/search.svg' %}" alt="search.svg"/>
+            </div>
+            <div class="Header-search">
+                <div class="search">
+                    <form class="form form_search" action="#" method="post">
+                        {% csrf_token %}
+                        <input class="search-input" id="query" name="query" type="text"
+                               placeholder="NVIDIA GeForce RTX 3060"/>
+                        <button class="search-button" type="submit" name="search" id="search"><img
+                                src="{% static 'img/icons/search.svg' %}" alt="search.svg"/>Поиск
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
+    </div>
     {% endif %}
 </header>

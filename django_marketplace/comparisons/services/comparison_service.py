@@ -13,10 +13,17 @@ def get_comparison_list(request, limit=3):
 def add_to_comparison(request, slug):
     product = Product.objects.get(slug=slug)
     compare_list = request.session.get('compare_list', [])
+    message = ""
 
-    if product.id not in compare_list:
+    if product.id in compare_list:
+        message = f"Товар '{product.name}' уже добавлен в список для сравнения."
+    elif len(compare_list) >= 3:
+        message = "Вы уже добавили 3 товара для сравнения."
+    else:
         compare_list.append(product.id)
         request.session['compare_list'] = compare_list
+
+    return message
 
 
 def remove_from_comparison(request, slug):

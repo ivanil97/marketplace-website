@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -23,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", 'django-insecure-@9a=h4+*ds9ohkcfj0svnx7q9&m$x@9@5l(cys7tz#tvqu!duz')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUG", "0") == "1"
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    '0.0.0.0',
-    '127.0.0.1',
-] + os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
+                    '0.0.0.0',
+                    '127.0.0.1',
+                ] + os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
 AUTH_USER_MODEL = 'users.User'
 """
 AUTH_USER_MODEL = 'users.User' - использовать модель User из приложения users вместо стандартной модели auth.User
@@ -85,6 +87,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'products.context_processors.list_categories',
+                'comparisons.context_processors.comparison_count',
             ],
         },
     },
@@ -108,7 +111,6 @@ CACHES = {
         "LOCATION": "",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -177,6 +179,7 @@ INTERNAL_IPS = [
 
 if DEBUG:
     import socket
+
     hostname, alternative_names, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS.append("10.0.2.2")
     INTERNAL_IPS.extend(
@@ -190,7 +193,6 @@ REST_FRAMEWORK = {
 
 CELERY_BROKER_URL = os.getenv("DJANGO_CELERY_BROKER_URL", "")
 CELERY_RESULT_BACKEND = os.getenv("DJANGO_CELERY_RESULT_BACKEND", "")
-
 
 # Вывод логов в консоли по SQL запросам
 # LOGGING = {
