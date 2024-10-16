@@ -9,9 +9,14 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-import os.path
+import os
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
+from dotenv import load_dotenv
+
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,15 +25,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@9a=h4+*ds9ohkcfj0svnx7q9&m$x@9@5l(cys7tz#tvqu!duz'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", 'django-insecure-@9a=h4+*ds9ohkcfj0svnx7q9&m$x@9@5l(cys7tz#tvqu!duz')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", "0") == "1"
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1',
-]
+] + os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
 AUTH_USER_MODEL = 'users.User'
 """
 AUTH_USER_MODEL = 'users.User' - использовать модель User из приложения users вместо стандартной модели auth.User
@@ -57,6 +62,7 @@ INSTALLED_APPS = [
     'mptt',
     'django_cleanup.apps.CleanupConfig',
     'debug_toolbar',
+    'modeltranslation',
 
 ]
 
@@ -68,6 +74,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
@@ -131,13 +138,23 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
+LANGUAGE_CODE = 'ru'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
+
+LANGUAGES = [
+    ('en', _('Английский')),
+    ('ru', _('Русский')),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale/',
+]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -156,12 +173,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/user/account/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = str(os.getenv('EMAIL_USER'))
-EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    EMAIL_HOST_USER = "test@test.ru"
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "")
+    EMAIL_USE_TLS = os.getenv("DJANGO_EMAIL_USE_TLS", "1") == 1
+    EMAIL_USE_SSL = os.getenv("DJANGO_EMAIL_USE_SSL", "0") == 1
+    try:
+        EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "0"))
+    except ValueError:
+        EMAIL_PORT = 0
+    EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_HOST_PASSWORD')
 
 INTERNAL_IPS = [
     'localhost',
@@ -180,9 +205,8 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 
-CELERY_BROKER_URL = "redis://redis:6379/0"
-CELERY_RESULT_BACKEND = "redis://redis:6379/0"
-
+CELERY_BROKER_URL = os.getenv("DJANGO_CELERY_BROKER_URL", "")
+CELERY_RESULT_BACKEND = os.getenv("DJANGO_CELERY_RESULT_BACKEND", "")
 
 
 # Вывод логов в консоли по SQL запросам

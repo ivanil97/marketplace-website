@@ -19,6 +19,8 @@ services:
     volumes:
        - ./django_marketplace/db.sqlite3:/var/team42_app/db.sqlite3
        - ./django_marketplace/import:/var/team42_app/import
+    env_file:
+      - .env
     depends_on:
       - redis
   celery:
@@ -34,6 +36,8 @@ services:
     command: ["celery", "--app=core", "worker", "--loglevel=INFO"]
     volumes_from:
       - app:rw
+    env_file:
+      - .env
     depends_on:
       - redis
   redis:

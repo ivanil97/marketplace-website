@@ -1,0 +1,12 @@
+{% extends 'admin/base.html' %}
+{% load i18n %}
+
+{% block content %}
+  <div class="content-main">
+    {% translate "Продукты будут импортированы из json-файлов размещенных в каталоге import проекта." %}
+  </div>
+  <form action="." method="post">
+    {% csrf_token %}
+    <input type="submit" value="Import">
+  </form>
+{% endblock %}

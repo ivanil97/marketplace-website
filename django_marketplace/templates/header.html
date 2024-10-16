@@ -1,6 +1,7 @@
 {%  load static %}
 {% load mptt_tags %}
 {% load carts_tags %}
+{% load i18n %}
 
 <header class="Header">
     <div class="ControlPanel">
@@ -25,8 +26,9 @@
                 <nav class="row-block">
                     {% if not request.user.is_authenticated %}
                         <div class="row ControlPanel-rowSplit">
-                            <div class="row-block"><a class="ControlPanel-title" href="{% url 'user:login' %}">Вход</a>
-                                <a class="ControlPanel-title" href="{% url 'user:register' %}">Регистрация</a>
+                            <div class="row-block">
+                                <a class="ControlPanel-title" href = {% url 'user:login' %}>{% translate "Вход" %}</a>
+                                <a class="ControlPanel-title" href = {% url 'user:register' %}>{% translate "Регистрация" %}</a>
                             </div>
                         </div>
                     {% endif %}
@@ -46,33 +48,43 @@
     </div>
     <div class="wrap">
         <div class="row Header-rowMain">
-            <div class="row-block Header-logo"><a class="logo" href="{% url 'home' %}"><img class="logo-image" src="{% static 'img/logo.png' %}" alt="logo.png" /></a>
+            <div class="row-block Header-logo">
+                <a class="logo" href="index.html">
+                    <img class="logo-image" src="{% static 'img/logo.png' %}" alt="logo.png" />
+                </a>
             </div>
             {% if not simple_header %}
                 <nav class="row-block row-block_right Header-menu">
                     <div class="menuModal" id="navigate">
                         <ul class="menu menu_main">
-                            <li class="menu-item"><a class="menu-link" href="{% url 'home' %}">Главная</a>
+                            <li class="menu-item">
+                                <a class="menu-link" href="index.html">{% translate "Главная" %}</a>
                             </li>
-                            <li class="menu-item"><span class="menu-label menu-label_success">Скидки</span><a class="menu-link" href="{% url 'products:products_list' %}">Каталог</a>
+                            <li class="menu-item">
+                                <span class="menu-label menu-label_success">{% translate "Скидки" %}</span>
+                                <a class="menu-link" href="{% url 'products:products_list' %}">{% translate "Каталог" %}</a>
                             </li>
-                            <li class="menu-item"><a class="menu-link" href="comparison.html">Сравнение</a>
+                            <li class="menu-item">
+                                <a class="menu-link" href="comparison.html">{% translate "Сравнение" %}</a>
                             </li>
                         </ul>
                     </div>
                 </nav>
                 <div class="row-block">
-
                     <div class="CartBlock">
                         <div class="dropdown">
                             {%  if request.user.is_authenticated %}
-                                <button class="dropbtn"><img class="CartBlock-img" src="{% static 'img/icons/loon-icon.svg' %}" alt="loon-icon.svg" /></button>
+                                <button class="dropbtn">
+                                    <img class="CartBlock-img" src="{% static 'img/icons/loon-icon.svg' %}" alt="loon-icon.svg" />
+                                </button>
                             {% endif %}
                             <div class="dropdown-content">
-                                <a class="dropdown-content-a" href="{% url 'user:account' %}">Личный кабинет</a>
-                                <a class="dropdown-content-a" href="account.html">Административный раздел</a>
+                                <a class="dropdown-content-a" href="{% url 'user:account' %}">{% translate "Личный кабинет" %}</a>
+                                <a class="dropdown-content-a" href="account.html">{% translate "Административный раздел" %}</a>
                                 <form id="logout-form" action="{% url 'user:logout' %}" method="post">
-                                    <a class="dropdown-content-a" href="#" onclick="document.getElementById('logout-form').submit(); return false;">Выход</a>
+                                    <a class="dropdown-content-a" href="#" onclick="document.getElementById('logout-form').submit(); return false;">
+                                        {% translate "Выход" %}
+                                    </a>
                                     {% csrf_token %}
                                 </form>
                             </div>
@@ -84,12 +96,28 @@
                             </span>
                         </a>
                         <div class="CartBlock-block">
-                            <span class="CartBlock-price">{% total_price request carts %}$</span>
+                            <span class="CartBlock-price">
+                                {% total_price request carts %}$
+                            </span>
+                        </div>
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as AVAILABLE_LANGUAGES %}
+                        <div class="dropdown CartBlock-block">
+                            <button class="dropbtn" style="display: flex;">
+                                <img class="CartBlock-img" src="{% static 'img/icons/lan.svg' %}" alt="lan.svg"/>
+                            </button>
+                            <div class="dropdown-content">
+                                {% for lang in AVAILABLE_LANGUAGES %}
+                                    <a class="dropdown-content-a" href="{% get_url request lang.0 %}" {% if lang.0 == CURRENT_LANGUAGE %} class="active" {% endif %}>
+                                        {{ lang.1 }}
+                                    </a>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row-block Header-trigger"><a class="menuTrigger" href="#navigate">
-                        <div class="menuTrigger-content">Показать навигацию
+                        <div class="menuTrigger-content">{% translate "Навигация" %}
                         </div><span></span><span></span><span></span>
                     </a>
                 </div>
@@ -102,8 +130,10 @@
                 <div class="Header-categories">
                     <div class="CategoriesButton">
                         <div class="CategoriesButton-title">
-                            <div class="CategoriesButton-icon"><img src="{% static 'img/icons/allDep.svg' %}" alt="allDep.svg" />
-                            </div><span class="CategoriesButton-text">Все категории</span>
+                            <div class="CategoriesButton-icon">
+                                <img src="{% static 'img/icons/allDep.svg' %}" alt="allDep.svg" />
+                            </div>
+                            <span class="CategoriesButton-text">{% translate "Все категории" %}</span>
                             <div class="CategoriesButton-arrow">
                             </div>
                         </div>
@@ -115,7 +145,10 @@
                                             <p>OO</p>
                                         </div>
                                         <span class="CategoriesButton-text">{{ node.name }}</span>
-                                    </a>{% if not node.is_leaf_node %}<a class="CategoriesButton-arrow" href=""{% url 'products:products_list' %}?category={{ node.id }}""></a>{% endif %}
+                                    </a>
+                                    {% if not node.is_leaf_node %}
+                                        <a class="CategoriesButton-arrow" href=""{% url 'products:products_list' %}?category={{ node.id }}""></a>
+                                    {% endif %}
                                     {% if not node.is_leaf_node %}
                                         <ul class="CategoriesButton-submenu">
                                             {{ children }}
@@ -123,7 +156,6 @@
                                     {% endif %}
                                 </ul>
                             {% endrecursetree %}
-
                         </div>
                     </div>
                 </div>
@@ -134,7 +166,8 @@
                         <form class="form form_search" action="#" method="post">
                             {% csrf_token %}
                             <input class="search-input" id="query" name="query" type="text" placeholder="NVIDIA GeForce RTX 3060" />
-                            <button class="search-button" type="submit" name="search" id="search"><img src="{% static 'img/icons/search.svg' %}" alt="search.svg" />Поиск
+                            <button class="search-button" type="submit" name="search" id="search">
+                                <img src="{% static 'img/icons/search.svg' %}" alt="search.svg" />{% translate "Поиск" %}
                             </button>
                         </form>
                     </div>

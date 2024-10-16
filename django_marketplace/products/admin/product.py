@@ -1,6 +1,12 @@
-from django.contrib import admin
+import os
+
+from django.contrib import admin, messages
 from django.db.models import Prefetch, QuerySet
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import path
+from core.settings import BASE_DIR
+from core.task import task_is_active, create_task_load_file
 from products.models import (
     Tag,
     Seller,
@@ -97,6 +103,29 @@ class ProductAdmin(admin.ModelAdmin):
     ordering = "name", "pk",
     search_fields = "name", "description",
     list_per_page = 40
+    change_list_template = "templates_adminpanel/product_change_list.html"
+
+    def process_import(self, request: HttpRequest) -> HttpResponse:
+        if request.method == 'GET':
+            return render(request, "templates_adminpanel/product_import_from_json.html")
+        if task_is_active():
+            self.message_user(
+                request,
+                "Import already is working. Can't start new one.",
+                level=messages.WARNING
+            )
+        else:
+            path_to_json = os.path.join(BASE_DIR, 'import')
+            create_task_load_file.delay(path_to_json)
+            self.message_user(request, "Import started.")
+        return redirect("..")
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('import_products_from_json/', self.process_import, name='import_product'),
+        ]
+        return custom_urls + urls
 
     def get_queryset(self, request) -> QuerySet:
         query = (

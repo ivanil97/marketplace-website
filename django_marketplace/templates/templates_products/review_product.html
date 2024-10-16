@@ -1,29 +1,31 @@
+{% load i18n %}
+
 {% if reviews %}
 <ul class="reviews-list">
     {% for review in reviews %}
     <li class="review-item">
-        <p>оставил отзыв: {{ review.user }}</p>
+        <p>{% translate "оставил отзыв" %}: {{ review.user }}</p>
         <p>{{ review.comment }}</p>
-        <p><small>Дата: {{ review.date|date:"d.m.Y H:i" }}</small></p>
+        <p><small>{% translate "Дата" %}: {{ review.date|date:"d.m.Y H:i" }}</small></p>
     </li>
     {% endfor %}
 </ul>
 
 {% if reviews.has_other_pages %}
 <div class="pagination">
-        <span class="step-links">
-            {% if reviews.has_previous %}
-                <a href="?page={{ reviews.previous_page_number }}">« Предыдущая</a>
-            {% endif %}
-            <span class="current">
-                Страница {{ reviews.number }} из {{ reviews.paginator.num_pages }}.
-            </span>
-            {% if reviews.has_next %}
-                <a href="?page={{ reviews.next_page_number }}">Следующая »</a>
-            {% endif %}
+    <span class="step-links">
+        {% if reviews.has_previous %}
+            <a href="?page={{ reviews.previous_page_number }}">« {% translate "Предыдущая" %}</a>
+        {% endif %}
+        <span class="current">
+            {% translate "Страница" %} {{ reviews.number }} {% translate "из" %} {{ reviews.paginator.num_pages }}.
         </span>
+        {% if reviews.has_next %}
+            <a href="?page={{ reviews.next_page_number }}">{% translate "Следующая" %} »</a>
+        {% endif %}
+    </span>
 </div>
 {% endif %}
 {% else %}
-<p>Пока отзывов нет. Будьте первым, кто оставит отзыв!</p>
+<p>{% translate "Пока отзывов нет. Будьте первым, кто оставит отзыв!" %}</p>
 {% endif %}

@@ -2,7 +2,7 @@
 {% load static %}
 {% load mptt_tags %}
 {% load cache %}
-
+{% load i18n %}
 {% block title %} Каталог товаров {% endblock %}
 
 {% block header %}
@@ -18,8 +18,7 @@
                 <div class="Section-column">
                     <div class="Section-columnSection">
                         <header class="Section-header">
-                            <strong class="Section-title">Фильтр
-                            </strong>
+                            <strong class="Section-title">{% translate "Фильтр" %}</strong>
                         </header>
                         <div class="Section-columnContent">
                             <form class="form" action="{% url 'products:products_list' %}" method="post">
@@ -27,10 +26,17 @@
                                 <div class="form-group">
                                     <div class="range Section-columnRange">
 {#                                        {{ form.price }}#}
-                                        <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="{{ min_price }}" data-max="{{ max_price }}" data-from="{{ price_from }}" data-to="{{ price_to }}" />
-                                        <div class="range-price">Цена:&#32;
-                                            <div class="rangePrice">
-                                            </div>
+                                        <input class="range-line"
+                                               id="price"
+                                               name="price"
+                                               type="text"
+                                               data-type="double"
+                                               data-min="{{ min_price }}"
+                                               data-max="{{ max_price }}"
+                                               data-from="{{ price_from }}"
+                                               data-to="{{ price_to }}" />
+                                        <div class="range-price">{% translate "Цена" %}:&#32;
+                                            <div class="rangePrice"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -41,19 +47,20 @@
                                     <label class="toggle">
                                         {{ form.in_stock }}
                                         <span class="toggle-box"></span>
-                                        <span class="toggle-text">Только товары в наличии</span>
+                                        <span class="toggle-text">{% translate "Только товары в наличии" %}</span>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <input class="btn btn_square btn_dark btn_narrow" type="submit" value="Фильтр">
+                                    <input class="btn btn_square btn_dark btn_narrow"
+                                           type="submit"
+                                           value="{% translate 'Фильтр' %}">
                                 </div>
                             </form>
                         </div>
                     </div>
                     <div class="Section-columnSection">
                         <header class="Section-header">
-                            <strong class="Section-title">Популярные тэги
-                            </strong>
+                            <strong class="Section-title">{% translate "Популярные тэги" %}</strong>
                         </header>
                         <div class="Section-columnContent">
                             <div class="buttons">
@@ -64,20 +71,18 @@
 
                                 {% endfor %}
 
-                                <a class="btn btn_default btn_sm" href="#">Видео</a>
-                                <a class="btn btn_default btn_sm" href="#">Разработка</a>
-                                <a class="btn btn_default btn_sm" href="#">Игры</a>
-                                <a class="btn btn_default btn_sm" href="#">Asus</a>
-                                <a class="btn btn_default btn_sm" href="#">Разработка</a>
-                                <a class="btn btn_default btn_sm" href="#">Видео</a>
+                                <a class="btn btn_default btn_sm" href="#">{% translate "Видео" %}</a>
+                                <a class="btn btn_default btn_sm" href="#">{% translate "Разработка" %}</a>
+                                <a class="btn btn_default btn_sm" href="#">{% translate "Игры" %}</a>
+                                <a class="btn btn_default btn_sm" href="#">{% translate "Разработка" %}</a>
+                                <a class="btn btn_default btn_sm" href="#">{% translate "Видео" %}</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="Section-content">
                     <div class="Sort">
-                        <div class="Sort-title">Сортировать:
-                        </div>
+                        <div class="Sort-title">{% translate "Сортировать" %}:</div>
                         <div class="Sort-variants">
                             <a class="Sort-sortBy {% if curr_sort and curr_sort == POP_ASC.value %}
                                 Sort-sortBy_dec
@@ -89,7 +94,7 @@
                                 href="{% if curr_sort and curr_sort == POP_ASC.value %}?sort={{ POP_DEC.value }}
                                 {% elif curr_sort and curr_sort == POP_DEC.value %}?sort={{ NONE.value }}
                                 {% else %}?sort={{ POP_ASC.value }}
-                                {% endif %}">Популярности</a>
+                                {% endif %}">{% translate "Популярности" %}</a>
 
                             <a class="Sort-sortBy {% if curr_sort and curr_sort == PR_ASC.value %}
                                 Sort-sortBy_dec
@@ -101,7 +106,7 @@
                                 href="{% if curr_sort and curr_sort == PR_ASC.value %}?sort={{ PR_DEC.value }}
                                 {% elif curr_sort and curr_sort == PR_DEC.value %}?sort={{ NONE.value }}
                                 {% else %}?sort={{ PR_ASC.value }}
-                                {% endif %}">Цене</a>
+                                {% endif %}">{% translate "Цене" %}</a>
 
                             <a class="Sort-sortBy {% if curr_sort and curr_sort == REV_ASC.value %}
                                 Sort-sortBy_dec
@@ -113,7 +118,7 @@
                                 href="{% if curr_sort and curr_sort == REV_ASC.value %}?sort={{ REV_DEC.value }}
                                 {% elif curr_sort and curr_sort == REV_DEC.value %}?sort={{ NONE.value }}
                                 {% else %}?sort={{ REV_ASC.value }}
-                                {% endif %}">Отзывам</a>
+                                {% endif %}">{% translate "Отзывам" %}</a>
 
                             <a class="Sort-sortBy {% if curr_sort and curr_sort == DATE_ASC.value %}
                                 Sort-sortBy_dec
@@ -125,26 +130,33 @@
                                 href="{% if curr_sort and curr_sort == DATE_ASC.value %}?sort={{ DATE_DEC.value }}
                                 {% elif curr_sort and curr_sort == DATE_DEC.value %}?sort={{ NONE.value }}
                                 {% else %}?sort={{ DATE_ASC.value }}
-                                {% endif %}">Новизне</a>
+                                {% endif %}">{% translate "Новизне" %}</a>
                         </div>
                     </div>
                     <div class="Cards">
                         {% for product in products %}
                             {% if product.archived == False %}
                                 {% with product.images.all|first as img %}
-                                    <div class="Card"><a class="Card-picture" href="{% url 'products:product_detail' slug=product.slug %}"><img src="{{ img.image.url }}" alt="card.jpg" /></a>
+                                    <div class="Card">
+                                        <a class="Card-picture" href="{% url 'products:product_detail' slug=product.slug %}">
+                                            <img src="{{ img.image.url }}" alt="card.jpg" />
+                                        </a>
                                 {% endwith %}
                                 <div class="Card-content">
-                                    <strong class="Card-title"><a href="{% url 'products:product_detail' slug=product.slug %}">{{ product.name }}</a>
+                                    <strong class="Card-title">
+                                        <a href="{% url 'products:product_detail' slug=product.slug %}">{{ product.name }}</a>
                                     </strong>
                                     <div class="Card-description">
-                                        <div class="Card-cost"><span class="Card-price">${{ product.auto_seller_price|floatformat:0 }}</span>
+                                        <div class="Card-cost">
+                                            <span class="Card-price">${{ product.auto_seller_price|floatformat:0 }}</span>
                                         </div>
-                                        <div class="Card-category">{{ product.category.name }}
+                                        <div class="Card-category">
+                                            {{ product.category.name }}
                                         </div>
-                                        <div class="Card-hover"><a class="Card-btn" href="{% url 'carts:add_cart' product.seller_price.first.id %}">
-                                            <img src="{% static 'img/icons/card/cart.svg' %}" alt="cart.svg" />
-                                        </a>
+                                        <div class="Card-hover">
+                                            <a class="Card-btn" href="{% url 'carts:add_cart' product.seller_price.first.id %}">
+                                                <img src="{% static 'img/icons/card/cart.svg' %}" alt="cart.svg" />
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -183,7 +195,7 @@
         </div>
     </div>
 {% else %}
-    <p>Пока товаров нет.</p>
+    <p>{% translate "Пока товаров нет." %}</p>
 {% endif %}
 
 {% endcache %}
