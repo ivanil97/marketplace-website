@@ -19,7 +19,6 @@ class ProfileView(LoginRequiredMixin, FormView):
         context = super().get_context_data(**kwargs)
         user_data = self.request.user
         context['user'] = user_data
-        print(vars(self.request.session))
 
         if 'form_submitted' in self.request.session:
             context['form_submitted'] = True
