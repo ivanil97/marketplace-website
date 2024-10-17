@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}
-	Авторизация
+	{% translate "Авторизация" %}
 {% endblock %}
 
 {% block content %}
     <main class="Middle">
       <div class="wrapper">
         <div class="header">
-            <h3 class="sign-in">Вход</h3>
+            <h3 class="sign-in">{% translate "Вход" %}</h3>
         </div>
         <div class="clear"></div>
         <form method="post">
@@ -17,19 +18,16 @@
                 <input class="user-input" type="text" name="username" id="name" placeholder="E-mail" />
             </div>
             <div>
-
                 <input type="password" name="password" id="name" placeholder="*********" />
             </div>
             <div>
-                <input type="submit" value="Войти" />
+                <input type="submit" value="{% translate 'Войти' %}" />
             </div>
-            <a class="forgot-label" href="{% url 'user:password_reset' %}">Забыли пароль?</a>
-            <a class="registr" href={% url "user:register" %}>
-                Регистрация
-            </a>
+            <a class="forgot-label" href="{% url 'user:password_reset' %}">{% translate "Забыли пароль" %}?</a>
+            <a class="registr" href="{% url 'user:register' %}">{% translate "Регистрация" %}</a>
         </form>
         {% if form.non_field_errors %}
-            <div class="form-error">Вы ввели неверные данные</div>
+            <div class="form-error">{% translate "Вы ввели неверные данные" %}</div>
         {% endif %}
       </div>
     </main>

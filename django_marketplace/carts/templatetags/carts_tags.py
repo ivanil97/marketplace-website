@@ -76,3 +76,8 @@ def total_price(request, carts):
 def get_quantity(request, cart):
     """Шаблонный тег для получения количества выбраного товара из сессии"""
     return request.session['cart'][str(cart['id'])]['quantity']
+
+
+@register.simple_tag()
+def get_url(request, lan):
+    return f"/{lan}/{request.get_full_path()[4:]}"

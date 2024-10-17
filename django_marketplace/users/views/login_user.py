@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView
-
+from django.utils.translation import get_language
+from django.conf import settings
 from products.models import SellerPrice
 
 from carts.models import Cart
@@ -17,6 +18,8 @@ class LoginUser(LoginView):
 
         # Авторизуем пользователя
         if user is not None:
+            lan = get_language()
+            settings.LOGIN_REDIRECT_URL = f"/{lan}" + settings.LOGIN_REDIRECT_URL.replace("/ru", "").replace("/en", "")
             login(self.request, user)
 
         # Проверяем данные из сесии

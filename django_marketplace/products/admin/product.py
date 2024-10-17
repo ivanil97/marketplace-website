@@ -5,7 +5,6 @@ from django.db.models import Prefetch, QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import path
-
 from core.settings import BASE_DIR
 from core.task import task_is_active, create_task_load_file
 from products.models import (
