@@ -20,7 +20,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -92,6 +91,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'products.context_processors.list_categories',
+                'comparisons.context_processors.comparison_count',
             ],
         },
     },
@@ -115,7 +115,6 @@ CACHES = {
         "LOCATION": "",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -194,6 +193,7 @@ INTERNAL_IPS = [
 
 if DEBUG:
     import socket
+
     hostname, alternative_names, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS.append("10.0.2.2")
     INTERNAL_IPS.extend(
@@ -207,7 +207,6 @@ REST_FRAMEWORK = {
 
 CELERY_BROKER_URL = os.getenv("DJANGO_CELERY_BROKER_URL", "")
 CELERY_RESULT_BACKEND = os.getenv("DJANGO_CELERY_RESULT_BACKEND", "")
-
 
 # Вывод логов в консоли по SQL запросам
 # LOGGING = {

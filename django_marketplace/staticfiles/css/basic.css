@@ -812,6 +812,13 @@ textarea {
     cursor: default;
 }
 
+.comparison-count {
+    font-weight: bold;
+    color: #ff5722;
+    margin-left: 5px;
+}
+
+
 /*-----------  Стилизация текстовых полей формы и текстовых областей  -----------*/
 /*----------  Поля формы  ----------*/
 label {
