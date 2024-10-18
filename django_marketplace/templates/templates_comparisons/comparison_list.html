@@ -10,22 +10,12 @@
 {% block content %}
 <div class="Middle">
     <div class="wrap">
-        {% if request.session.message %}
-        <div class="alert alert-warning">
-            {{ request.session.message }}
-        </div>
-        {% comment %} Очищаем сообщение после отображения, чтобы оно не отображалось повторно {% endcomment %}
-        {% with request.session.message as msg %}
-        {% if msg %}
-        {% comment %} Удаляем сообщение из сессии {% endcomment %}
-        {% for key in request.session.keys %}
-        {% if key == 'message' %}
-        {% comment %} Элемент в сессии будет удален {% endcomment %}
-        {% if msg %}{% comment %} Элемент в сессии будет удален {% endcomment %}{% endif %}
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
         {% endif %}
         <div class="Product">
             <div class="ProductCard">
@@ -68,10 +58,26 @@
                             <div class="ProductCard-price">${{ product.auto_seller_price|floatformat:0 }}</div>
                         </div>
                     </div>
+
+                    <div class="ProductCard-cart">
+                        <form action="{% url 'carts:add_cart' product.seller_price.first.id %}" method="post"
+                              style="display: flex; margin-right: 15px;">
+                            {% csrf_token %}
+                            <div class="ProductCard-cartElement">
+                                <button class="btn btn_primary Amount-input form-input" type="submit">
+                                    <img class="btn-icon" src="{% static 'img/icons/card/cart_white.svg' %}"
+                                         alt="cart_white.svg"/>
+                                    <span class="btn-content">{% translate "Купить" %}</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="ProductCard-cart">
                         <form method="post" action="{% url 'comparisons:remove_from_comparison' product.slug %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn_primary">{% translate "Исключить из сравнения" %}</button>
+                            <button type="submit" class="btn btn_primary">{% translate "Исключить из сравнения" %}
+                            </button>
                         </form>
                     </div>
                 </div>

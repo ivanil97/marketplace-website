@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import View, ListView
+from django.views.generic import View
 
 from comparisons.services.comparison_service import *
 
@@ -17,8 +17,7 @@ class ComparisonListView(View):
 class AddComparisonView(View):
     def post(self, request, **kwargs):
         slug = kwargs.get('slug')
-        message = add_to_comparison(request, slug)
-        request.session['message'] = message
+        add_to_comparison(request, slug, limit=3)
         return redirect('comparisons:comparison_list')
 
 
