@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+
+{% load carts_tags %}
+
+{% block content %}
+<script>
+    function updatePreview() {
+        console.log("Updating preview...");
+
+        const name_element = document.getElementById('first_name');
+        const phone_element = document.getElementById('phone');
+        const email_element = document.getElementById('email');
+        const city_element = document.getElementById('city');
+        const address_element = document.getElementById('address');
+
+        const name = name_element ? name_element.value : '';
+        const phone = phone_element ? phone_element.value : '';
+        const email = email_element ? email_element.value : '';
+        const city = city_element ? city_element.value : '';
+        const address = address_element ? address_element.value : '';
+
+        const deliveryOptions = document.getElementsByName('delivery_option');
+        let delivery_option_label = '';
+
+        for (const option of deliveryOptions) {
+            if (option.checked) {
+                const label = option.closest('label');
+                if (label) {
+                    const text = label.querySelector('.toggle-text');
+                    if (text) {
+                        delivery_option_label = text.textContent;
+                    }
+                }
+                break;
+            }
+        }
+
+        const paymentOptions = document.getElementsByName('payment_option');
+        let payment_option_label = '';
+
+        for (const option of paymentOptions) {
+            if (option.checked) {
+                const label = option.closest('label');
+                if (label) {
+                    const text = label.querySelector('.toggle-text');
+                    if (text) {
+                        payment_option_label = text.textContent;
+                    }
+                }
+                break;
+            }
+        }
+
+        document.getElementById('preview').innerHTML = `
+            <div class="row">
+                <div class="row-block">
+                    <div class="Order-info">
+                        <div class="Order-infoType">Имя и фамилия:
+                        </div>
+                        <div class="Order-infoContent">${name}
+                        </div>
+                    </div>
+                    <div class="Order-info">
+                        <div class="Order-infoType">Телефон:
+                        </div>
+                        <div class="Order-infoContent">${phone}
+                        </div>
+                    </div>
+                    <div class="Order-info">
+                        <div class="Order-infoType">E-mail:
+                        </div>
+                        <div class="Order-infoContent">${email}
+                        </div>
+                    </div>
+                </div>
+                <div class="row-block">
+                    <div class="Order-info Order-info_delivery">
+                        <div class="Order-infoType">Тип доставки:
+                        </div>
+                        <div class="Order-infoContent">${delivery_option_label}
+                        </div>
+                    </div>
+                    <div class="Order-info">
+                        <div class="Order-infoType">Город:
+                        </div>
+                        <div class="Order-infoContent">${city}
+                        </div>
+                    </div>
+                    <div class="Order-info">
+                        <div class="Order-infoType">Адрес:
+                        </div>
+                        <div class="Order-infoContent">${address}
+                        </div>
+                    </div>
+                    <div class="Order-info Order-info_pay">
+                        <div class="Order-infoType">Оплата:
+                        </div>
+                        <div class="Order-infoContent">${payment_option_label}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            `;
+        }
+
+        window.onload = updatePreview;
+</script>
+
+<div class="Middle Middle_top">
+        <div class="Section Section_column Section_columnRight Section_columnWide Order">
+            <div class="wrap">
+                <div class="Section-column">
+                    <div class="Section-columnSection">
+                        <header class="Section-header">
+                            <strong class="Section-title">Прогресс заполнения
+                            </strong>
+                        </header>
+                        <div class="Section-columnContent">
+                            <div class="NavigateProfile">
+                                <ul class="menu menu_vt">
+                                    <li class="menu-item_ACTIVE menu-item"><a class="menu-link Order-next" href="#step1">Шаг 1. Параметры пользователя</a>
+                                    </li>
+                                    <li class="menu-item"><a class="menu-link Order-next" href="#step2">Шаг 2. Способ доставки</a>
+                                    </li>
+                                    <li class="menu-item"><a class="menu-link Order-next" href="#step3">Шаг 3. Способ оплаты</a>
+                                    </li>
+                                    <li class="menu-item"><a class="menu-link Order-next" href="#step4">Шаг 4. Подтверждение заказа</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="Section-content">
+                    <form class="form Profile-form" action="{% url 'orders:order_proceed' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="Order-block Order-block_OPEN" id="step1">
+                            <header class="Section-header Section-header_sm">
+                                <h2 class="Section-title">Шаг 1. Параметры пользователя
+                                </h2>
+                            </header>
+                            <div class="row">
+                                <div class="row-block">
+                                    <div class="form-group">
+                                        <label class="form-label" for="first_name">Имя и фамилия</label>
+                                        <input class="form-input" id="first_name" name="first_name" type="text" value="{{ user.first_name }} {{ user.last_name }} " oninput="updatePreview()"/>
+                                        <div style="color: red">
+                                            {{ form.errors.first_name|join:", " }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="phone">Телефон
+                                        </label>
+                                        {% if user.phone_number %}
+                                        {% with phone_prefix="+7" %}
+                                        <input class="form-input" id="phone" name="phone_number" type="text"
+                                               value="{{ phone_prefix }}{{ user.phone_number }}"
+                                               placeholder="{{ form.phone_number.field.widget.attrs.placeholder }}" oninput="updatePreview();"/>
+                                        {% endwith %}
+                                        {% else %}
+                                        <input class="form-input" id="phone" name="phone_number" type="text" value=""
+                                               placeholder="{{ form.phone_number.field.widget.attrs.placeholder }}" oninput="updatePreview();"/>
+                                        {% endif %}
+                                        <div style="color: red">
+                                            {{ form.errors.phone_number|join:", " }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="email">E-mail
+                                        </label>
+                                        <input class="form-input" id="email" name="email" type="text" value="{{ user.email }}" oninput="updatePreview();"/>
+                                        <div style="color: red">
+                                            {{ form.errors.email|join:", " }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-block">
+                                    {% if not user.is_authenticated %}
+                                    <div class="form-group">
+                                        <label class="form-label" for="password">Пароль
+                                        </label>
+                                        <input class="form-input" id="password" name="password" type="password"
+                                               placeholder="{{ form.password.field.widget.attrs.placeholder }}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="password_reply">Подтверждение пароля
+                                        </label>
+                                        <input class="form-input" id="password_reply" name="password_reply" type="password"
+                                               placeholder="{{ form.password_reply.field.widget.attrs.placeholder }}"/>
+                                        <div style="color: red">
+                                            {{ form.errors.password|join:", " }}
+                                            {{ form.errors.password_reply|join:", " }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group"><a class="btn btn_muted Order-btnReg" href="{% url 'user:login' %}?next={% url 'orders:order_proceed' %}">Я уже зарегистрирован</a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step2">Дальше</a>
+                            </div>
+
+                            {% if user_exists %}
+                                <div class="Profile-success">
+                                    Пользователь с указанным email существует, вы можете авторизоваться
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="Order-block" id="step2">
+                            <header class="Section-header Section-header_sm">
+                                <h2 class="Section-title">Шаг 2. Способ доставки
+                                </h2>
+                            </header>
+                            <div class="form-group">
+                                {% for value, label in form.delivery_option.field.choices %}
+                                    <div>
+                                        <label class="toggle">
+                                            <input type="radio" name="delivery_option" value="{{ value }}" {% if forloop.first %}checked="checked"{% endif %} oninput="updatePreview();"/>
+                                            <span class="toggle-box"></span>
+                                            <span class="toggle-text">{{ label }}</span>
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="city">Город
+                                </label>
+                                <input class="form-input" id="city" name="city" type="text" oninput="updatePreview();"/>
+                                    <div style="color: red">
+                                        {{ form.errors.city|join:", " }}
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="address">Адрес
+                                </label>
+                                <textarea class="form-textarea" name="address" id="address" oninput="updatePreview();"></textarea>
+                                <div style="color: red">
+                                    {{ form.errors.address|join:", " }}
+                                </div>
+                            </div>
+                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step3">Дальше</a>
+                            </div>
+                        </div>
+                        <div class="Order-block" id="step3">
+                            <header class="Section-header Section-header_sm">
+                                <h2 class="Section-title">Шаг 3. Способ оплаты
+                                </h2>
+                            </header>
+                            <div class="form-group">
+                                {% for value, label in form.payment_option.field.choices %}
+                                    <div>
+                                        <label class="toggle">
+                                            <input type="radio" name="payment_option" value="{{ value }}" {% if forloop.first %}checked="checked"{% endif %} oninput="updatePreview();"/>
+                                            <span class="toggle-box"></span>
+                                            <span class="toggle-text">{{ label }}</span>
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step4">Дальше</a>
+                            </div>
+                        </div>
+                        <div class="Order-block" id="step4">
+                            <header class="Section-header Section-header_sm">
+                                <h2 class="Section-title">Шаг 4. Подтверждение заказа
+                                </h2>
+                            </header>
+                            <div class="Order-infoBlock">
+                                <div id="preview" class="Order-personal">
+                                    <div class="row">
+                                        <div class="row-block">
+                                            <div class="Order-info">
+                                                <div class="Order-infoType">Имя и фамилия:
+                                                </div>
+                                                <div class="Order-infoContent">{{ user.first_name }} {{ user.last_name }}
+                                                </div>
+                                            </div>
+                                            <div class="Order-info">
+                                                <div class="Order-infoType">Телефон:
+                                                </div>
+                                                <div class="Order-infoContent">+7{{ user.phone_number }}
+                                                </div>
+                                            </div>
+                                            <div class="Order-info">
+                                                <div class="Order-infoType">E-mail:
+                                                </div>
+                                                <div class="Order-infoContent">{{ user.email }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row-block">
+                                            <div class="Order-info Order-info_delivery">
+                                                <div class="Order-infoType">Тип доставки:
+                                                </div>
+                                                <div class="Order-infoContent">
+                                                </div>
+                                            </div>
+                                            <div class="Order-info">
+                                                <div class="Order-infoType">Город:
+                                                </div>
+                                                <div class="Order-infoContent">Москва
+                                                </div>
+                                            </div>
+                                            <div class="Order-info">
+                                                <div class="Order-infoType">Адрес:
+                                                </div>
+                                                <div class="Order-infoContent">Ул. Академика Арцимовича, д. 10, кв. 10
+                                                </div>
+                                            </div>
+                                            <div class="Order-info Order-info_pay">
+                                                <div class="Order-infoType">Оплата:
+                                                </div>
+                                                <div class="Order-infoContent">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Cart Cart_order">
+                                    {% for i_item in cart %}
+                                    <div class="Cart-product">
+                                        <div class="Cart-block Cart-block_row">
+                                            {% with i_item.sellerprice.product.images.all|first as img %}
+                                            <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="{{ img.image.url }}" alt="{{ i_item.product.name }}" /></a>
+                                            </div>
+                                            {% endwith %}
+                                            <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#"> {{ i_item.sellerprice.product.name }}</a>
+                                                <div class="Cart-desc">{{ i_item.sellerprice.product.description }}
+                                                </div>
+                                            </div>
+                                            <div class="Cart-block Cart-block_price">
+                                                <div class="Cart-price">{{ i_item.sellerprice.price }}$
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="Cart-block Cart-block_row">
+                                            <div class="Cart-block Cart-block_amount">{{ i_item.quantity }} шт.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    <div class="Cart-total">
+                                        <div class="Cart-block Cart-block_total">
+                                            <strong class="Cart-title">Итого:
+                                            </strong><span class="Cart-price">{% total_price request carts %}$</span>
+                                        </div>
+                                        <div class="Cart-block">
+                                            <button class="btn btn_primary btn_lg" type="submit">Оплатить
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

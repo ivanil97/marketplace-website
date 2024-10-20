@@ -1,16 +1,10 @@
-import enum
-
 from django.core.cache.utils import make_template_fragment_key
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import DetailView, TemplateView, ListView
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, ListView
 from django.dispatch import receiver
 from django.core.cache import cache
 
-from products.models import SellerPrice
 from products.services.product_context import product_context
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
@@ -125,27 +119,6 @@ class ProductsListView(ListView):
         products = self.get_queryset()
         context = get_context_data(self.request, products)
         return context
-
-
-class ComparisonListView(View):
-    def get(self, request):
-        limit = int(request.GET.get('limit', 3))
-        context = get_comparison_context(request, limit)
-        return render(request, 'templates_products/comparison_list.html', context)
-
-
-class AddComparisonView(View):
-    def post(self, request, *args, **kwargs):
-        slug = kwargs.get('slug')
-        add_to_comparison(request, slug)
-        return render(request, 'templates_products/comparison_list.html', get_comparison_context(request))
-
-
-class RemoveFromComparisonView(View):
-    def post(self, request, *args, **kwargs):
-        slug = kwargs.get('slug')
-        remove_from_comparison(request, slug)
-        return render(request, 'templates_products/comparison_list.html', get_comparison_context(request))
 
 
 class HomeView(TemplateView):

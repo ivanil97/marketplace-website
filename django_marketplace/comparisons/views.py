@@ -1,24 +1,29 @@
-from django.shortcuts import render
-from django.views import View
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.views.generic import View
 
 from comparisons.services.comparison_service import *
 
+
 class ComparisonListView(View):
-    def get(self, request):
+    template_name = 'templates_comparisons/comparison_list.html'
+
+    def get(self, request) -> HttpResponse:
         limit = int(request.GET.get('limit', 3))
         context = get_comparison_context(request, limit)
-        return render(request, 'templates_comparisons/comparison_list.html', context)
+        return render(request, self.template_name, context)
 
 
 class AddComparisonView(View):
-    def post(self, request, *args, **kwargs):
+    def post(self, request, **kwargs):
         slug = kwargs.get('slug')
-        add_to_comparison(request, slug)
-        return render(request, 'templates_comparisons/comparison_list.html', get_comparison_context(request))
+        add_to_comparison(request, slug, limit=3)
+        return redirect('comparisons:comparison_list')
 
 
 class RemoveFromComparisonView(View):
-    def post(self, request, *args, **kwargs):
+
+    def post(self, request, **kwargs):
         slug = kwargs.get('slug')
         remove_from_comparison(request, slug)
-        return render(request, 'templates_comparisons/comparison_list.html', get_comparison_context(request))
+        return redirect('comparisons:comparison_list')

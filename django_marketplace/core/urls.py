@@ -28,6 +28,7 @@ from products.views import HomeView
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('product/', include('products.urls')),
+    path('order/', include('orders.urls')),
     path('user/', include('users.urls')),
     path('cart/', include('carts.urls')),
     path('', HomeView.as_view(), name='home'),

@@ -1,3 +1,5 @@
+from random import choice
+
 from django.db import models
 from django.conf import settings
 from products.models import Product
@@ -22,6 +24,22 @@ class Order(models.Model):
         ('canceled', 'Отменен')
     ]
 
+    DELIVERY_OPTIONS = [
+        ('ordinary', 'Обычная доставка'),
+        ('express', 'Экспресс доставка'),
+    ]
+
+    PAYMENT_OPTIONS = [
+        ('online', 'Онлайн картой'),
+        ('someone', 'Онлайн со случайного чужого счета'),
+    ]
+
+    PAYMENT_STATUS = [
+        ('unpaid', 'Не оплачен'),
+        ('paid', 'Оплачен'),
+        ('error', 'Ошибка оплаты')
+    ]
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -43,6 +61,31 @@ class Order(models.Model):
         choices=STATUS_CHOICES,
         default='pending',
         verbose_name='Статус'
+    )
+    city = models.CharField(
+        blank=True,
+        max_length=50,
+        verbose_name='Город'
+    )
+    address = models.CharField(
+        blank=True,
+        max_length=100,
+        verbose_name='Адрес'
+    )
+    delivery_option = models.CharField(
+        default=DELIVERY_OPTIONS[0],
+        max_length=20,
+        choices=DELIVERY_OPTIONS
+    )
+    payment_option = models.CharField(
+        default=PAYMENT_OPTIONS[0],
+        max_length=20,
+        choices=PAYMENT_OPTIONS
+    )
+    payment_status = models.CharField(
+        default=PAYMENT_STATUS[0],
+        max_length=20,
+        choices=PAYMENT_STATUS
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')

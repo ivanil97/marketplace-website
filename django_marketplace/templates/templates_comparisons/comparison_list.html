@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load mptt_tags %}
 {% load i18n %}
 
 {% block header %}
@@ -9,6 +10,13 @@
 {% block content %}
 <div class="Middle">
     <div class="wrap">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <div class="Product">
             <div class="ProductCard">
                 {% for product in products %}
@@ -33,7 +41,9 @@
                                             {% for feature in product.features.all %}
                                             <tr>
                                                 <td>{{ feature.feature.name }}</td>
-                                                <td>{{ feature.value }}</td>
+                                                <td>
+                                                    {{ feature.value }}
+                                                </td>
                                             </tr>
                                             {% endfor %}
                                         </table>
@@ -48,10 +58,26 @@
                             <div class="ProductCard-price">${{ product.auto_seller_price|floatformat:0 }}</div>
                         </div>
                     </div>
+
+                    <div class="ProductCard-cart">
+                        <form action="{% url 'carts:add_cart' product.seller_price.first.id %}" method="post"
+                              style="display: flex; margin-right: 15px;">
+                            {% csrf_token %}
+                            <div class="ProductCard-cartElement">
+                                <button class="btn btn_primary Amount-input form-input" type="submit">
+                                    <img class="btn-icon" src="{% static 'img/icons/card/cart_white.svg' %}"
+                                         alt="cart_white.svg"/>
+                                    <span class="btn-content">{% translate "Купить" %}</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="ProductCard-cart">
                         <form method="post" action="{% url 'comparisons:remove_from_comparison' product.slug %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn_primary">{% translate "Исключить из сравнения" %}</button>
+                            <button type="submit" class="btn btn_primary">{% translate "Исключить из сравнения" %}
+                            </button>
                         </form>
                     </div>
                 </div>

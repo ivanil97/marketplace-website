@@ -8,7 +8,13 @@ def add_cart(request, sellerprice_id, count=1):
     product = SellerPrice.objects.get(id=sellerprice_id)
 
     if request.method == 'POST':
-        count = int(request.POST.get('amount', None))
+        amount = request.POST.get('amount')
+        if amount is not None:
+            try:
+                count = int(amount)
+            except ValueError:
+                return redirect(request.META.get('HTTP_REFERER', '/'))
+
     if product.count_products < count:
         count = product.count_products
     if product.count_products == 0:
