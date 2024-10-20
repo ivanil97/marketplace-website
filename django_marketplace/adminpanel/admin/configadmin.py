@@ -1,6 +1,7 @@
 from constance.admin import ConstanceAdmin, Config
 from django.contrib import admin, messages
 from django.core.cache import cache
+from django.core.cache.utils import make_template_fragment_key
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import path
@@ -11,16 +12,21 @@ class CacheChoiceForm(forms.Form):
     """
     Форма для установки списка ключей кеша проекта для выборочного сброса.
     options = [("cache_key1", "verbose_name_key1"), ...]
+    Если cache_key это ключ кэша html-фрагмента, то его необходимо преобразовать
+    from django.core.cache.utils import make_template_fragment_key
     """
     options = [
-        ('slider_banners', 'slider banners'),
-        ('static_banners', 'static banners'),
-        ('limited_item_day', 'limited item day'),
-        ('product_detail', 'product detail'),
-        ('product_list', 'product list'),
+        ('slider_banners', 'api cache slider banners'),
+        ('static_banners', 'api cache static banners'),
+        ('limited_item_day', 'api cache limited item day'),
+        (make_template_fragment_key('product_detail'), 'html fragment cache product detail'),
+        (make_template_fragment_key('product_list'), 'html fragment cache product list'),
     ]
     template_name_label = ""
-    cache_choice_field = forms.MultipleChoiceField(choices=options, widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-row'}))
+    cache_choice_field = forms.MultipleChoiceField(
+        choices=options,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-row'})
+    )
 
 
 class ConfigAdmin(ConstanceAdmin):
@@ -35,10 +41,12 @@ class ConfigAdmin(ConstanceAdmin):
                 return redirect("..")
             elif form.is_valid():
                 selected_values = form.cleaned_data['cache_choice_field']
-                if selected_values:
-                    for cache_key in selected_values:
-                        cache.delete(cache_key)
-                messages.info(request, f"Cache was deleted for: {', '.join(selected_values)}")
+                for cache_key in selected_values:
+                    cache.delete(cache_key)
+                messages.info(
+                    request,
+                    f"Cache was deleted for: {selected_values}",
+                )
                 return redirect("..")
         else:
             form = CacheChoiceForm()
