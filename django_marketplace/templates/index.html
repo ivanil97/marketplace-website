@@ -74,19 +74,21 @@
                                   </header>
                                   {% with limited_item_day.product.images.all|first as img %}
                                     <div class="Card">
-                                        {% if product.slug %}
-                                            <a href="{% url 'product_detail' slug=product.slug %}">{{ product.name }}</a>
+                                        {% if limited_item_day.product.slug %}
+                                            <a href="{% url 'product_detail' slug=limited_item_day.product.slug %}">{{ limited_item_day.product.name }}</a>
                                         {% else %}
-                                            <span>{{ product.name }}</span>
+                                            <span>{{ limited_item_day.product.name }}</span>
                                         {% endif %}
-                                            <img src="{{ img.image.url }}" alt="{% translate 'нет доступных изображений' %}"/>
-                                        </a>
-                                  {% endwith %}
+                                        <img src="{{ img.image.url }}" alt="{% translate 'нет доступных изображений' %}"/>
+                                    </div>
+                                {% endwith %}
                                     <div class="Card-content">
                                       <strong class="Card-title">
-                                          <a href="{% url 'products:product_detail' slug=limited_item_day.product.slug %}">
-                                              {{ limited_item_day.product.name }}
-                                          </a>
+                                          {% if limited_item_day.product.slug %}
+                                                <a href="{% url 'product_detail' slug=limited_item_day.product.slug %}">{{ limited_item_day.product.name }}</a>
+                                            {% else %}
+                                                <span>{{ limited_item_day.product.name }}</span>
+                                            {% endif %}
                                       </strong>
                                       <div class="Card-description">
                                         <div class="Card-cost">
