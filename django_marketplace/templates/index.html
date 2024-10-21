@@ -74,7 +74,11 @@
                                   </header>
                                   {% with limited_item_day.product.images.all|first as img %}
                                     <div class="Card">
-                                        <a class="Card-picture" href="{% url 'products:product_detail' slug=limited_item_day.product.slug %}">
+                                        {% if product.slug %}
+                                            <a href="{% url 'product_detail' slug=product.slug %}">{{ product.name }}</a>
+                                        {% else %}
+                                            <span>{{ product.name }}</span>
+                                        {% endif %}
                                             <img src="{{ img.image.url }}" alt="{% translate 'нет доступных изображений' %}"/>
                                         </a>
                                   {% endwith %}
@@ -93,7 +97,7 @@
                                             {{ limited_item_day.product.category }}
                                         </div>
                                       </div>
-                                      <div class="CountDown" data-date="31.09.2020 03:59">
+                                      <div class="CountDown" data-date="{{ end_of_day }}">
                                         <div class="CountDown-block">
                                           <div class="CountDown-wrap">
                                             <div class="CountDown-days"></div>
