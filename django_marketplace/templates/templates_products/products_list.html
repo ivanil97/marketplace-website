@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-{% cache 2 product_list %}
+{% cache config.CACHES_PRODUCTS product_list %}
 {% if products %}
     <div class="Middle Middle_top">
         <div class="Section Section_column Section_columnLeft">

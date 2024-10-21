@@ -4,6 +4,8 @@ from typing import List, Dict
 from django.core.cache import cache
 import random
 
+from constance import config
+
 from django.db.models import Prefetch
 
 from products.models import Category, Product, SellerPrice, SliderBanner, StaticBanner, ProductImage
@@ -20,7 +22,7 @@ def get_slider_banners():
     if not banners:
         banners = list(SliderBanner.objects.filter(is_active=True))
         banners = random.sample(banners, min(len(banners), 3))
-        cache.set('slider_banners', banners, timeout=600)  # кеш на 10 минут
+        cache.set('slider_banners', banners, timeout=config.CACHES_BANNERS)  # кеш на 10 минут
     return banners
 
 
@@ -35,7 +37,7 @@ def get_static_banners():
     if not banners:
         banners = list(StaticBanner.objects.filter(is_active=True))
         banners = random.sample(banners, min(len(banners), 3))
-        cache.set('static_banners', banners, timeout=600)  # кеш на 10 минут
+        cache.set('static_banners', banners, timeout=config.CACHES_BANNERS)  # кеш на 10 минут
     return banners
 
 
