@@ -485,8 +485,9 @@ var CountDown = function(){
     var $blocks = $('.CountDown');
 
     // Получаем время окончания суток из атрибута data-date
-    function getTimeRemaining(endtime){
-        endtime = endtime.split('T'); // Изменяем на 'T' для ISO формата
+    function getTimeRemaining(endtime) {
+//        endtime = endtime.split('T'); // Изменяем на 'T' для ISO формата
+        var endDate = new Date(endtime); // Прямое создание объекта даты
         var date = endtime[0].split('-'); // 'YYYY-MM-DD'
         var time = endtime[1].split(':'); // 'HH:mm:ss'
         var t = new Date(date[0], date[1] - 1, date[2], time[0], time[1]) - new Date();

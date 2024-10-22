@@ -74,21 +74,15 @@
                                   </header>
                                   {% with limited_item_day.product.images.all|first as img %}
                                     <div class="Card">
-                                        {% if limited_item_day.product.slug %}
-                                            <a href="{% url 'product_detail' slug=limited_item_day.product.slug %}">{{ limited_item_day.product.name }}</a>
-                                        {% else %}
-                                            <span>{{ limited_item_day.product.name }}</span>
-                                        {% endif %}
-                                        <img src="{{ img.image.url }}" alt="{% translate 'нет доступных изображений' %}"/>
-                                    </div>
-                                {% endwith %}
+                                        <a class="Card-picture" href="{% url 'products:product_detail' slug=limited_item_day.product.slug %}">
+                                            <img src="{{ img.image.url }}" alt="{% translate 'нет доступных изображений' %}"/>
+                                        </a>
+                                  {% endwith %}
                                     <div class="Card-content">
                                       <strong class="Card-title">
-                                          {% if limited_item_day.product.slug %}
-                                                <a href="{% url 'product_detail' slug=limited_item_day.product.slug %}">{{ limited_item_day.product.name }}</a>
-                                            {% else %}
-                                                <span>{{ limited_item_day.product.name }}</span>
-                                            {% endif %}
+                                          <a href="{% url 'products:product_detail' slug=limited_item_day.product.slug %}">
+                                              {{ limited_item_day.product.name }}
+                                          </a>
                                       </strong>
                                       <div class="Card-description">
                                         <div class="Card-cost">
@@ -99,13 +93,13 @@
                                             {{ limited_item_day.product.category }}
                                         </div>
                                       </div>
-                                      <div class="CountDown" data-date="{{ end_of_day }}">
-                                        <div class="CountDown-block">
-                                          <div class="CountDown-wrap">
-                                            <div class="CountDown-days"></div>
-                                              <span class="CountDown-label">{% translate "дни" %}</span>
-                                          </div>
-                                        </div>
+                                      <div class="CountDown" data-date=" {{ end_of_day }} ">
+<!--                                        <div class="CountDown-block">-->
+<!--                                          <div class="CountDown-wrap">-->
+<!--                                            <div class="CountDown-days"></div>-->
+<!--                                              <span class="CountDown-label">{% translate "дни" %}</span>-->
+<!--                                          </div>-->
+<!--                                        </div>-->
                                         <div class="CountDown-block">
                                           <div class="CountDown-wrap">
                                             <div class="CountDown-hours"></div>
@@ -226,12 +220,13 @@
                         </div>
                     </div>
                 </div>
-        <script src="assets/plg/jQuery/jquery-3.5.0.slim.min.js"></script>
-        <script src="assets/plg/form/jquery.form.js"></script>
-        <script src="assets/plg/form/jquery.maskedinput.min.js"></script>
-        <script src="assets/plg/range/ion.rangeSlider.min.js"></script>
-        <script src="assets/plg/Slider/slick.min.js"></script>
-        <script src="assets/js/scripts.js"></script>
+        <script src="{% static 'assets/plg/jQuery/jquery-3.5.0.slim.min.js' %}"></script>
+        <script src="{% static 'assets/plg/form/jquery.form.js' %}"></script>
+        <script src="{% static 'assets/plg/form/jquery.maskedinput.min.js' %}"></script>
+        <script src="{% static 'assets/plg/range/ion.rangeSlider.min.js' %}"></script>
+        <script src="{% static 'assets/plg/Slider/slick.min.js' %}"></script>
+        <script src="{% static 'assets/js/scripts.js' %}"></script>
+
     </div>
     </body>
 {% endblock %}

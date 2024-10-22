@@ -146,7 +146,7 @@ class HomeView(TemplateView):
         if limited_item_day is None:
             context['limited_item_day'] = None
             context['limited_items'] = []
-            context['end_of_day'] = None
+            context['end_of_day'] = end_of_day
         else:
             context['limited_item_day'] = limited_item_day
             context['limited_items'] = limited_items

@@ -34,7 +34,10 @@ class SellerPrice(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Seller {self.seller.name} | Product {self.product.name}"
+        seller_name = self.seller.name if self.seller else "No seller"
+        product_name = self.product.name if self.product else "No product"
+        return f"Seller {seller_name} | Product {product_name}"
+        # return f"Seller {self.seller.name} | Product {self.product.name}"
 
     def display_price(self):
         return f"{self.price}" # Вывести с учетом скидки!!!
