@@ -99,8 +99,9 @@
                             </span>
                         </a>
                         <div class="CartBlock-block">
+                            {% total_price request carts as price %}
                             <span class="CartBlock-price">
-                                {% total_price request carts %}$
+                                {{ price.total_price }}$
                             </span>
                         </div>
                         {% get_current_language as CURRENT_LANGUAGE %}
