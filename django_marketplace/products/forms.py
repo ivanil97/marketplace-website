@@ -42,3 +42,7 @@ class SearchForm(forms.Form):
     in_stock = forms.BooleanField(
         required=False,
     )
+
+    in_discount = forms.BooleanField(
+        required=False
+    )
