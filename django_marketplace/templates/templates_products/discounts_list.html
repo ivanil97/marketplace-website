@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block header %}
+<!-- Здесь будет header -->
+{% endblock %}
+
+{% block content %}
+<div class="Middle Middle_top">
+    <div class="Section">
+        <div class="wrap">
+            <div class="Cards Cards_blog">
+                {% for discount in discounts %}
+                <div class="Card">
+                    <div class="Card-content">
+                        <strong class="Card-title"><a href="#">{{ discount.description }}</a></strong>
+                        <div class="Card-description">
+                            Скидка: {{ discount.percent }}% <br>
+                            Действует с {{ discount.from_date|date:"d.m.Y" }} по {{ discount.to_date|date:"d.m.Y" }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+<!-- Здесь будет footer -->
+{% endblock %}
