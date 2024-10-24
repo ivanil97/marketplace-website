@@ -20,22 +20,7 @@
             <div class="wrap">
                 <div class="Section-column">
                     <div class="Section-columnSection">
-                        <header class="Section-header">
-                            <strong class="Section-title">{% translate "Навигация" %}
-                            </strong>
-                        </header>
-                        <div class="Section-columnContent">
-                            <div class="NavigateProfile">
-                                <ul class="menu menu_vt">
-                                    <li class="menu-item_ACTIVE menu-item"><a class="menu-link" href="{% url 'user:account' %}">{% translate "Личный кабинет" %}</a>
-                                    </li>
-                                    <li class="menu-item"><a class="menu-link" href="{% url 'user:user_profile' %}">{% translate "Профиль" %}</a>
-                                    </li>
-                                    <li class="menu-item"><a class="menu-link" href="historyorder.html">{% translate "История заказов" %}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        {% include 'templates_users/user_account_navigation.html' %}
                     </div>
                 </div>
                 <div class="Section-content">
@@ -46,7 +31,7 @@
                                     <div class="Account-avatar"><img src="{{ user.profile_picture.url }}" alt="profile_picture" />
                                 </div>
                                 {% else %}
-                                    <div class="Account-avatar">{% translate "Изображение не доступно" %}</div>
+                                    <div class="Account-avatar">{% translate "Изображение недоступно" %}</div>
                                 {% endif %}
                             </div>
                             <div class="Account-column">
@@ -57,40 +42,49 @@
                         <div class="Account-group">
                             <div class="Account-column Account-column_full">
                                 <div class="Order Order_anons">
-                                    <div class="Order-personal">
+                                    {% if order %}
+                                        <div class="Order-personal">
                                         <div class="row">
-                                            <div class="row-block"><a class="Order-title" href="oneorder.html">{% translate "Заказ" %}&#32;<span class="Order-numberOrder">№200</span>&#32;от&#32;<span class="Order-dateOrder">21.07.2020</span></a>
-                                                <div class="Account-editLink"><a href="historyorder.html">{% translate "История заказов" %}</a>
+                                            <div class="row-block"><a class="Order-title" href="{% url 'orders:order_detail' pk=order.id %}">{% translate "Заказ" %}&#32;<span class="Order-numberOrder">№{{ order.id }}</span>&#32;от&#32;<span class="Order-dateOrder">{{ order.created_at|date:"d.m.Y" }}</span></a>
+                                                <div class="Account-editLink"><a href="{% url 'user:user_order_history' %}">{% translate "История заказов" %}</a>
                                                 </div>
                                             </div>
                                             <div class="row-block">
                                                 <div class="Order-info Order-info_delivery">
                                                     <div class="Order-infoType">{% translate "Тип доставки" %}:
                                                     </div>
-                                                    <div class="Order-infoContent">{% translate "Обычная доставка" %}
+                                                    <div class="Order-infoContent">{{ order.get_delivery_label }}
                                                     </div>
                                                 </div>
                                                 <div class="Order-info Order-info_pay">
                                                     <div class="Order-infoType">{% translate "Оплата" %}:
                                                     </div>
-                                                    <div class="Order-infoContent">{% translate "Онлайн картой" %}
+                                                    <div class="Order-infoContent">{{ order.get_payment_label }}
                                                     </div>
                                                 </div>
                                                 <div class="Order-info">
                                                     <div class="Order-infoType">{% translate "Итого" %}:
                                                     </div>
-                                                    <div class="Order-infoContent">200.99$
+                                                    <div class="Order-infoContent"><span class="Order-price">{{ order.total_price }}$</span>
                                                     </div>
                                                 </div>
                                                 <div class="Order-info Order-info_status">
-                                                    <div class="Order-infoType">{% translate "Статус" %}:
-                                                    </div>
-                                                    <div class="Order-infoContent">{% translate "Не оплачен" %}
-                                                    </div>
+                                            <div class="Order-infoType">Статус:
+                                            </div>
+                                            {% if i_order.payment_status == "paid" %}
+                                                <div class="Order-infoContent">{{ i_order.get_payment_status_label }}
+                                                </div>
+                                            {% else %}
+                                                <a class="Order-infoContent" href="{% url 'orders:order_payment' pk=order.id %}">{{ order.get_payment_status_label }}
+                                                </a>
+                                            {% endif %}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    {% else %}
+                                        No orders yet
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
