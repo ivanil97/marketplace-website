@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
-from users.models import User
+from orders.models import Order
 
 
 class AccountView(LoginRequiredMixin, TemplateView):
@@ -15,4 +15,7 @@ class AccountView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         user_data = self.request.user
         context['user'] = user_data
+
+        order_history = Order.objects.filter(user_id=self.request.user.id).first()
+        context['order'] = order_history
         return context
