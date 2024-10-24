@@ -14,7 +14,7 @@
                 {% for discount in discounts %}
                 <div class="Card">
                     <div class="Card-content">
-                        <strong class="Card-title"><a href="#">{{ discount.description }}</a></strong>
+                        <strong class="Card-title"><a href="{% url 'products:products_list' %}?discount={{ discount.id }}">{{ discount.description }}</a></strong>
                         <div class="Card-description">
                             {% translate "Скидка" %}: {{ discount.percent }}% <br>
                             {% translate "Действует с" %} {{ discount.from_date|date:"d.m.Y" }} {% translate "по" %} {{ discount.to_date|date:"d.m.Y" }}
