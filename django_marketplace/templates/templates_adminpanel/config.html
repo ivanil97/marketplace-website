@@ -1,0 +1,11 @@
+{% extends 'admin/constance/change_list.html' %}
+
+{% block content %}
+  {% load admin_urls %}
+    <ul class="object-tools">
+      <li>
+        <a href="{% url 'admin:clear-cache' %}" class="addlink">Clear cache</a>
+      </li>
+    </ul>
+  {{ block.super }}
+{% endblock %}

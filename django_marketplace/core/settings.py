@@ -20,6 +20,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -47,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'constance',
 
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
@@ -86,6 +89,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'constance.context_processors.config',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -115,6 +119,7 @@ CACHES = {
         "LOCATION": "",
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -193,7 +198,6 @@ INTERNAL_IPS = [
 
 if DEBUG:
     import socket
-
     hostname, alternative_names, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS.append("10.0.2.2")
     INTERNAL_IPS.extend(
@@ -205,8 +209,51 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 
-CELERY_BROKER_URL = os.getenv("DJANGO_CELERY_BROKER_URL", "")
-CELERY_RESULT_BACKEND = os.getenv("DJANGO_CELERY_RESULT_BACKEND", "")
+CELERY_BROKER_URL = os.getenv("DJANGO_REDIS_URL", "")
+CELERY_RESULT_BACKEND = os.getenv("DJANGO_REDIS_URL", "")
+
+CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
+# CONSTANCE_REDIS_CONNECTION = os.getenv("DJANGO_REDIS_URL", "")
+# CONSTANCE_BACKEND = 'constance.backends.redisd.RedisBackend'
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_CONFIG = {
+    'CACHES_CATEGORIES': (60 * 60 * 24, 'Cashes categories for catalog in seconds'),
+    'CACHES_PRODUCTS': (60 * 60 * 24, 'Cashes products for catalog in seconds'),
+    'CACHES_BANNERS': (60 * 10, 'Cashes products for catalog in seconds'),
+    'CACHES_SELLERS': (60 * 60 * 24, 'Cashes sellers in seconds'),
+    'CACHES_SELLERS_TOP_PRODUCTS': (60 * 60, 'Cashes products for catalog in seconds'),
+    'EXPRESS_DELIVERY_COST': (500, 'Cast of express delivery'),
+    'FREE_DELIVERY_MINIMAL_COST': (2000, 'Minimal cast for free delivery'),
+    'DELIVERY_COST': (200, 'Cast of simple delivery'),
+}
+CONSTANCE_CONFIG_FIELDSETS = (
+    (
+        'caches',
+        {
+            'fields':
+            (
+                'CACHES_CATEGORIES',
+                'CACHES_PRODUCTS',
+                'CACHES_BANNERS',
+                'CACHES_SELLERS',
+                'CACHES_SELLERS_TOP_PRODUCTS',
+             ),
+            'collapse': False,
+        },
+    ),
+    (
+        'delivery',
+        {
+            'fields':
+            (
+                'EXPRESS_DELIVERY_COST',
+                'FREE_DELIVERY_MINIMAL_COST',
+                'DELIVERY_COST',
+            ),
+            'collapse': False,
+        },
+    ),
+)
 
 # Вывод логов в консоли по SQL запросам
 # LOGGING = {

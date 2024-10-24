@@ -4,6 +4,8 @@ from typing import List, Dict
 from django.core.cache import cache
 import random
 
+from constance import config
+
 from django.db.models import Prefetch
 
 from products.models import Category, Product, SellerPrice, SliderBanner, StaticBanner, ProductImage
@@ -20,7 +22,7 @@ def get_slider_banners():
     if not banners:
         banners = list(SliderBanner.objects.filter(is_active=True))
         banners = random.sample(banners, min(len(banners), 3))
-        cache.set('slider_banners', banners, timeout=600)  # кеш на 10 минут
+        cache.set('slider_banners', banners, timeout=config.CACHES_BANNERS)  # кеш на 10 минут
     return banners
 
 
@@ -35,7 +37,7 @@ def get_static_banners():
     if not banners:
         banners = list(StaticBanner.objects.filter(is_active=True))
         banners = random.sample(banners, min(len(banners), 3))
-        cache.set('static_banners', banners, timeout=600)  # кеш на 10 минут
+        cache.set('static_banners', banners, timeout=config.CACHES_BANNERS)  # кеш на 10 минут
     return banners
 
 
@@ -55,34 +57,49 @@ def get_popular_items():
     return popular_items
 
 
+from django.core.cache import cache
+from datetime import datetime, timedelta
+import random
+
+
 def get_limited_items():
     """
-    Получает 16 товаров ограниченного тиража и 1 товар для предложения дня
-    Ограниченный тираж - 16 случайных товаров с признаком is_limited кроме товара "Предложение дня"
-    Предложение дня - случайный товар с признаком is_limited, который кэшируется до конца текущего дня
+    Получает 16 товаров ограниченного тиража и 1 товар для предложения дня.
+    Ограниченный тираж - 16 случайных товаров с признаком is_limited кроме товара "Предложение дня".
+    Предложение дня - случайный товар с признаком is_limited, который кэшируется до конца текущего дня.
+
     :return: tuple(SellerPrice, list(SellerPrice)):
-    кортеж из двух элементов для передачи во view-функцию:
-    Товар для блока предложение дня, список товаров ограниченного тиража
+    кортеж из трех элементов для передачи во view-функцию:
+    Товар для блока "Предложение дня", список товаров ограниченного тиража, время окончания суток.
     """
+
     limited_items_raw = list(SellerPrice.objects.filter(is_limited=True, archived=False)
                              .prefetch_related('product__images'))
 
-    if limited_items_raw:
-        limited_item_day = cache.get('limited_item_day')
-        if not limited_item_day:
-            limited_items = limited_items_raw[:17]
-            limited_item_day = random.sample(limited_items, 1)[0]
-            limited_items.remove(limited_item_day)
+    if not limited_items_raw:
+        # Если нет доступных товаров, возвращаем None
+        return None, [], None
 
-            now = datetime.now()
-            end_of_day = datetime.combine(now.date() + timedelta(days=1), datetime.min.time())
-            timeout = int((end_of_day - now).total_seconds())
-            cache.set('limited_item_day', limited_item_day, timeout=timeout)  # кеш до конца дня
-        else:
-            limited_items_raw.remove(limited_item_day)
-            limited_items = limited_items_raw[:16]
+    # Получаем кэшированный товар для "Предложения дня"
+    limited_item_day = cache.get('limited_item_day')
 
-        return limited_item_day, limited_items
+    if limited_item_day is None:
+        # Если кэш отсутствует, выбираем случайный товар и обновляем кэш
+        limited_items = limited_items_raw[:17]
+        limited_item_day = random.choice(limited_items)  # Выбор случайного товара
+        limited_items.remove(limited_item_day)
 
+        # Рассчитываем время окончания суток
+        now = datetime.now()
+        end_of_day = datetime.combine(now.date() + timedelta(days=1), datetime.min.time())
+        timeout = int((end_of_day - now).total_seconds())
+        cache.set('limited_item_day', limited_item_day, timeout=timeout)  # Кешируем до конца дня
     else:
-        return None
+        limited_items_raw.remove(limited_item_day)
+        limited_items = limited_items_raw[:16]  # Выбираем остальные товары
+
+    # Если кэшированный товар существует, просто определяем end_of_day
+    end_of_day = datetime.combine(datetime.now().date() + timedelta(days=1), datetime.min.time())
+
+    return limited_item_day, limited_items, end_of_day.isoformat()
+

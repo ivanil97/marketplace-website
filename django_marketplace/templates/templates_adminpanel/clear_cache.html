@@ -1,0 +1,11 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+  <h1>Chose cache to clear:</h1>
+  <form action="." method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Clear selected" name="clear_selected">
+    <input type="submit" value="Clear all" name="clear_all">
+  </form>
+{% endblock %}
