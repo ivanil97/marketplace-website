@@ -1,3 +1,4 @@
+from cProfile import label
 from random import choice
 
 from django.db import models
@@ -75,7 +76,7 @@ class Order(models.Model):
     delivery_option = models.CharField(
         default=DELIVERY_OPTIONS[0],
         max_length=20,
-        choices=DELIVERY_OPTIONS
+        choices=DELIVERY_OPTIONS,
     )
     payment_option = models.CharField(
         default=PAYMENT_OPTIONS[0],
@@ -83,7 +84,7 @@ class Order(models.Model):
         choices=PAYMENT_OPTIONS
     )
     payment_status = models.CharField(
-        default=PAYMENT_STATUS[0],
+        default='unpaid',
         max_length=20,
         choices=PAYMENT_STATUS
     )
@@ -92,6 +93,15 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Заказ #{self.id} от {self.user.email}"
+
+    def get_delivery_label(self):
+        return dict(self.DELIVERY_OPTIONS).get(self.delivery_option, self.delivery_option)
+
+    def get_payment_label(self):
+        return dict(self.PAYMENT_OPTIONS).get(self.payment_option, self.payment_option)
+
+    def get_payment_status_label(self):
+        return dict(self.PAYMENT_STATUS).get(self.payment_status, self.payment_status)
 
     class Meta:
         verbose_name = 'Заказ'

@@ -11,17 +11,13 @@
                     <div class="row ControlPanel-rowSplit">
                         <div class="row-block hide_700">
                             <ul class="menu menu_img menu_smallImg ControlPanel-menu">
-                                <li class="menu-item"><a class="menu-link" href="#"><img
-                                        src="{% static 'img/icons/socialHeader/tw.svg' %}" alt="tw.svg"/></a>
+                                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/tw.svg' %}" alt="tw.svg" /></a>
                                 </li>
-                                <li class="menu-item"><a class="menu-link" href="#"><img
-                                        src="{% static 'img/icons/socialHeader/in.svg' %}" alt="in.svg"/></a>
+                                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/in.svg' %}" alt="in.svg" /></a>
                                 </li>
-                                <li class="menu-item"><a class="menu-link" href="#"><img
-                                        src="{% static 'img/icons/socialHeader/pt.svg' %}" alt="pt.svg"/></a>
+                                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/pt.svg' %}" alt="pt.svg" /></a>
                                 </li>
-                                <li class="menu-item"><a class="menu-link" href="#"><img
-                                        src="{% static 'img/icons/socialHeader/mail.svg' %}" alt="mail.svg"/></a>
+                                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'img/icons/socialHeader/mail.svg' %}" alt="mail.svg" /></a>
                                 </li>
                             </ul>
                         </div>
@@ -29,12 +25,12 @@
                 </div>
                 <nav class="row-block">
                     {% if not request.user.is_authenticated %}
-                    <div class="row ControlPanel-rowSplit">
-                        <div class="row-block">
-                            <a class="ControlPanel-title" href={% url 'user:login' %}>{% translate "Вход" %}</a>
-                            <a class="ControlPanel-title" href={% url 'user:register' %}>{% translate "Регистрация" %}</a>
+                        <div class="row ControlPanel-rowSplit">
+                            <div class="row-block">
+                                <a class="ControlPanel-title" href ="{% url 'user:login' %}">{% translate 'Вход' %}</a>
+                                <a class="ControlPanel-title" href ="{% url 'user:register' %}">{% translate 'Регистрация' %}</a>
+                            </div>
                         </div>
-                    </div>
                     {% endif %}
                 </nav>
             </div>
@@ -53,53 +49,52 @@
     <div class="wrap">
         <div class="row Header-rowMain">
             <div class="row-block Header-logo">
-                <a class="logo" href="index.html">
-                    <img class="logo-image" src="{% static 'img/logo.png' %}" alt="logo.png"/>
+                <a class="logo" href="{% url 'home' %}">
+                    <img class="logo-image" src="{% static 'img/logo.png' %}" alt="logo.png" />
                 </a>
             </div>
             {% if not simple_header %}
-            <nav class="row-block row-block_right Header-menu">
-                <div class="menuModal" id="navigate">
-                    <ul class="menu menu_main">
-                        <li class="menu-item">
-                            <a class="menu-link" href="index.html">{% translate "Главная" %}</a>
-                        </li>
-                        <li class="menu-item">
-                            <span class="menu-label menu-label_success">{% translate "Скидки" %}</span>
-                            <a class="menu-link" href="{% url 'products:products_list' %}">{% translate "Каталог" %}</a>
-                        </li>
-                        <li class="menu-item">
-                            <a class="menu-link" href="{% url 'comparisons:comparison_list' %}">{% translate "Сравнение" %}</a>
-                            {% if comparison_count > 0 %}
-                            <samp class="CartBlock-amount">{{ comparison_count }}</samp>
-                            {% endif %}
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <div class="row-block">
-                <div class="CartBlock">
-                    <div class="dropdown">
-                        {% if request.user.is_authenticated %}
-                        <button class="dropbtn">
-                            <img class="CartBlock-img" src="{% static 'img/icons/loon-icon.svg' %}" alt="loon-icon.svg"/>
-                        </button>
-                        {% endif %}
-                        <div class="dropdown-content">
-                            <a class="dropdown-content-a" href="{% url 'user:account' %}">{% translate "Личный кабинет" %}</a>
-                            <a class="dropdown-content-a" href="account.html">{% translate "Административный раздел" %}</a>
-                            <form id="logout-form" action="{% url 'user:logout' %}" method="post">
-                                <a class="dropdown-content-a" href="#"
-                                   onclick="document.getElementById('logout-form').submit(); return false;">
-                                    {% translate "Выход" %}
-                                </a>
-                                {% csrf_token %}
-                            </form>
-                        </div>
+                <nav class="row-block row-block_right Header-menu">
+                    <div class="menuModal" id="navigate">
+                        <ul class="menu menu_main">
+                            <li class="menu-item">
+                                <a class="menu-link" href="{% url 'home' %}">{% translate "Главная" %}</a>
+                            </li>
+                            <li class="menu-item">
+                                <span class="menu-label menu-label_success">{% translate "Скидки" %}</span>
+                                <a class="menu-link" href="{% url 'products:products_list' %}">{% translate "Каталог" %}</a>
+                            </li>
+                            <li class="menu-item">
+                                <a class="menu-link" href="{% url 'comparisons:comparison_list' %}">{% translate "Сравнение" %}</a>
+                                {% if comparison_count > 0 %}
+                                <samp class="CartBlock-amount">{{ comparison_count }}</samp>
+                                {% endif %}
+                            </li>
+                        </ul>
                     </div>
-                    <a class="CartBlock-block" href="{% url 'carts:cart' %}">
-                        <img class="CartBlock-img" src="{% static 'img/icons/cart.svg' %}" alt="cart.svg"/>
-                        <span class="CartBlock-amount">
+                </nav>
+                <div class="row-block">
+                    <div class="CartBlock">
+                        <div class="dropdown">
+                            {%  if request.user.is_authenticated %}
+                                <button class="dropbtn">
+                                    <img class="CartBlock-img" src="{% static 'img/icons/loon-icon.svg' %}" alt="loon-icon.svg" />
+                                </button>
+                            {% endif %}
+                            <div class="dropdown-content">
+                                <a class="dropdown-content-a" href="{% url 'user:account' %}">{% translate "Личный кабинет" %}</a>
+                                <a class="dropdown-content-a" href="account.html">{% translate "Административный раздел" %}</a>
+                                <form id="logout-form" action="{% url 'user:logout' %}" method="post">
+                                    <a class="dropdown-content-a" href="#" onclick="document.getElementById('logout-form').submit(); return false;">
+                                        {% translate "Выход" %}
+                                    </a>
+                                    {% csrf_token %}
+                                </form>
+                            </div>
+                        </div>
+                        <a class="CartBlock-block" href="{% url 'carts:cart' %}">
+                            <img class="CartBlock-img" src="{% static 'img/icons/cart.svg' %}" alt="cart.svg" />
+                            <span class="CartBlock-amount">
                                 {% quantity_products request %}
                             </span>
                     </a>
