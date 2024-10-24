@@ -99,9 +99,11 @@
                             </span>
                         </a>
                         <div class="CartBlock-block">
-                            <span class="CartBlock-price">
-                                {% total_price request carts %}$
-                            </span>
+                            {% if total_price %}
+                                <span class="CartBlock-price">
+                                    {% total_price request carts %}$
+                                </span>
+                            {% endif %}
                         </div>
                         {% get_current_language as CURRENT_LANGUAGE %}
                         {% get_available_languages as AVAILABLE_LANGUAGES %}
@@ -164,11 +166,12 @@
                 </div>
                 <div class="Header-searchLink"><img src="{% static 'img/icons/search.svg' %}" alt="search.svg" />
                 </div>
+
                 <div class="Header-search">
                     <div class="search">
-                        <form class="form form_search" action="#" method="post">
+                        <form class="form form_search" action="{% url 'products:products_list' %}" method="post">
                             {% csrf_token %}
-                            <input class="search-input" id="query" name="query" type="text" placeholder="NVIDIA GeForce RTX 3060" />
+                            <input class="search-input" id="query" name="name" type="text" placeholder="NVIDIA GeForce RTX 3060" />
                             <button class="search-button" type="submit" name="search" id="search">
                                 <img src="{% static 'img/icons/search.svg' %}" alt="search.svg" />{% translate "Поиск" %}
                             </button>

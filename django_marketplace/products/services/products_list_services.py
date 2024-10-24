@@ -47,7 +47,6 @@ def filter_queryset(request, form=None):
             queryset = queryset.filter(
                 auto_seller_price__range=(price_range[0], price_range[1])
             )
-            print(form['price'])
         if in_stock:
             queryset = queryset.filter(quantity__gt=0)
 
@@ -90,7 +89,8 @@ def get_context_data(request, products):
     }
     if 'form' in context and context['form'].is_valid():
         price = context['form'].cleaned_data.get('price')
-        price_range = price.split(';')
-        context['price_from'] = price_range[0]
-        context['price_to'] = price_range[1]
+        if price:
+            price_range = price.split(';')
+            context['price_from'] = price_range[0]
+            context['price_to'] = price_range[1]
     return context
