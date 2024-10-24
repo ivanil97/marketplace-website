@@ -56,10 +56,7 @@ def filter_queryset(request, form=None):
         queryset = queryset.filter(category_id=category_id)
 
     if discount_id:
-        queryset = queryset.filter(
-            models.Q(discounts__id=discount_id) |  # Фильтрация по товарам, связанным со скидкой
-            models.Q(category__discounts__id=discount_id)  # Фильтрация по категориям товаров
-        )
+        queryset = queryset.filter(discounts__id=discount_id)
 
     if curr_sort != '1':
         queryset = queryset.order_by(curr_sort)

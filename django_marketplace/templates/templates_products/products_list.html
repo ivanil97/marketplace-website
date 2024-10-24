@@ -10,7 +10,6 @@
 {% endblock %}
 
 {% block content %}
-{% cache config.CACHES_PRODUCTS product_list %}
 {% if products %}
     <div class="Middle Middle_top">
         <div class="Section Section_column Section_columnLeft">
@@ -197,8 +196,6 @@
 {% else %}
     <p>{% translate "Пока товаров нет." %}</p>
 {% endif %}
-
-{% endcache %}
 {% endblock %}
 
 {% block footer %}
