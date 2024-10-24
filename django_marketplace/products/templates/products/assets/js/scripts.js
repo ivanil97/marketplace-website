@@ -483,15 +483,18 @@ var Card = function(){
 Card().init();
 var CountDown = function(){
     var $blocks = $('.CountDown');
-    function getTimeRemaining(endtime){
-        endtime = endtime.split(' ');
-        var date = endtime[0].split('.');
-        var time = endtime[1].split(':');
-        var t = new Date(date[2], date[1] - 1, date[0] - 1, time[0], time[1]) - new Date();
-        var seconds = Math.floor( (t/1000) % 60 );
-        var minutes = Math.floor( (t/1000/60) % 60 );
-        var hours = Math.floor( (t/(1000*60*60)) % 24 );
-        var days = Math.floor( t/(1000*60*60*24) );
+
+    // Получаем время окончания суток из атрибута data-date
+    function getTimeRemaining(endtime) {
+//        endtime = endtime.split('T'); // Изменяем на 'T' для ISO формата
+        var endDate = new Date(endtime); // Прямое создание объекта даты
+        var date = endtime[0].split('-'); // 'YYYY-MM-DD'
+        var time = endtime[1].split(':'); // 'HH:mm:ss'
+        var t = new Date(date[0], date[1] - 1, date[2], time[0], time[1]) - new Date();
+        var seconds = Math.floor((t / 1000) % 60);
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
         return {
             'total': t,
             'days': days,
@@ -500,6 +503,7 @@ var CountDown = function(){
             'seconds': seconds
         };
     }
+
     function initializeClock(clock, endtime){
         function updateClock(){
             var t = getTimeRemaining(endtime);
@@ -507,12 +511,14 @@ var CountDown = function(){
             clock.find('.CountDown-hours').text(t.hours);
             clock.find('.CountDown-minutes').text(t.minutes);
             clock.find('.CountDown-secs').text(t.seconds);
-            if(t.total<=0){
+
+            if(t.total <= 0){
                 clearInterval(timeinterval);
+                clock.find('.CountDown').text("Время истекло!"); // Выводим сообщение о завершении
             }
         }
         updateClock();
-        var timeinterval = setInterval(updateClock,1000);
+        var timeinterval = setInterval(updateClock, 1000);
     }
     return {
         init: function(){
@@ -523,6 +529,12 @@ var CountDown = function(){
         }
     };
 };
+// Инициализируем таймер при загрузке страницы
+$(document).ready(function() {
+    var countdown = CountDown();
+    countdown.init();
+});
+
 CountDown().init();
 var Rating = function(){
     return {
