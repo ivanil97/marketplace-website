@@ -11,6 +11,10 @@ def mark_archived(
         request: HttpRequest,
         query: QuerySet
 ) -> None:
+    """
+    Архивирование скидок.
+    Все выбранные скидки будут отмечены как архивные.
+    """
     query.update(archived=True)
 
 
@@ -20,6 +24,10 @@ def mark_unarchived(
         request: HttpRequest,
         query: QuerySet
 ) -> None:
+    """
+    Удаление скидок из архива.
+    Все выбранные скидки будут отмечены как активные и не архивные.
+    """
     query.update(archived=False)
 
 
@@ -29,6 +37,10 @@ def mark_inactive(
         request: HttpRequest,
         query: QuerySet
 ) -> None:
+    """
+    Деактивация скидок.
+    Выбранные скидки будут помечены как неактивные.
+    """
     query.update(is_active=False)
 
 
@@ -38,11 +50,19 @@ def mark_active(
         request: HttpRequest,
         query: QuerySet
 ) -> None:
+    """
+    Активация скидок.
+    Выбранные скидки будут активированы и доступны для использования.
+    """
     query.update(is_active=True)
 
 
 @admin.register(Discount)
 class DiscountAdmin(admin.ModelAdmin):
+    """
+    Конфигурация отображения скидок в административном интерфейсе.
+    Определены действия по архивированию, активации/деактивации скидок.
+    """
     actions = [
         mark_archived,
         mark_unarchived,
@@ -59,9 +79,12 @@ class DiscountAdmin(admin.ModelAdmin):
         "is_active",
         "archived",
     )
-    list_display_links = "pk", "percent",
-    ordering = "percent",
-    search_fields = "description", "products",
+    list_display_links = ("pk", "percent",)
+    ordering = ("percent",)
+    search_fields = ("description", "products__name",)
 
     def description(self, obj: Discount) -> str:
+        """
+        Отображение первых 50 символов описания скидки в списке скидок.
+        """
         return obj.description if len(obj.description) < 50 else obj.description[:50] + "..."

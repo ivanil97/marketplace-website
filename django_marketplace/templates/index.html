@@ -72,55 +72,59 @@
                                   <header class="Section-columnHeader">
                                     <strong class="Section-columnTitle">{% translate "Ограниченное предложение" %}</strong>
                                   </header>
-                                  {% with limited_item_day.product.images.all|first as img %}
-                                    <div class="Card">
-                                        <a class="Card-picture" href="{% url 'products:product_detail' slug=limited_item_day.product.slug %}">
-                                            <img src="{{ img.image.url }}" alt="{% translate 'нет доступных изображений' %}"/>
-                                        </a>
-                                  {% endwith %}
-                                    <div class="Card-content">
-                                      <strong class="Card-title">
-                                          <a href="{% url 'products:product_detail' slug=limited_item_day.product.slug %}">
-                                              {{ limited_item_day.product.name }}
-                                          </a>
-                                      </strong>
-                                      <div class="Card-description">
-                                        <div class="Card-cost">
-                                            <span class="Card-priceOld">${{ limited_item_day.price }}</span>
-                                            <span class="Card-price">${{ limited_item_day.price }}</span>
-                                        </div>
-                                        <div class="Card-category">
-                                            {{ limited_item_day.product.category }}
+                                  {% if limited_item_day %}
+                                      {% with limited_item_day.product.images.all|first as img %}
+                                        <div class="Card">
+                                            <a class="Card-picture" href="{% url 'products:product_detail' slug=limited_item_day.product.slug %}">
+                                                <img src="{{ img.image.url }}" alt="{% translate 'нет доступных изображений' %}"/>
+                                            </a>
+                                      {% endwith %}
+                                        <div class="Card-content">
+                                          <strong class="Card-title">
+                                              <a href="{% url 'products:product_detail' slug=limited_item_day.product.slug %}">
+                                                  {{ limited_item_day.product.name }}
+                                              </a>
+                                          </strong>
+                                          <div class="Card-description">
+                                            <div class="Card-cost">
+                                                <span class="Card-priceOld">${{ limited_item_day.price }}</span>
+                                                <span class="Card-price">${{ limited_item_day.price }}</span>
+                                            </div>
+                                            <div class="Card-category">
+                                                {{ limited_item_day.product.category }}
+                                            </div>
+                                          </div>
+                                          <div class="CountDown" data-date=" {{ end_of_day }} ">
+    <!--                                        <div class="CountDown-block">-->
+    <!--                                          <div class="CountDown-wrap">-->
+    <!--                                            <div class="CountDown-days"></div>-->
+    <!--                                              <span class="CountDown-label">{% translate "дни" %}</span>-->
+    <!--                                          </div>-->
+    <!--                                        </div>-->
+                                            <div class="CountDown-block">
+                                              <div class="CountDown-wrap">
+                                                <div class="CountDown-hours"></div>
+                                                  <span class="CountDown-label">{% translate "часы" %}</span>
+                                              </div>
+                                            </div>
+                                            <div class="CountDown-block">
+                                              <div class="CountDown-wrap">
+                                                <div class="CountDown-minutes"></div>
+                                                  <span class="CountDown-label">{% translate "минуты" %}</span>
+                                              </div>
+                                            </div>
+                                            <div class="CountDown-block">
+                                              <div class="CountDown-wrap">
+                                                <div class="CountDown-secs"></div>
+                                                  <span class="CountDown-label">{% translate "секунды" %}</span>
+                                              </div>
+                                            </div>
+                                          </div>
                                         </div>
                                       </div>
-                                      <div class="CountDown" data-date=" {{ end_of_day }} ">
-<!--                                        <div class="CountDown-block">-->
-<!--                                          <div class="CountDown-wrap">-->
-<!--                                            <div class="CountDown-days"></div>-->
-<!--                                              <span class="CountDown-label">{% translate "дни" %}</span>-->
-<!--                                          </div>-->
-<!--                                        </div>-->
-                                        <div class="CountDown-block">
-                                          <div class="CountDown-wrap">
-                                            <div class="CountDown-hours"></div>
-                                              <span class="CountDown-label">{% translate "часы" %}</span>
-                                          </div>
-                                        </div>
-                                        <div class="CountDown-block">
-                                          <div class="CountDown-wrap">
-                                            <div class="CountDown-minutes"></div>
-                                              <span class="CountDown-label">{% translate "минуты" %}</span>
-                                          </div>
-                                        </div>
-                                        <div class="CountDown-block">
-                                          <div class="CountDown-wrap">
-                                            <div class="CountDown-secs"></div>
-                                              <span class="CountDown-label">{% translate "секунды" %}</span>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
+                                    {% else %}
+                                        <p>{% translate "На данный момент ограниченных предложений нет" %}</p>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="Section-content">
