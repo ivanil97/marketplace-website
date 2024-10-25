@@ -1,4 +1,18 @@
 services:
+  db:
+    image: postgres
+    volumes:
+      - ./app_data/database:/var/team42_app/postgresql/data
+    environment:
+      - POSTGRES_DB=$POSTGRES_NAME
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $POSTGRES_DB" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   app:
     build:
       context: .
@@ -9,20 +23,18 @@ services:
       options:
         max-file: "10"
         max-size: "200k"
-    command:
-      - "python"
-      - "manage.py"
-      - "runserver"
-      - "0.0.0.0:8080"
+    command: ./start_prod.sh
     ports:
-      - "8000:8080"
+      - 8000:8080
     volumes:
-       - ./django_marketplace/db.sqlite3:/var/team42_app/db.sqlite3
-       - ./django_marketplace/import:/var/team42_app/import
+      - ./app_data/media:/var/team42_app/media
+      - ./app_data/import:/var/team42_app/import
     env_file:
       - .env
     depends_on:
       - redis
+      - db:
+          condition: service_healthy
   celery:
     build:
       context: .
