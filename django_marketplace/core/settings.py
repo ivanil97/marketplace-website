@@ -107,14 +107,19 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+try:
+    POSTGRES_PORT = int(os.getenv("POSTGRES_PORT", "0"))
+except ValueError:
+    POSTGRES_PORT = 0
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_NAME'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': os.getenv('POSTGRES_PORT'),
+        'NAME': os.getenv('POSTGRES_NAME', "postgres"),
+        'USER': os.getenv('POSTGRES_USER', "user"),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', "password"),
+        'HOST': os.getenv('POSTGRES_HOST', "postgres"),
+        'PORT': os.getenv('POSTGRES_PORT', 5432),
     }
 }
 
@@ -182,20 +187,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/user/account/'
 
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    EMAIL_HOST_USER = "test@test.ru"
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "")
-    EMAIL_USE_TLS = os.getenv("DJANGO_EMAIL_USE_TLS", "1") == 1
-    EMAIL_USE_SSL = os.getenv("DJANGO_EMAIL_USE_SSL", "0") == 1
-    try:
-        EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "0"))
-    except ValueError:
-        EMAIL_PORT = 0
-    EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "")
+EMAIL_USE_TLS = os.getenv("DJANGO_EMAIL_USE_TLS", "1") == 1
+EMAIL_USE_SSL = os.getenv("DJANGO_EMAIL_USE_SSL", "0") == 1
+try:
+    EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "0"))
+except ValueError:
+    EMAIL_PORT = 0
+EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_HOST_PASSWORD')
 
 INTERNAL_IPS = [
     'localhost',
@@ -218,9 +219,9 @@ CELERY_BROKER_URL = os.getenv("DJANGO_REDIS_URL", "")
 CELERY_RESULT_BACKEND = os.getenv("DJANGO_REDIS_URL", "")
 
 CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
-# CONSTANCE_REDIS_CONNECTION = os.getenv("DJANGO_REDIS_URL", "")
-# CONSTANCE_BACKEND = 'constance.backends.redisd.RedisBackend'
-CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_REDIS_CONNECTION = os.getenv("DJANGO_REDIS_URL", "")
+CONSTANCE_BACKEND = 'constance.backends.redisd.RedisBackend'
+
 CONSTANCE_CONFIG = {
     'CACHES_CATEGORIES': (60 * 60 * 24, 'Cashes categories for catalog in seconds'),
     'CACHES_PRODUCTS': (60 * 60 * 24, 'Cashes products for catalog in seconds'),
