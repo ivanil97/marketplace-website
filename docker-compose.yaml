@@ -43,7 +43,8 @@ services:
       - ./app_data/media:/var/team42_app/mediafiles
       - ./app_data/static:/var/team42_app/staticfiles
     ports:
-      - 1337:80
+      - 80:80
+      - 443:443
     depends_on:
       - app
   celery:
