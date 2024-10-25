@@ -24,10 +24,11 @@ services:
         max-file: "10"
         max-size: "200k"
     command: ./start_prod.sh
-    ports:
-      - 8000:8080
+    expose:
+      - 8080
     volumes:
-      - ./app_data/media:/var/team42_app/media
+      - ./app_data/media:/var/team42_app/mediafiles
+      - ./app_data/media:/var/team42_app/staticfiles
       - ./app_data/import:/var/team42_app/import
     env_file:
       - .env
@@ -36,6 +37,15 @@ services:
         condition: service_started
       db:
         condition: service_healthy
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./app_data/media:/var/team42_app/mediafiles
+      - ./app_data/media:/var/team42_app/staticfiles
+    ports:
+      - 1337:80
+    depends_on:
+      - app
   celery:
     build:
       context: .

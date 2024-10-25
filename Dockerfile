@@ -2,7 +2,11 @@ FROM python:3.10
 
 ENV PYTHONBUFFERED=1
 
-WORKDIR /var/team42_app
+ENV APP_HOME=/var/team42_app
+RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/staticfiles
+RUN mkdir $APP_HOME/mediafiles
+WORKDIR $APP_HOME
 
 COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
