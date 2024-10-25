@@ -108,7 +108,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 try:
-    POSTGRES_PORT = int(os.getenv("POSTGRES_PORT", "0"))
+    POSTGRES_PORT = int(os.getenv("POSTGRES_PORT", "5432"))
 except ValueError:
     POSTGRES_PORT = 0
 
@@ -119,7 +119,7 @@ DATABASES = {
         'USER': os.getenv('POSTGRES_USER', "user"),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', "password"),
         'HOST': os.getenv('POSTGRES_HOST', "postgres"),
-        'PORT': os.getenv('POSTGRES_PORT', 5432),
+        'PORT': POSTGRES_PORT,
     }
 }
 
