@@ -42,8 +42,8 @@
                         <li>
                             <div class="Card-content">
                                 <strong class="Card-title"><a
-                                        href="{% url 'products:product_detail' slug=product.productslug %}">{{
-                                    product.productname }}</a>
+                                        href="{% url 'products:product_detail' slug=product.productslug %}">
+                                    {{ product.productname }}</a>
                                 </strong>
                                 {% with product.images.all|first as img %}
                                 <div class="Card"><a class="Card-picture"
