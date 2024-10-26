@@ -22,8 +22,9 @@ from products.services.products_list_services import filter_queryset, get_contex
 from products.services.review_service import add_review_to_product
 from users.services.viewed_products_service import ViewedProductsService
 from products.services.index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
-
 from products.models import Product
+from products.models import Discount
+from products.models import Review
 
 
 class ProductDetailView(DetailView):
@@ -75,7 +76,12 @@ class ReviewCreateView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse_lazy('products:product_detail', kwargs={'slug': self.kwargs['slug']})
+        if self.kwargs['slug']:
+            return reverse_lazy('products:product_detail', kwargs={'slug': self.kwargs['slug']})
+        else:
+            # Если slug пустой, перенаправляем на другую страницу или показываем ошибку
+            return reverse_lazy('products:products_list')  # или другая подходящая страница
+
 
 
 class ProductsListView(ListView):
@@ -134,14 +140,38 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         """
         Формирует контекст для передачи данных в шаблон.
+        Проверяет наличие данных в базе данных и избегает ошибок при отсутствии данных.
         """
         context = super().get_context_data(**kwargs)
-        context['slider_banners'] = get_slider_banners()
-        context['static_banners'] = get_static_banners()
-        context['popular_items'] = get_popular_items()
-        context['limited_item_day'] = get_limited_items()[0]
-        context['limited_items'] = get_limited_items()[1]
+
+        # Получаем баннеры и популярные товары
+        context['slider_banners'] = get_slider_banners() or []
+        context['static_banners'] = get_static_banners() or []
+        context['popular_items'] = get_popular_items() or []
+
+        # Получаем ограниченное предложение и проверяем на наличие данных
+        limited_item_day, limited_items, end_of_day = get_limited_items()
+
+        # Проверяем, есть ли данные о лимитированном товаре
+        if limited_item_day is None:
+            context['limited_item_day'] = None
+            context['limited_items'] = []
+            context['end_of_day'] = end_of_day
+        else:
+            context['limited_item_day'] = limited_item_day
+            context['limited_items'] = limited_items
+            context['end_of_day'] = end_of_day
+
         return context
+
+
+class DiscountListView(ListView):
+    model = Discount
+    template_name = 'templates_products/discounts_list.html'
+    context_object_name = 'discounts'
+
+    def get_queryset(self):
+        return Discount.objects.filter(is_active=True, archived=False).order_by('-to_date')
 
 
 @receiver(post_save, sender=Product)

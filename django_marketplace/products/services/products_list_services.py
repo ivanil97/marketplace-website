@@ -1,8 +1,8 @@
 import enum
 from django.db.models import Avg, Count, Sum, Min, Max
-from products.models import Product, SellerPrice
+from products.models import Product, SellerPrice, Discount
 from products.forms import SearchForm
-
+from django.db import models
 
 class ProductListEnum(enum.Enum):
     POP_ASC = 'quantity_sold'
@@ -33,6 +33,7 @@ def filter_queryset(request, form=None):
     )
 
     category_id = request.GET.get('category')
+    discount_id = request.GET.get('discount')
     curr_sort = request.GET.get('sort', 'auto_seller_price')
 
     if form and form.is_valid():
@@ -52,6 +53,9 @@ def filter_queryset(request, form=None):
 
     if category_id:
         queryset = queryset.filter(category_id=category_id)
+
+    if discount_id:
+        queryset = queryset.filter(discounts__id=discount_id)
 
     if curr_sort != '1':
         queryset = queryset.order_by(curr_sort)

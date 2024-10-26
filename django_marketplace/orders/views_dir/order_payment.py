@@ -22,9 +22,9 @@ class OrderPaymentView(TemplateView, FormView):
         current_order = Order.objects.filter(id=self.kwargs.get('pk')).first()
         if current_order:
             if len(card_number) != 8 or int(card_number) % 2 != 0:
-                current_order.payment_status = current_order.PAYMENT_STATUS[2]
+                current_order.payment_status = 'error'
             else:
-                current_order.payment_status = current_order.PAYMENT_STATUS[1]
+                current_order.payment_status = 'paid'
             current_order.save()
 
         return redirect(reverse(self.success_url, kwargs={'pk': current_order.pk}))
