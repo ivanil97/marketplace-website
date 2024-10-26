@@ -35,6 +35,7 @@ def filter_queryset(request, form=None):
     category_id = request.GET.get('category')
     discount_id = request.GET.get('discount')
     curr_sort = request.GET.get('sort', 'auto_seller_price')
+    selected_tag = request.POST.get('tag')
 
     if form and form.is_valid():
         price = form.cleaned_data.get('price')
@@ -60,6 +61,8 @@ def filter_queryset(request, form=None):
     if curr_sort != '1':
         queryset = queryset.order_by(curr_sort)
 
+    if selected_tag:
+        queryset = queryset.filter(tags__name=selected_tag)
     return queryset.all()
 
 

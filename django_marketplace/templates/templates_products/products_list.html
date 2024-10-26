@@ -62,18 +62,18 @@
                         </header>
                         <div class="Section-columnContent">
                             <div class="buttons">
-                                {% for product in products %}
-                                    {% for tag in product.tags.all %}
-                                        <a class="btn btn_default btn_sm" href="#">{{ tag }}</a>
-                                    {% endfor %}
-
+                                {% for tag in tags %}
+                                <form class="form form_search" action="{% url 'products:products_list' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="tag" value="{{ tag.name }}">
+                                    <input class="btn btn_default btn_sm" type="submit" value="{{ tag.name }}">
+                                </form>
                                 {% endfor %}
-
-                                <a class="btn btn_default btn_sm" href="#">{% translate "Видео" %}</a>
-                                <a class="btn btn_default btn_sm" href="#">{% translate "Разработка" %}</a>
-                                <a class="btn btn_default btn_sm" href="#">{% translate "Игры" %}</a>
-                                <a class="btn btn_default btn_sm" href="#">{% translate "Разработка" %}</a>
-                                <a class="btn btn_default btn_sm" href="#">{% translate "Видео" %}</a>
+{#                                <a class="btn btn_default btn_sm" href="#">{% translate "Видео" %}</a>#}
+{#                                <a class="btn btn_default btn_sm" href="#">{% translate "Разработка" %}</a>#}
+{#                                <a class="btn btn_default btn_sm" href="#">{% translate "Игры" %}</a>#}
+{#                                <a class="btn btn_default btn_sm" href="#">{% translate "Разработка" %}</a>#}
+{#                                <a class="btn btn_default btn_sm" href="#">{% translate "Видео" %}</a>#}
                             </div>
                         </div>
                     </div>
