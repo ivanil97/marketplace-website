@@ -29,21 +29,21 @@
                                                name="price"
                                                type="text"
                                                data-type="double"
-                                               data-min="{{ context1.min_price }}"
-                                               data-max="{{ context1.max_price }}"
-                                               data-from="{{ context1.price_from }}"
-                                               data-to="{{ context1.price_to }}"/>
+                                               data-min="{{ filter_context.min_price }}"
+                                               data-max="{{ filter_context.max_price }}"
+                                               data-from="{{ filter_context.price_from }}"
+                                               data-to="{{ filter_context.price_to }}"/>
                                         <div class="range-price">{% translate "Цена" %}:&#32;
                                             <div class="rangePrice"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{ context1.form.name }}
+                                    {{ filter_context.form.name }}
                                 </div>
                                 <div class="form-group">
                                     <label class="toggle">
-                                        {{ context1.form.in_stock }}
+                                        {{ filter_context.form.in_stock }}
                                         <span class="toggle-box"></span>
                                         <span class="toggle-text">{% translate "Только товары в наличии" %}</span>
                                     </label>
@@ -82,52 +82,52 @@
                     <div class="Sort">
                         <div class="Sort-title">{% translate "Сортировать" %}:</div>
                         <div class="Sort-variants">
-                            <a class="Sort-sortBy {% if context1.curr_sort and context1.curr_sort == context1.POP_ASC.value %}
+                            <a class="Sort-sortBy {% if filter_context.curr_sort and filter_context.curr_sort == filter_context.POP_ASC.value %}
                                 Sort-sortBy_dec
-                            {% elif context1.curr_sort and context1.curr_sort == context1.POP_DEC.value %}
+                            {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.POP_DEC.value %}
                                 Sort-sortBy_inc
-                            {% elif context1.curr_sort and context1.curr_sort == context1.NONE.value %}
+                            {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.NONE.value %}
 
                             {% endif %}"
-                               href="{% if context1.curr_sort and context1.curr_sort == context1.POP_ASC.value %}?sort={{ context1.POP_DEC.value }}
-                                {% elif context1.curr_sort and context1.curr_sort == context1.POP_DEC.value %}?sort={{ context1.NONE.value }}
-                                {% else %}?sort={{ context1.POP_ASC.value }}
+                               href="{% if filter_context.curr_sort and filter_context.curr_sort == filter_context.POP_ASC.value %}?sort={{ filter_context.POP_DEC.value }}
+                                {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.POP_DEC.value %}?sort={{ filter_context.NONE.value }}
+                                {% else %}?sort={{ filter_context.POP_ASC.value }}
                                 {% endif %}">{% translate "Популярности" %}</a>
 
-                            <a class="Sort-sortBy {% if context1.curr_sort and context1.curr_sort == context1.PR_ASC.value %}
+                            <a class="Sort-sortBy {% if filter_context.curr_sort and filter_context.curr_sort == filter_context.PR_ASC.value %}
                                 Sort-sortBy_dec
-                            {% elif context1.curr_sort and context1.curr_sort == context1.PR_DEC.value %}
+                            {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.PR_DEC.value %}
                                 Sort-sortBy_inc
-                            {% elif context1.curr_sort and context1.curr_sort == context1.NONE.value %}
+                            {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.NONE.value %}
 
                             {% endif %}"
-                               href="{% if context1.curr_sort and context1.curr_sort == context1.PR_ASC.value %}?sort={{ context1.PR_DEC.value }}
-                                {% elif context1.curr_sort and context1.curr_sort == context1.PR_DEC.value %}?sort={{ context1.NONE.value }}
-                                {% else %}?sort={{ context1.PR_ASC.value }}
+                               href="{% if filter_context.curr_sort and filter_context.curr_sort == filter_context.PR_ASC.value %}?sort={{ filter_context.PR_DEC.value }}
+                                {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.PR_DEC.value %}?sort={{ filter_context.NONE.value }}
+                                {% else %}?sort={{ filter_context.PR_ASC.value }}
                                 {% endif %}">{% translate "Цене" %}</a>
 
-                            <a class="Sort-sortBy {% if context1.curr_sort and context1.curr_sort == context1.REV_ASC.value %}
+                            <a class="Sort-sortBy {% if filter_context.curr_sort and filter_context.curr_sort == filter_context.REV_ASC.value %}
                                 Sort-sortBy_dec
-                            {% elif context1.curr_sort and context1.curr_sort == context1.REV_DEC.value %}
+                            {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.REV_DEC.value %}
                                 Sort-sortBy_inc
-                            {% elif context1.curr_sort and context1.curr_sort == context1.NONE.value %}
+                            {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.NONE.value %}
 
                             {% endif %}"
-                               href="{% if context1.curr_sort and context1.curr_sort == context1.REV_ASC.value %}?sort={{ context1.REV_DEC.value }}
-                                {% elif context1.curr_sort and context1.curr_sort == context1.REV_DEC.value %}?sort={{ context1.NONE.value }}
-                                {% else %}?sort={{ context1.REV_ASC.value }}
+                               href="{% if filter_context.curr_sort and filter_context.curr_sort == filter_context.REV_ASC.value %}?sort={{ filter_context.REV_DEC.value }}
+                                {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.REV_DEC.value %}?sort={{ filter_context.NONE.value }}
+                                {% else %}?sort={{ filter_context.REV_ASC.value }}
                                 {% endif %}">{% translate "Отзывам" %}</a>
 
-                            <a class="Sort-sortBy {% if context1.curr_sort and context1.curr_sort == context1.DATE_ASC.value %}
+                            <a class="Sort-sortBy {% if filter_context.curr_sort and filter_context.curr_sort == filter_context.DATE_ASC.value %}
                                 Sort-sortBy_dec
-                            {% elif context1.curr_sort and context1.curr_sort == context1.DATE_DEC.value %}
+                            {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.DATE_DEC.value %}
                                 Sort-sortBy_inc
-                            {% elif context1.curr_sort and context1.curr_sort == context1.NONE.value %}
+                            {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.NONE.value %}
 
                             {% endif %}"
-                               href="{% if context1.curr_sort and context1.curr_sort == context1.DATE_ASC.value %}?sort={{ context1.DATE_DEC.value }}
-                                {% elif context1.curr_sort and context1.curr_sort == context1.DATE_DEC.value %}?sort={{ context1.NONE.value }}
-                                {% else %}?sort={{ context1.DATE_ASC.value }}
+                               href="{% if filter_context.curr_sort and filter_context.curr_sort == filter_context.DATE_ASC.value %}?sort={{ filter_context.DATE_DEC.value }}
+                                {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.DATE_DEC.value %}?sort={{ filter_context.NONE.value }}
+                                {% else %}?sort={{ filter_context.DATE_ASC.value }}
                                 {% endif %}">{% translate "Новизне" %}</a>
                         </div>
                     </div>
