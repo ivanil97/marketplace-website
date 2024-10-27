@@ -1,8 +1,8 @@
 import enum
 from django.db.models import Avg, Count, Sum, Min, Max
-from products.models import Product, SellerPrice
+from products.models import Product, SellerPrice, Discount
 from products.forms import SearchForm
-
+from django.db import models
 
 class ProductListEnum(enum.Enum):
     POP_ASC = 'quantity_sold'
@@ -33,6 +33,7 @@ def filter_queryset(request, form=None):
     )
 
     category_id = request.GET.get('category')
+    discount_id = request.GET.get('discount')
     curr_sort = request.GET.get('sort', 'auto_seller_price')
 
     if form and form.is_valid():
@@ -47,12 +48,14 @@ def filter_queryset(request, form=None):
             queryset = queryset.filter(
                 auto_seller_price__range=(price_range[0], price_range[1])
             )
-            print(form['price'])
         if in_stock:
             queryset = queryset.filter(quantity__gt=0)
 
     if category_id:
         queryset = queryset.filter(category_id=category_id)
+
+    if discount_id:
+        queryset = queryset.filter(discounts__id=discount_id)
 
     if curr_sort != '1':
         queryset = queryset.order_by(curr_sort)
@@ -90,7 +93,8 @@ def get_context_data(request, products):
     }
     if 'form' in context and context['form'].is_valid():
         price = context['form'].cleaned_data.get('price')
-        price_range = price.split(';')
-        context['price_from'] = price_range[0]
-        context['price_to'] = price_range[1]
+        if price:
+            price_range = price.split(';')
+            context['price_from'] = price_range[0]
+            context['price_to'] = price_range[1]
     return context

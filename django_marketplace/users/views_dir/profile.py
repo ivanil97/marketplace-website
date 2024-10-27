@@ -45,6 +45,3 @@ class ProfileView(LoginRequiredMixin, FormView):
         self.request.session['form_submitted'] = True
 
         return redirect('user:user_profile')
-
-    def form_invalid(self, form):
-        return self.render_to_response(self.get_context_data(form=form))

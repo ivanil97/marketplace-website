@@ -63,7 +63,7 @@ class OrderProcessView(TemplateView, FormView):
         total_carts_price = sum([i_cart.quantity * i_cart.sellerprice.price for i_cart in carts])
 
         # получение данных корзины, если корзина была создана неавторизованным пользователем
-        if not carts: #TODO: вынести в отдельную функцию и тоже самое сделать в контексте выше
+        if not carts:
             carts = get_cart_from_request(self.request)
             cart_products = [i_cart['sellerprice'].product for i_cart in carts]
             total_carts_price = sum([i_cart['quantity'] * i_cart['sellerprice'].price for i_cart in carts])

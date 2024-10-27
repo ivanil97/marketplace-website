@@ -27,8 +27,8 @@
                     {% if not request.user.is_authenticated %}
                         <div class="row ControlPanel-rowSplit">
                             <div class="row-block">
-                                <a class="ControlPanel-title" href = {% url 'user:login' %}>{% translate "Вход" %}</a>
-                                <a class="ControlPanel-title" href = {% url 'user:register' %}>{% translate "Регистрация" %}</a>
+                                <a class="ControlPanel-title" href ="{% url 'user:login' %}">{% translate 'Вход' %}</a>
+                                <a class="ControlPanel-title" href ="{% url 'user:register' %}">{% translate 'Регистрация' %}</a>
                             </div>
                         </div>
                     {% endif %}
@@ -49,7 +49,7 @@
     <div class="wrap">
         <div class="row Header-rowMain">
             <div class="row-block Header-logo">
-                <a class="logo" href="index.html">
+                <a class="logo" href="{% url 'home' %}">
                     <img class="logo-image" src="{% static 'img/logo.png' %}" alt="logo.png" />
                 </a>
             </div>
@@ -58,7 +58,7 @@
                     <div class="menuModal" id="navigate">
                         <ul class="menu menu_main">
                             <li class="menu-item">
-                                <a class="menu-link" href="index.html">{% translate "Главная" %}</a>
+                                <a class="menu-link" href="{% url 'home' %}">{% translate "Главная" %}</a>
                             </li>
                             <li class="menu-item">
                                 <span class="menu-label menu-label_success">{% translate "Скидки" %}</span>
@@ -97,85 +97,97 @@
                             <span class="CartBlock-amount">
                                 {% quantity_products request %}
                             </span>
-                        </a>
-                        <div class="CartBlock-block">
+                    </a>
+                    <div class="CartBlock-block">
+                        {% if total_price %}
                             <span class="CartBlock-price">
                                 {% total_price request carts %}$
                             </span>
-                        </div>
-                        {% get_current_language as CURRENT_LANGUAGE %}
-                        {% get_available_languages as AVAILABLE_LANGUAGES %}
-                        <div class="dropdown CartBlock-block">
-                            <button class="dropbtn" style="display: flex;">
-                                <img class="CartBlock-img" src="{% static 'img/icons/lan.svg' %}" alt="lan.svg"/>
-                            </button>
-                            <div class="dropdown-content">
-                                {% for lang in AVAILABLE_LANGUAGES %}
-                                    <a class="dropdown-content-a" href="{% get_url request lang.0 %}" {% if lang.0 == CURRENT_LANGUAGE %} class="active" {% endif %}>
-                                        {{ lang.1 }}
-                                    </a>
-                                {% endfor %}
-                            </div>
+                        {% endif %}
+                    </div>
+                    {% get_current_language as CURRENT_LANGUAGE %}
+                    {% get_available_languages as AVAILABLE_LANGUAGES %}
+                    <div class="dropdown CartBlock-block">
+                        <button class="dropbtn" style="display: flex;">
+                            <img class="CartBlock-img" src="{% static 'img/icons/lan.svg' %}" alt="lan.svg"/>
+                        </button>
+                        <div class="dropdown-content">
+                            {% for lang in AVAILABLE_LANGUAGES %}
+                            <a class="dropdown-content-a" href="{% get_url request lang.0 %}" {% if lang.0 == CURRENT_LANGUAGE %} class="active" {% endif %}>
+                                {{ lang.1 }}
+                            </a>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                <div class="row-block Header-trigger"><a class="menuTrigger" href="#navigate">
-                        <div class="menuTrigger-content">{% translate "Навигация" %}
-                        </div><span></span><span></span><span></span>
-                    </a>
+            </div>
+            <div class="row-block Header-trigger"><a class="menuTrigger" href="#navigate">
+                <div class="menuTrigger-content">{% translate "Навигация" %}
                 </div>
+                <span></span><span></span><span></span>
+            </a>
+            </div>
             {% endif %}
         </div>
     </div>
     {% if not simple_header %}
-        <div class="Header-searchWrap">
-            <div class="wrap">
-                <div class="Header-categories">
-                    <div class="CategoriesButton">
-                        <div class="CategoriesButton-title">
-                            <div class="CategoriesButton-icon">
-                                <img src="{% static 'img/icons/allDep.svg' %}" alt="allDep.svg" />
-                            </div>
-                            <span class="CategoriesButton-text">{% translate "Все категории" %}</span>
-                            <div class="CategoriesButton-arrow">
-                            </div>
+    <div class="Header-searchWrap">
+        <div class="wrap">
+            <div class="Header-categories">
+                <div class="CategoriesButton">
+                    <div class="CategoriesButton-title">
+                        <div class="CategoriesButton-icon">
+                            <img src="{% static 'img/icons/allDep.svg' %}" alt="allDep.svg"/>
                         </div>
-                        <div class="CategoriesButton-content">
-                            {% recursetree list_categories %}
-                                <ul class="CategoriesButton-link">
-                                    <a href="{% url 'products:products_list' %}?category={{ node.id }}">
-                                        <div class="CategoriesButton-icon">
-                                            <p>OO</p>
-                                        </div>
-                                        <span class="CategoriesButton-text">{{ node.name }}</span>
-                                    </a>
-                                    {% if not node.is_leaf_node %}
-                                        <a class="CategoriesButton-arrow" href=""{% url 'products:products_list' %}?category={{ node.id }}""></a>
-                                    {% endif %}
-                                    {% if not node.is_leaf_node %}
-                                        <ul class="CategoriesButton-submenu">
-                                            {{ children }}
-                                        </ul>
-                                    {% endif %}
-                                </ul>
-                            {% endrecursetree %}
+                        <span class="CategoriesButton-text">{% translate "Все категории" %}</span>
+                        <div class="CategoriesButton-arrow">
                         </div>
                     </div>
-                </div>
-                <div class="Header-searchLink"><img src="{% static 'img/icons/search.svg' %}" alt="search.svg" />
-                </div>
-                <div class="Header-search">
-                    <div class="search">
-                        <form class="form form_search" action="#" method="post">
-                            {% csrf_token %}
-                            <input class="search-input" id="query" name="query" type="text" placeholder="NVIDIA GeForce RTX 3060" />
-                            <button class="search-button" type="submit" name="search" id="search">
-                                <img src="{% static 'img/icons/search.svg' %}" alt="search.svg" />{% translate "Поиск" %}
-                            </button>
-                        </form>
+                    <div class="CategoriesButton-content">
+                        <ul class="CategoriesButton-link">
+                            <a href="{% url 'products:discounts_list' %}">
+                                <div class="CategoriesButton-icon">
+                                    <img src="{% static 'img/icons/departments/4.svg' %}" alt="4.svg" />
+                                </div>
+                                <span class="CategoriesButton-text">{% translate "Скидки" %}</span>
+                            </a>
+                        </ul>
+                        {% recursetree list_categories %}
+                        <ul class="CategoriesButton-link">
+                            <a href="{% url 'products:products_list' %}?category={{ node.id }}">
+                                <div class="CategoriesButton-icon">
+                                    <p>OO</p>
+                                </div>
+                                <span class="CategoriesButton-text">{{ node.name }}</span>
+                            </a>
+                            {% if not node.is_leaf_node %}
+                            <a class="CategoriesButton-arrow" href="" {% url 'products:products_list' %}?category={{ node.id }}""></a>
+                            {% endif %}
+                            {% if not node.is_leaf_node %}
+                            <ul class="CategoriesButton-submenu">
+                                {{ children }}
+                            </ul>
+                            {% endif %}
+                        </ul>
+                        {% endrecursetree %}
                     </div>
                 </div>
             </div>
+            <div class="Header-searchLink"><img src="{% static 'img/icons/search.svg' %}" alt="search.svg"/>
+            </div>
+            <div class="Header-search">
+                <div class="search">
+                    <form class="form form_search" action="{% url 'products:products_list' %}" method="post">
+                        {% csrf_token %}
+                        <input class="search-input" id="query" name="name" type="text"
+                               placeholder="NVIDIA GeForce RTX 3060"/>
+                        <button class="search-button" type="submit" name="search" id="search">
+                            <img src="{% static 'img/icons/search.svg' %}" alt="search.svg"/>{% translate "Поиск" %}
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
+    </div>
     {% endif %}
 </header>

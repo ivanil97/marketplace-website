@@ -18,7 +18,7 @@
     <div class="Section">
         <div class="wrap">
                 {% if carts %}
-                <form class="form Cart" action="{% url 'orders:order' %}" method="post">
+                <form class="form Cart" action="{% url 'orders:order_proceed' %}" method="post">
                     {% for cart in list_data %}
                     <div class="Cart-product">
                         <div class="Cart-block Cart-block_row">
@@ -92,7 +92,7 @@
                             <strong class="Cart-title">{% translate "Итого" %}:
                             </strong><span class="Cart-price">{% total_price request carts %}$</span>
                         </div>
-                        <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'orders:order_detail' 1 %}">{% translate "Оформить заказ" %}</a>
+                        <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'orders:order_proceed' %}">{% translate "Оформить заказ" %}</a>
                         </div>
                     </div>
                 </form>
