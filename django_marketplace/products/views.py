@@ -122,8 +122,12 @@ class ProductsListView(ListView):
         :param kwargs: Дополнительные аргументы.
         :return: Словарь с контекстом для шаблона.
         """
+        context = super().get_context_data(**kwargs)
         products = self.get_queryset()
-        context = get_context_data(self.request, products)
+        filter_context = get_context_data(self.request, products)
+        context.update({
+            'filter_context': filter_context,
+        })
         return context
 
 
