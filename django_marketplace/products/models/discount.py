@@ -29,4 +29,4 @@ class Discount(models.Model):
         return f"Discount {self.percent} %"
 
     class Meta:
-        ordering = "-to_date",
+        ordering = ("-to_date",)
