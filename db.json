@@ -1,0 +1,2021 @@
+[
+  {
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+      "action_time": "2024-10-26T18:27:09.077Z",
+      "user": 1,
+      "content_type": 21,
+      "object_id": "2",
+      "object_repr": "seller@seller.ru",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+      "action_time": "2024-10-26T18:30:03.470Z",
+      "user": 1,
+      "content_type": 21,
+      "object_id": "2",
+      "object_repr": "seller@seller.ru",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"\\u0424\\u043e\\u0442\\u043e\", \"\\u041f\\u0435\\u0440\\u0441\\u043e\\u043d\\u0430\\u043b\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+      "action_time": "2024-10-26T18:36:49.092Z",
+      "user": 1,
+      "content_type": 21,
+      "object_id": "3",
+      "object_repr": "buyer@buyer.ru",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+      "action_time": "2024-10-26T18:54:49.401Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "1",
+      "object_repr": "БНС",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+      "action_time": "2024-10-26T18:59:58.128Z",
+      "user": 1,
+      "content_type": 21,
+      "object_id": "3",
+      "object_repr": "buyer@buyer.ru",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"password\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+      "action_time": "2024-10-26T19:09:17.107Z",
+      "user": 1,
+      "content_type": 21,
+      "object_id": "2",
+      "object_repr": "seller@seller.ru",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"password\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+      "action_time": "2024-10-26T19:23:58.975Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "1",
+      "object_repr": "TV",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+      "action_time": "2024-10-26T19:25:04.668Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "2",
+      "object_repr": "Headphones",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+      "action_time": "2024-10-26T19:28:12.905Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "3",
+      "object_repr": "Smartphones",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+      "action_time": "2024-10-26T19:29:37.742Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "4",
+      "object_repr": "Accessories",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+      "action_time": "2024-10-26T19:33:12.214Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "4",
+      "object_repr": "Accessories",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Icon\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+      "action_time": "2024-10-26T19:33:24.175Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "4",
+      "object_repr": "Accessories",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Icon\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+      "action_time": "2024-10-26T19:36:07.382Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "5",
+      "object_repr": "Cases",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+      "action_time": "2024-10-26T19:41:06.695Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "2",
+      "object_repr": "Electron",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+      "action_time": "2024-10-26T19:46:47.571Z",
+      "user": 1,
+      "content_type": 12,
+      "object_id": "1",
+      "object_repr": "Type",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+      "action_time": "2024-10-26T19:48:33.968Z",
+      "user": 1,
+      "content_type": 12,
+      "object_id": "2",
+      "object_repr": "Color",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+      "action_time": "2024-10-26T19:53:27.138Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "1",
+      "object_repr": "Headphones TWS FreeBuds Pro 3",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"seller price\", \"object\": \"Seller Electron | Product \\u041d\\u0430\\u0443\\u0448\\u043d\\u0438\\u043a\\u0438 TWS FreeBuds Pro 3 \\u0441\\u0435\\u0440\\u044b\\u0439\"}}, {\"added\": {\"name\": \"seller price\", \"object\": \"Seller \\u0411\\u041d\\u0421 | Product \\u041d\\u0430\\u0443\\u0448\\u043d\\u0438\\u043a\\u0438 TWS FreeBuds Pro 3 \\u0441\\u0435\\u0440\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"\\u041d\\u0430\\u0443\\u0448\\u043d\\u0438\\u043a\\u0438 TWS FreeBuds Pro 3 \\u0441\\u0435\\u0440\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"\\u041d\\u0430\\u0443\\u0448\\u043d\\u0438\\u043a\\u0438 TWS FreeBuds Pro 3 \\u0441\\u0435\\u0440\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (1)\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (2)\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+      "action_time": "2024-10-26T20:02:42.472Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "2",
+      "object_repr": "24\" (60 см) LED-TV 24H1/W white",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"seller price\", \"object\": \"Seller Electron | Product 24\\\" (60 \\u0441\\u043c) LED-\\u0442\\u0435\\u043b\\u0435\\u0432\\u0438\\u0437\\u043e\\u0440 24H1/W \\u0431\\u0435\\u043b\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"24\\\" (60 \\u0441\\u043c) LED-\\u0442\\u0435\\u043b\\u0435\\u0432\\u0438\\u0437\\u043e\\u0440 24H1/W \\u0431\\u0435\\u043b\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"24\\\" (60 \\u0441\\u043c) LED-\\u0442\\u0435\\u043b\\u0435\\u0432\\u0438\\u0437\\u043e\\u0440 24H1/W \\u0431\\u0435\\u043b\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (3)\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (4)\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+      "action_time": "2024-10-26T20:10:01.729Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "3",
+      "object_repr": "6.6\" Smartphone A60 128 GB black",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"seller price\", \"object\": \"Seller \\u0411\\u041d\\u0421 | Product 6.6\\\" \\u0421\\u043c\\u0430\\u0440\\u0442\\u0444\\u043e\\u043d A60 128 \\u0413\\u0411 \\u0447\\u0435\\u0440\\u043d\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"6.6\\\" \\u0421\\u043c\\u0430\\u0440\\u0442\\u0444\\u043e\\u043d A60 128 \\u0413\\u0411 \\u0447\\u0435\\u0440\\u043d\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"6.6\\\" \\u0421\\u043c\\u0430\\u0440\\u0442\\u0444\\u043e\\u043d A60 128 \\u0413\\u0411 \\u0447\\u0435\\u0440\\u043d\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (5)\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+      "action_time": "2024-10-26T20:11:45.314Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "2",
+      "object_repr": "24\" (60 см) LED-TV 24H1/W white",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Description\", \"Description [en]\", \"Description [ru]\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+      "action_time": "2024-10-26T20:12:48.652Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "1",
+      "object_repr": "Headphones TWS FreeBuds Pro 3",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Description\", \"Description [en]\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+      "action_time": "2024-10-26T20:20:34.442Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "4",
+      "object_repr": "Bumper Diamond Case for Apple iPhone 7/ 8/ SE 2020 pink",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"seller price\", \"object\": \"Seller Electron | Product \\u041d\\u0430\\u043a\\u043b\\u0430\\u0434\\u043a\\u0430 Diamond Case \\u0434\\u043b\\u044f Apple iPhone 7/ 8/ SE 2020 \\u0440\\u043e\\u0437\\u043e\\u0432\\u044b\\u0439\"}}, {\"added\": {\"name\": \"seller price\", \"object\": \"Seller \\u0411\\u041d\\u0421 | Product \\u041d\\u0430\\u043a\\u043b\\u0430\\u0434\\u043a\\u0430 Diamond Case \\u0434\\u043b\\u044f Apple iPhone 7/ 8/ SE 2020 \\u0440\\u043e\\u0437\\u043e\\u0432\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"\\u041d\\u0430\\u043a\\u043b\\u0430\\u0434\\u043a\\u0430 Diamond Case \\u0434\\u043b\\u044f Apple iPhone 7/ 8/ SE 2020 \\u0440\\u043e\\u0437\\u043e\\u0432\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"\\u041d\\u0430\\u043a\\u043b\\u0430\\u0434\\u043a\\u0430 Diamond Case \\u0434\\u043b\\u044f Apple iPhone 7/ 8/ SE 2020 \\u0440\\u043e\\u0437\\u043e\\u0432\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (6)\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (7)\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 23,
+    "fields": {
+      "action_time": "2024-10-26T20:30:08.056Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "5",
+      "object_repr": "Book case for all models black",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"seller price\", \"object\": \"Seller \\u0411\\u041d\\u0421 | Product \\u0427\\u0435\\u0445\\u043e\\u043b-\\u043a\\u043d\\u0438\\u0436\\u043a\\u0430 \\u0434\\u043b\\u044f \\u043b\\u044e\\u0431\\u044b\\u0445 \\u043c\\u043e\\u0434\\u0435\\u043b\\u0435\\u0439 \\u0447\\u0435\\u0440\\u043d\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"\\u0427\\u0435\\u0445\\u043e\\u043b-\\u043a\\u043d\\u0438\\u0436\\u043a\\u0430 \\u0434\\u043b\\u044f \\u043b\\u044e\\u0431\\u044b\\u0445 \\u043c\\u043e\\u0434\\u0435\\u043b\\u0435\\u0439 \\u0447\\u0435\\u0440\\u043d\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"\\u0427\\u0435\\u0445\\u043e\\u043b-\\u043a\\u043d\\u0438\\u0436\\u043a\\u0430 \\u0434\\u043b\\u044f \\u043b\\u044e\\u0431\\u044b\\u0445 \\u043c\\u043e\\u0434\\u0435\\u043b\\u0435\\u0439 \\u0447\\u0435\\u0440\\u043d\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (8)\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (9)\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 24,
+    "fields": {
+      "action_time": "2024-10-26T20:37:48.869Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "6",
+      "object_repr": "Charger BN2 white",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"seller price\", \"object\": \"Seller Electron | Product \\u0421\\u0435\\u0442\\u0435\\u0432\\u043e\\u0435 \\u0437\\u0430\\u0440\\u044f\\u0434\\u043d\\u043e\\u0435 \\u0443\\u0441\\u0442\\u0440\\u043e\\u0439\\u0441\\u0442\\u0432\\u043e BN2 \\u0431\\u0435\\u043b\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"\\u0421\\u0435\\u0442\\u0435\\u0432\\u043e\\u0435 \\u0437\\u0430\\u0440\\u044f\\u0434\\u043d\\u043e\\u0435 \\u0443\\u0441\\u0442\\u0440\\u043e\\u0439\\u0441\\u0442\\u0432\\u043e BN2 \\u0431\\u0435\\u043b\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product feature\", \"object\": \"\\u0421\\u0435\\u0442\\u0435\\u0432\\u043e\\u0435 \\u0437\\u0430\\u0440\\u044f\\u0434\\u043d\\u043e\\u0435 \\u0443\\u0441\\u0442\\u0440\\u043e\\u0439\\u0441\\u0442\\u0432\\u043e BN2 \\u0431\\u0435\\u043b\\u044b\\u0439\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (10)\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (11)\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 25,
+    "fields": {
+      "action_time": "2024-10-26T20:39:23.496Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "2",
+      "object_repr": "24\" (60 см) LED-TV 24H1/W white",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"name\": \"seller price\", \"object\": \"Seller Electron | Product 24\\\" (60 \\u0441\\u043c) LED-\\u0442\\u0435\\u043b\\u0435\\u0432\\u0438\\u0437\\u043e\\u0440 24H1/W \\u0431\\u0435\\u043b\\u044b\\u0439\", \"fields\": [\"Is limited\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 26,
+    "fields": {
+      "action_time": "2024-10-26T20:39:50.418Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "4",
+      "object_repr": "Bumper Diamond Case for Apple iPhone 7/ 8/ SE 2020 pink",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"name\": \"seller price\", \"object\": \"Seller Electron | Product \\u041d\\u0430\\u043a\\u043b\\u0430\\u0434\\u043a\\u0430 Diamond Case \\u0434\\u043b\\u044f Apple iPhone 7/ 8/ SE 2020 \\u0440\\u043e\\u0437\\u043e\\u0432\\u044b\\u0439\", \"fields\": [\"Is limited\"]}}, {\"changed\": {\"name\": \"seller price\", \"object\": \"Seller \\u0411\\u041d\\u0421 | Product \\u041d\\u0430\\u043a\\u043b\\u0430\\u0434\\u043a\\u0430 Diamond Case \\u0434\\u043b\\u044f Apple iPhone 7/ 8/ SE 2020 \\u0440\\u043e\\u0437\\u043e\\u0432\\u044b\\u0439\", \"fields\": [\"Is limited\"]}}]"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+      "name": "Can add log entry",
+      "content_type": 1,
+      "codename": "add_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Can change log entry",
+      "content_type": 1,
+      "codename": "change_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+      "name": "Can delete log entry",
+      "content_type": 1,
+      "codename": "delete_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+      "name": "Can view log entry",
+      "content_type": 1,
+      "codename": "view_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+      "name": "Can add permission",
+      "content_type": 2,
+      "codename": "add_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+      "name": "Can change permission",
+      "content_type": 2,
+      "codename": "change_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+      "name": "Can delete permission",
+      "content_type": 2,
+      "codename": "delete_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+      "name": "Can view permission",
+      "content_type": 2,
+      "codename": "view_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+      "name": "Can add group",
+      "content_type": 3,
+      "codename": "add_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+      "name": "Can change group",
+      "content_type": 3,
+      "codename": "change_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+      "name": "Can delete group",
+      "content_type": 3,
+      "codename": "delete_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+      "name": "Can view group",
+      "content_type": 3,
+      "codename": "view_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+      "name": "Can add content type",
+      "content_type": 4,
+      "codename": "add_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+      "name": "Can change content type",
+      "content_type": 4,
+      "codename": "change_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+      "name": "Can delete content type",
+      "content_type": 4,
+      "codename": "delete_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+      "name": "Can view content type",
+      "content_type": 4,
+      "codename": "view_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+      "name": "Can add session",
+      "content_type": 5,
+      "codename": "add_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+      "name": "Can change session",
+      "content_type": 5,
+      "codename": "change_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+      "name": "Can delete session",
+      "content_type": 5,
+      "codename": "delete_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+      "name": "Can view session",
+      "content_type": 5,
+      "codename": "view_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+      "name": "Can add constance",
+      "content_type": 6,
+      "codename": "add_constance"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+      "name": "Can change constance",
+      "content_type": 6,
+      "codename": "change_constance"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+      "name": "Can delete constance",
+      "content_type": 6,
+      "codename": "delete_constance"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+      "name": "Can view constance",
+      "content_type": 6,
+      "codename": "view_constance"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+      "name": "Can change config",
+      "content_type": 6,
+      "codename": "change_config"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+      "name": "Can view config",
+      "content_type": 6,
+      "codename": "view_config"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+      "name": "Can add category",
+      "content_type": 7,
+      "codename": "add_category"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+      "name": "Can change category",
+      "content_type": 7,
+      "codename": "change_category"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+      "name": "Can delete category",
+      "content_type": 7,
+      "codename": "delete_category"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+      "name": "Can view category",
+      "content_type": 7,
+      "codename": "view_category"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+      "name": "Can add product",
+      "content_type": 8,
+      "codename": "add_product"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+      "name": "Can change product",
+      "content_type": 8,
+      "codename": "change_product"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+      "name": "Can delete product",
+      "content_type": 8,
+      "codename": "delete_product"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+      "name": "Can view product",
+      "content_type": 8,
+      "codename": "view_product"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+      "name": "Can add product image",
+      "content_type": 9,
+      "codename": "add_productimage"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+      "name": "Can change product image",
+      "content_type": 9,
+      "codename": "change_productimage"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+      "name": "Can delete product image",
+      "content_type": 9,
+      "codename": "delete_productimage"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+      "name": "Can view product image",
+      "content_type": 9,
+      "codename": "view_productimage"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+      "name": "Can add tag",
+      "content_type": 10,
+      "codename": "add_tag"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+      "name": "Can change tag",
+      "content_type": 10,
+      "codename": "change_tag"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+      "name": "Can delete tag",
+      "content_type": 10,
+      "codename": "delete_tag"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+      "name": "Can view tag",
+      "content_type": 10,
+      "codename": "view_tag"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+      "name": "Can add review",
+      "content_type": 11,
+      "codename": "add_review"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+      "name": "Can change review",
+      "content_type": 11,
+      "codename": "change_review"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+      "name": "Can delete review",
+      "content_type": 11,
+      "codename": "delete_review"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+      "name": "Can view review",
+      "content_type": 11,
+      "codename": "view_review"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+      "name": "Can add feature",
+      "content_type": 12,
+      "codename": "add_feature"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+      "name": "Can change feature",
+      "content_type": 12,
+      "codename": "change_feature"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+      "name": "Can delete feature",
+      "content_type": 12,
+      "codename": "delete_feature"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+      "name": "Can view feature",
+      "content_type": 12,
+      "codename": "view_feature"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+      "name": "Can add discount",
+      "content_type": 13,
+      "codename": "add_discount"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+      "name": "Can change discount",
+      "content_type": 13,
+      "codename": "change_discount"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 53,
+    "fields": {
+      "name": "Can delete discount",
+      "content_type": 13,
+      "codename": "delete_discount"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 54,
+    "fields": {
+      "name": "Can view discount",
+      "content_type": 13,
+      "codename": "view_discount"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 55,
+    "fields": {
+      "name": "Can add product feature",
+      "content_type": 14,
+      "codename": "add_productfeature"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 56,
+    "fields": {
+      "name": "Can change product feature",
+      "content_type": 14,
+      "codename": "change_productfeature"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 57,
+    "fields": {
+      "name": "Can delete product feature",
+      "content_type": 14,
+      "codename": "delete_productfeature"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 58,
+    "fields": {
+      "name": "Can view product feature",
+      "content_type": 14,
+      "codename": "view_productfeature"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 59,
+    "fields": {
+      "name": "Can add seller",
+      "content_type": 15,
+      "codename": "add_seller"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 60,
+    "fields": {
+      "name": "Can change seller",
+      "content_type": 15,
+      "codename": "change_seller"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 61,
+    "fields": {
+      "name": "Can delete seller",
+      "content_type": 15,
+      "codename": "delete_seller"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 62,
+    "fields": {
+      "name": "Can view seller",
+      "content_type": 15,
+      "codename": "view_seller"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 63,
+    "fields": {
+      "name": "Can add seller price",
+      "content_type": 16,
+      "codename": "add_sellerprice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 64,
+    "fields": {
+      "name": "Can change seller price",
+      "content_type": 16,
+      "codename": "change_sellerprice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 65,
+    "fields": {
+      "name": "Can delete seller price",
+      "content_type": 16,
+      "codename": "delete_sellerprice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 66,
+    "fields": {
+      "name": "Can view seller price",
+      "content_type": 16,
+      "codename": "view_sellerprice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 67,
+    "fields": {
+      "name": "Can add Слайдерный баннер",
+      "content_type": 17,
+      "codename": "add_sliderbanner"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 68,
+    "fields": {
+      "name": "Can change Слайдерный баннер",
+      "content_type": 17,
+      "codename": "change_sliderbanner"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 69,
+    "fields": {
+      "name": "Can delete Слайдерный баннер",
+      "content_type": 17,
+      "codename": "delete_sliderbanner"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 70,
+    "fields": {
+      "name": "Can view Слайдерный баннер",
+      "content_type": 17,
+      "codename": "view_sliderbanner"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 71,
+    "fields": {
+      "name": "Can add Статический баннер",
+      "content_type": 18,
+      "codename": "add_staticbanner"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 72,
+    "fields": {
+      "name": "Can change Статический баннер",
+      "content_type": 18,
+      "codename": "change_staticbanner"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 73,
+    "fields": {
+      "name": "Can delete Статический баннер",
+      "content_type": 18,
+      "codename": "delete_staticbanner"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 74,
+    "fields": {
+      "name": "Can view Статический баннер",
+      "content_type": 18,
+      "codename": "view_staticbanner"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 75,
+    "fields": {
+      "name": "Can add Просмотренный товар",
+      "content_type": 19,
+      "codename": "add_viewedproducts"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 76,
+    "fields": {
+      "name": "Can change Просмотренный товар",
+      "content_type": 19,
+      "codename": "change_viewedproducts"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 77,
+    "fields": {
+      "name": "Can delete Просмотренный товар",
+      "content_type": 19,
+      "codename": "delete_viewedproducts"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 78,
+    "fields": {
+      "name": "Can view Просмотренный товар",
+      "content_type": 19,
+      "codename": "view_viewedproducts"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 79,
+    "fields": {
+      "name": "Can add Роль",
+      "content_type": 20,
+      "codename": "add_role"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 80,
+    "fields": {
+      "name": "Can change Роль",
+      "content_type": 20,
+      "codename": "change_role"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 81,
+    "fields": {
+      "name": "Can delete Роль",
+      "content_type": 20,
+      "codename": "delete_role"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 82,
+    "fields": {
+      "name": "Can view Роль",
+      "content_type": 20,
+      "codename": "view_role"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 83,
+    "fields": {
+      "name": "Can add Пользователь",
+      "content_type": 21,
+      "codename": "add_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 84,
+    "fields": {
+      "name": "Can change Пользователь",
+      "content_type": 21,
+      "codename": "change_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 85,
+    "fields": {
+      "name": "Can delete Пользователь",
+      "content_type": 21,
+      "codename": "delete_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 86,
+    "fields": {
+      "name": "Can view Пользователь",
+      "content_type": 21,
+      "codename": "view_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 87,
+    "fields": {
+      "name": "Can add Заказ",
+      "content_type": 22,
+      "codename": "add_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 88,
+    "fields": {
+      "name": "Can change Заказ",
+      "content_type": 22,
+      "codename": "change_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 89,
+    "fields": {
+      "name": "Can delete Заказ",
+      "content_type": 22,
+      "codename": "delete_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 90,
+    "fields": {
+      "name": "Can view Заказ",
+      "content_type": 22,
+      "codename": "view_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 91,
+    "fields": {
+      "name": "Can add Cart",
+      "content_type": 23,
+      "codename": "add_cart"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 92,
+    "fields": {
+      "name": "Can change Cart",
+      "content_type": 23,
+      "codename": "change_cart"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 93,
+    "fields": {
+      "name": "Can delete Cart",
+      "content_type": 23,
+      "codename": "delete_cart"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 94,
+    "fields": {
+      "name": "Can view Cart",
+      "content_type": 23,
+      "codename": "view_cart"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+      "app_label": "admin",
+      "model": "logentry"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+      "app_label": "auth",
+      "model": "permission"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+      "app_label": "auth",
+      "model": "group"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+      "app_label": "contenttypes",
+      "model": "contenttype"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+      "app_label": "sessions",
+      "model": "session"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+      "app_label": "constance",
+      "model": "constance"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+      "app_label": "products",
+      "model": "category"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+      "app_label": "products",
+      "model": "product"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+      "app_label": "products",
+      "model": "productimage"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+      "app_label": "products",
+      "model": "tag"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": {
+      "app_label": "products",
+      "model": "review"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": {
+      "app_label": "products",
+      "model": "feature"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 13,
+    "fields": {
+      "app_label": "products",
+      "model": "discount"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 14,
+    "fields": {
+      "app_label": "products",
+      "model": "productfeature"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 15,
+    "fields": {
+      "app_label": "products",
+      "model": "seller"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 16,
+    "fields": {
+      "app_label": "products",
+      "model": "sellerprice"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 17,
+    "fields": {
+      "app_label": "products",
+      "model": "sliderbanner"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 18,
+    "fields": {
+      "app_label": "products",
+      "model": "staticbanner"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 19,
+    "fields": {
+      "app_label": "products",
+      "model": "viewedproducts"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 20,
+    "fields": {
+      "app_label": "users",
+      "model": "role"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 21,
+    "fields": {
+      "app_label": "users",
+      "model": "user"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 22,
+    "fields": {
+      "app_label": "orders",
+      "model": "order"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 23,
+    "fields": {
+      "app_label": "carts",
+      "model": "cart"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "85djolq631ge0tp70waqzy76hhx3wk55",
+    "fields": {
+      "session_data": ".eJxVjDsOgzAQBe-ydWThD9hQpucM1q53HZNEIPGpEHdPkGho38y8HRLOK3T78YCI21ritsgcB4YONNw2wvSR8QT8xvE1qTSN6zyQOhV10UX1E8v3ebm3g4JL-dfBVs7kxgdDyHWlJZEgWSFjg_g2a2obFmuQPTOLE-PYBVcz-WxaneH4AUCFPBI:1t4mLg:vnIs2NUUdXMwpshghGwTfsOIsx6Ur0w6bCkH0s_9RhY",
+      "expire_date": "2024-11-09T19:21:20.313Z"
+    }
+  },
+  {
+    "model": "constance.constance",
+    "pk": 1,
+    "fields": {
+      "key": "CACHES_BANNERS",
+      "value": "{\"__type__\": \"default\", \"__value__\": 600}"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "Телевизоры",
+      "name_en": "TV",
+      "name_ru": "Телевизоры",
+      "slug": "tv",
+      "description": "Телевизоры",
+      "description_en": "televisions",
+      "description_ru": "Телевизоры",
+      "icon": "category_icon_directory_path/1.png",
+      "archived": false,
+      "parent": null,
+      "lft": 1,
+      "rght": 2,
+      "tree_id": 3,
+      "level": 0
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+      "name": "Наушники",
+      "name_en": "Headphones",
+      "name_ru": "Наушники",
+      "slug": "headphones",
+      "description": "Наушники",
+      "description_en": "Headphones",
+      "description_ru": "Наушники",
+      "icon": "category_icon_directory_path/2.png",
+      "archived": false,
+      "parent": null,
+      "lft": 1,
+      "rght": 2,
+      "tree_id": 1,
+      "level": 0
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+      "name": "Смартфоны",
+      "name_en": "Smartphones",
+      "name_ru": "Смартфоны",
+      "slug": "smartphones",
+      "description": "Смартфоны",
+      "description_en": "Smartphones",
+      "description_ru": "Смартфоны",
+      "icon": "category_icon_directory_path/8.png",
+      "archived": false,
+      "parent": null,
+      "lft": 1,
+      "rght": 6,
+      "tree_id": 2,
+      "level": 0
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 4,
+    "fields": {
+      "name": "Аксессуары",
+      "name_en": "Accessories",
+      "name_ru": "Аксессуары",
+      "slug": "accessories",
+      "description": "Аксессуары",
+      "description_en": "Accessories",
+      "description_ru": "Аксессуары",
+      "icon": "category_icon_directory_path/3.png",
+      "archived": false,
+      "parent": 3,
+      "lft": 2,
+      "rght": 3,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 5,
+    "fields": {
+      "name": "Чехлы",
+      "name_en": "Cases",
+      "name_ru": "Чехлы",
+      "slug": "cases",
+      "description": "Чехлы",
+      "description_en": "Cases",
+      "description_ru": "Чехлы",
+      "icon": "category_icon_directory_path/4.png",
+      "archived": false,
+      "parent": 3,
+      "lft": 4,
+      "rght": 5,
+      "tree_id": 2,
+      "level": 1
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "Наушники TWS FreeBuds Pro 3 серый",
+      "name_en": "Headphones TWS FreeBuds Pro 3",
+      "name_ru": "Наушники TWS FreeBuds Pro 3 серый",
+      "slug": "headphones-tws-freebuds-pro-3",
+      "description": "Наушники TWS FreeBuds Pro 3 синхронизируются с устройством по беспроводной технологии Bluetooth. Двойные динамические излучатели с каждой стороны формируют детализированный звук с глубоким басом в частотном диапазоне 14-48000 Гц. Система с 3 цифровыми микрофонами в каждом наушнике позволяет точно передавать голос собеседнику. Технология интеллектуального активного шумоподавления обеспечивает чистую передачу голоса в шумной обстановке за счет поглощения посторонних звуков.",
+      "description_en": "The TWS FreeBuds Pro 3 headphones synchronize with the device via Bluetooth wireless technology. Dual dynamic emitters on each side form a detailed sound with deep bass in the frequency range of 14-48000 Hz. The system with 3 digital microphones in each earphone allows you to accurately transmit your voice to your interlocutor. Intelligent active noise reduction technology ensures clean voice transmission in noisy environments by absorbing extraneous sounds.",
+      "description_ru": "Наушники TWS FreeBuds Pro 3 синхронизируются с устройством по беспроводной технологии Bluetooth. Двойные динамические излучатели с каждой стороны формируют детализированный звук с глубоким басом в частотном диапазоне 14-48000 Гц. Система с 3 цифровыми микрофонами в каждом наушнике позволяет точно передавать голос собеседнику. Технология интеллектуального активного шумоподавления обеспечивает чистую передачу голоса в шумной обстановке за счет поглощения посторонних звуков.",
+      "archived": false,
+      "category": 2,
+      "sort_index": 1,
+      "quantity_sold": 0,
+      "created_at": "2024-10-26T19:53:27.021Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "name": "24\" (60 см) LED-телевизор 24H1/W белый",
+      "name_en": "24\" (60 см) LED-TV 24H1/W white",
+      "name_ru": "24\" (60 см) LED-телевизор 24H1/W белый",
+      "slug": "24-60-sm-led-tv-24h1w-white",
+      "description": "Телевизор LED  24H1/W в стильном белом корпусе со съемными ножками допускает настенный монтаж на кронштейн VESA 100 x 100. Экран с диагональю 24” и разрешением HD радует четкой и детальной картинкой с реалистичной передачей цвета.",
+      "description_en": "The LED 24 H1/W TV in a stylish white case with removable legs allows wall mounting on a VESA 100 x 100 bracket. The screen with a diagonal of 24” and HD resolution pleases with a clear and detailed picture with realistic color transfer.",
+      "description_ru": "Телевизор LED  24H1/W в стильном белом корпусе со съемными ножками допускает настенный монтаж на кронштейн VESA 100 x 100. Экран с диагональю 24” и разрешением HD радует четкой и детальной картинкой с реалистичной передачей цвета.",
+      "archived": false,
+      "category": 1,
+      "sort_index": 1,
+      "quantity_sold": 0,
+      "created_at": "2024-10-26T20:02:42.424Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "name": "6.6\" Смартфон A60 128 ГБ черный",
+      "name_en": "6.6\" Smartphone A60 128 GB black",
+      "name_ru": "6.6\" Смартфон A60 128 ГБ черный",
+      "slug": "66-smartphone-a60-128-gb-black",
+      "description": "Смартфон A60 с поддержкой 2 SIM оснащен аккумулятором емкостью 5000 мАч. Энергия рассчитана на 7.5 ч работы в режиме разговора. Основная двухмодульная камера с разрешением матрицы 8 Мп обладает светодиодной вспышкой, наполняющей снимки яркостью при недостаточном освещении.",
+      "description_en": "The A60 smartphone with 2 SIM support is equipped with a 5000 mAh battery. The energy is designed for 7.5 hours of talk time. The main dual-module camera with a matrix resolution of 8 MP has an LED flash that fills the images with brightness in low light.",
+      "description_ru": "Смартфон A60 с поддержкой 2 SIM оснащен аккумулятором емкостью 5000 мАч. Энергия рассчитана на 7.5 ч работы в режиме разговора. Основная двухмодульная камера с разрешением матрицы 8 Мп обладает светодиодной вспышкой, наполняющей снимки яркостью при недостаточном освещении.",
+      "archived": false,
+      "category": 3,
+      "sort_index": 1,
+      "quantity_sold": 0,
+      "created_at": "2024-10-26T20:10:01.539Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "name": "Накладка Diamond Case для Apple iPhone 7/ 8/ SE 2020 розовый",
+      "name_en": "Bumper Diamond Case for Apple iPhone 7/ 8/ SE 2020 pink",
+      "name_ru": "Накладка Diamond Case для Apple iPhone 7/ 8/ SE 2020 розовый",
+      "slug": "bumper-diamond-case-for-apple-iphone-7-8-se-2020-pink",
+      "description": "Накладка для смартфона Apple iPhone 7/8/SE 2020 выполнена в розовом цвете и выделяется фигурным оформлением тыловой панели.",
+      "description_en": "The cover for the Apple iPhone 7/8/SE 2020 smartphone is made in pink and stands out by the curly design of the back panel.",
+      "description_ru": "Накладка для смартфона Apple iPhone 7/8/SE 2020 выполнена в розовом цвете и выделяется фигурным оформлением тыловой панели.",
+      "archived": false,
+      "category": 5,
+      "sort_index": 1,
+      "quantity_sold": 0,
+      "created_at": "2024-10-26T20:20:34.350Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "name": "Чехол-книжка для любых моделей черный",
+      "name_en": "Book case for all models black",
+      "name_ru": "Чехол-книжка для любых моделей черный",
+      "slug": "book-case-for-all-models-black",
+      "description": "Изготовленный из высококачественного полиуретана чехол-книжка Aceline отличается значительной долговечностью. Аксессуар сохранит свой внешний вид в течение длительного времени.",
+      "description_en": "Made of high-quality polyurethane, the Aceline book case is characterized by significant durability. The accessory will retain its appearance for a long time.",
+      "description_ru": "Изготовленный из высококачественного полиуретана чехол-книжка Aceline отличается значительной долговечностью. Аксессуар сохранит свой внешний вид в течение длительного времени.",
+      "archived": false,
+      "category": 5,
+      "sort_index": 1,
+      "quantity_sold": 0,
+      "created_at": "2024-10-26T20:30:07.957Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+      "name": "Сетевое зарядное устройство BN2 белый",
+      "name_en": "Charger BN2 white",
+      "name_ru": "Сетевое зарядное устройство BN2 белый",
+      "slug": "charger-bn2-white",
+      "description": "Сетевое зарядное устройство BN2 - компактный адаптер питания, который подойдет для подзарядки нетребовательных к мощности мобильных устройств. Модель заменит собой штатный зарядный блок при его утере или поломке, благодаря чему вы сможете продолжить пользоваться вашим смартфоном.",
+      "description_en": "The BN2 network charger is a compact power adapter that is suitable for charging undemanding mobile devices. The model will replace the standard charging unit if it is lost or broken, so you can continue to use your smartphone.",
+      "description_ru": "Сетевое зарядное устройство BN2 - компактный адаптер питания, который подойдет для подзарядки нетребовательных к мощности мобильных устройств. Модель заменит собой штатный зарядный блок при его утере или поломке, благодаря чему вы сможете продолжить пользоваться вашим смартфоном.",
+      "archived": false,
+      "category": 4,
+      "sort_index": 1,
+      "quantity_sold": 0,
+      "created_at": "2024-10-26T20:37:48.813Z"
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 1,
+    "fields": {
+      "image": "products/product_1/images/headphones1.jpeg.webp",
+      "product": 1
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 2,
+    "fields": {
+      "image": "products/product_1/images/headphones1_2.jpeg.webp",
+      "product": 1
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 3,
+    "fields": {
+      "image": "products/product_2/images/TV11.webp",
+      "product": 2
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 4,
+    "fields": {
+      "image": "products/product_2/images/TV12.webp",
+      "product": 2
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 5,
+    "fields": {
+      "image": "products/product_3/images/Phone11.webp",
+      "product": 3
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 6,
+    "fields": {
+      "image": "products/product_4/images/bumper_11.webp",
+      "product": 4
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 7,
+    "fields": {
+      "image": "products/product_4/images/bumper_12.webp",
+      "product": 4
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 8,
+    "fields": {
+      "image": "products/product_5/images/case_11.webp",
+      "product": 5
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 9,
+    "fields": {
+      "image": "products/product_5/images/case_12.webp",
+      "product": 5
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 10,
+    "fields": {
+      "image": "products/product_6/images/adapter_11.webp",
+      "product": 6
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 11,
+    "fields": {
+      "image": "products/product_6/images/adapter_12.webp",
+      "product": 6
+    }
+  },
+  {
+    "model": "products.seller",
+    "pk": 1,
+    "fields": {
+      "name": "БНС",
+      "slug": "bns",
+      "description": "Магазин по продаже цифровой и бытовой техники.",
+      "email": "bns@bns.bns",
+      "phone": "123456789",
+      "address": "Москва Кремль 1",
+      "image": "",
+      "user": 2
+    }
+  },
+  {
+    "model": "products.seller",
+    "pk": 2,
+    "fields": {
+      "name": "Electron",
+      "slug": "electron",
+      "description": "Магазин электроники и бытовой техники",
+      "email": "electron@electron.ru",
+      "phone": "987654321",
+      "address": "St. Petersburg Manezhnaya pl 1",
+      "image": "",
+      "user": 3
+    }
+  },
+  {
+    "model": "products.sellerprice",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "seller": 2,
+      "price": "20.00",
+      "is_limited": false,
+      "count_products": 100,
+      "archived": false,
+      "created_at": "2024-10-26T19:53:27.078Z"
+    }
+  },
+  {
+    "model": "products.sellerprice",
+    "pk": 2,
+    "fields": {
+      "product": 1,
+      "seller": 1,
+      "price": "19.00",
+      "is_limited": false,
+      "count_products": 16,
+      "archived": false,
+      "created_at": "2024-10-26T19:53:27.084Z"
+    }
+  },
+  {
+    "model": "products.sellerprice",
+    "pk": 3,
+    "fields": {
+      "product": 2,
+      "seller": 2,
+      "price": "70.00",
+      "is_limited": true,
+      "count_products": 20,
+      "archived": false,
+      "created_at": "2024-10-26T20:02:42.435Z"
+    }
+  },
+  {
+    "model": "products.sellerprice",
+    "pk": 4,
+    "fields": {
+      "product": 3,
+      "seller": 1,
+      "price": "200.00",
+      "is_limited": false,
+      "count_products": 42,
+      "archived": false,
+      "created_at": "2024-10-26T20:10:01.558Z"
+    }
+  },
+  {
+    "model": "products.sellerprice",
+    "pk": 5,
+    "fields": {
+      "product": 4,
+      "seller": 2,
+      "price": "6.00",
+      "is_limited": true,
+      "count_products": 100,
+      "archived": false,
+      "created_at": "2024-10-26T20:20:34.379Z"
+    }
+  },
+  {
+    "model": "products.sellerprice",
+    "pk": 6,
+    "fields": {
+      "product": 4,
+      "seller": 1,
+      "price": "5.55",
+      "is_limited": true,
+      "count_products": 17,
+      "archived": false,
+      "created_at": "2024-10-26T20:20:34.386Z"
+    }
+  },
+  {
+    "model": "products.sellerprice",
+    "pk": 7,
+    "fields": {
+      "product": 5,
+      "seller": 1,
+      "price": "2.00",
+      "is_limited": false,
+      "count_products": 6,
+      "archived": false,
+      "created_at": "2024-10-26T20:30:07.973Z"
+    }
+  },
+  {
+    "model": "products.sellerprice",
+    "pk": 8,
+    "fields": {
+      "product": 6,
+      "seller": 2,
+      "price": "5.00",
+      "is_limited": false,
+      "count_products": 54,
+      "archived": false,
+      "created_at": "2024-10-26T20:37:48.823Z"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "feature": 1,
+      "value": "наушники TWS",
+      "value_en": "headphones TWS",
+      "value_ru": "наушники TWS"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 2,
+    "fields": {
+      "product": 1,
+      "feature": 2,
+      "value": "серый",
+      "value_en": "greq",
+      "value_ru": "серый"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 3,
+    "fields": {
+      "product": 2,
+      "feature": 1,
+      "value": "LED-телевизор",
+      "value_en": "LED-TV",
+      "value_ru": "LED-телевизор"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 4,
+    "fields": {
+      "product": 2,
+      "feature": 2,
+      "value": "белый",
+      "value_en": "white",
+      "value_ru": "белый"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 5,
+    "fields": {
+      "product": 3,
+      "feature": 1,
+      "value": "смартфон",
+      "value_en": "smartphone",
+      "value_ru": "смартфон"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 6,
+    "fields": {
+      "product": 3,
+      "feature": 2,
+      "value": "чёрный",
+      "value_en": "black",
+      "value_ru": "чёрный"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 7,
+    "fields": {
+      "product": 4,
+      "feature": 1,
+      "value": "Накладка",
+      "value_en": "Bumper",
+      "value_ru": "Накладка"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 8,
+    "fields": {
+      "product": 4,
+      "feature": 2,
+      "value": "Розовый",
+      "value_en": "Pink",
+      "value_ru": "Розовый"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 9,
+    "fields": {
+      "product": 5,
+      "feature": 1,
+      "value": "чехол-книжка",
+      "value_en": "book-case",
+      "value_ru": "чехол-книжка"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 10,
+    "fields": {
+      "product": 5,
+      "feature": 2,
+      "value": "черный",
+      "value_en": "black",
+      "value_ru": "черный"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 11,
+    "fields": {
+      "product": 6,
+      "feature": 1,
+      "value": "зарядное устройство",
+      "value_en": "charger",
+      "value_ru": "зарядное устройство"
+    }
+  },
+  {
+    "model": "products.productfeature",
+    "pk": 12,
+    "fields": {
+      "product": 6,
+      "feature": 2,
+      "value": "белый",
+      "value_en": "white",
+      "value_ru": "белый"
+    }
+  },
+  {
+    "model": "products.feature",
+    "pk": 1,
+    "fields": {
+      "name": "Тип",
+      "name_en": "Type",
+      "name_ru": "Тип"
+    }
+  },
+  {
+    "model": "products.feature",
+    "pk": 2,
+    "fields": {
+      "name": "Цвет",
+      "name_en": "Color",
+      "name_ru": "Цвет"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$0UXk8G4tWrUEWVSWkueugh$w37Rh1HN5KtYZYko11Gzpk/lEqhSsnLl8GZq8AKl9XI=",
+      "last_login": "2024-10-26T19:21:20.295Z",
+      "email": "andr73@list.ru",
+      "first_name": "admin",
+      "last_name": "admin",
+      "is_active": true,
+      "is_staff": true,
+      "is_superuser": true,
+      "role": null,
+      "profile_picture": "",
+      "phone_number": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$Z0A7vUfA3dwSGS0pJyNMSF$gV1HFRyEyZtqmQr2saPe5MNEHIjuIAXdpXb+yg74t5s=",
+      "last_login": "2024-10-26T19:15:54.204Z",
+      "email": "seller@seller.ru",
+      "first_name": "Иван",
+      "last_name": "Иванов",
+      "is_active": true,
+      "is_staff": true,
+      "is_superuser": false,
+      "role": null,
+      "profile_picture": "users/profile_pictures/seller.jpeg",
+      "phone_number": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$5VTKtFFcbD6WS5RWQq8waL$VOj4o5/dxgXK1xJNlJoGv2F/bpnT2wfH3TmmBStFJ1s=",
+      "last_login": "2024-10-26T19:06:03.972Z",
+      "email": "buyer@buyer.ru",
+      "first_name": "Петр",
+      "last_name": "Петров",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "role": null,
+      "profile_picture": "",
+      "phone_number": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
