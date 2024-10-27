@@ -25,7 +25,6 @@
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <div class="range Section-columnRange">
-{#                                        {{ form.price }}#}
                                         <input class="range-line"
                                                id="price"
                                                name="price"
@@ -68,9 +67,7 @@
                                     {% for tag in product.tags.all %}
                                         <a class="btn btn_default btn_sm" href="#">{{ tag }}</a>
                                     {% endfor %}
-
                                 {% endfor %}
-
                                 <a class="btn btn_default btn_sm" href="#">{% translate "Видео" %}</a>
                                 <a class="btn btn_default btn_sm" href="#">{% translate "Разработка" %}</a>
                                 <a class="btn btn_default btn_sm" href="#">{% translate "Игры" %}</a>
@@ -131,6 +128,13 @@
                                 {% elif curr_sort and curr_sort == DATE_DEC.value %}?sort={{ NONE.value }}
                                 {% else %}?sort={{ DATE_ASC.value }}
                                 {% endif %}">{% translate "Новизне" %}</a>
+
+                            <a class="Sort-sortBy {% if curr_sort and curr_sort == DISCOUNT.value %}
+                                Sort-sortBy_dec
+                            {% elif curr_sort and curr_sort == NONE.value %}
+
+                            {% endif %}" </a>
+                            <a class="Sort-sortBy" href="{% url 'products:sale_list' %}">{% translate "Скидке" %}</a>
                         </div>
                     </div>
                     <div class="Cards">

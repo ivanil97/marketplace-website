@@ -4,21 +4,27 @@ from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, ListView
 from django.dispatch import receiver
 from django.core.cache import cache
+
 from products.services.product_context import product_context
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 from django.views.generic import TemplateView
+
 from products.forms import ReviewForm, SearchForm
+
 from django.db.models.signals import post_save
 from products.models.review import Review
 from django.db.models import Count, Min, Max, Avg
 from django.db.models import Prefetch
+
 from comparisons.services.comparison_service import *
 from products.services.products_list_services import filter_queryset, get_context_data
 from products.services.review_service import add_review_to_product
 from users.services.viewed_products_service import ViewedProductsService
 from products.services.index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
 from products.models import Product
+from products.models import Discount
+from products.models import Review
 
 
 class ProductDetailView(DetailView):
@@ -116,8 +122,12 @@ class ProductsListView(ListView):
         :param kwargs: Дополнительные аргументы.
         :return: Словарь с контекстом для шаблона.
         """
+        context = super().get_context_data(**kwargs)
         products = self.get_queryset()
-        context = get_context_data(self.request, products)
+        filter_context = get_context_data(self.request, products)
+        context.update({
+            'filter_context': filter_context,
+        })
         return context
 
 
@@ -154,6 +164,14 @@ class HomeView(TemplateView):
 
         return context
 
+
+class DiscountListView(ListView):
+    model = Discount
+    template_name = 'templates_products/discounts_list.html'
+    context_object_name = 'discounts'
+
+    def get_queryset(self):
+        return Discount.objects.filter(is_active=True, archived=False).order_by('-to_date')
 
 
 @receiver(post_save, sender=Product)
