@@ -20,7 +20,7 @@ def prepare_data(request, carts) -> list[dict]:
         prepare = [
             {
                 "price": col.sellerprice.price,
-                "discount": col.sellerprice.product.one_discount,
+                "discount": col.sellerprice.product.one_discount if col.sellerprice.product else 0,
                 "quantity": col.quantity
             }
             for col in carts
@@ -29,7 +29,7 @@ def prepare_data(request, carts) -> list[dict]:
         prepare = [
             {
                 "price": col.price,
-                "discount": col.product.one_discount,
+                "discount": col.product.one_discount if col.product else 0,
                 "quantity": request.session['cart'][str(col.id)].get('quantity'),
                 "deleted": request.session['cart'][str(col.id)].get('deleted') # Флаг отвечающий за удаленный товар в сессии
             }

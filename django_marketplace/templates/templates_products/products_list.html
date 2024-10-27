@@ -23,7 +23,6 @@
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <div class="range Section-columnRange">
-{#                                        {{ form.price }}#}
                                         <input class="range-line"
                                                id="price"
                                                name="price"
@@ -129,6 +128,13 @@
                                 {% elif filter_context.curr_sort and filter_context.curr_sort == filter_context.DATE_DEC.value %}?sort={{ filter_context.NONE.value }}
                                 {% else %}?sort={{ filter_context.DATE_ASC.value }}
                                 {% endif %}">{% translate "Новизне" %}</a>
+
+                            <a class="Sort-sortBy {% if curr_sort and curr_sort == DISCOUNT.value %}
+                                Sort-sortBy_dec
+                            {% elif curr_sort and curr_sort == NONE.value %}
+
+                            {% endif %}" </a>
+                            <a class="Sort-sortBy" href="{% url 'products:sale_list' %}">{% translate "Скидке" %}</a>
                         </div>
                     </div>
                     <div class="Cards">
