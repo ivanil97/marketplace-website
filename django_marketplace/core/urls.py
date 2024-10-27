@@ -33,7 +33,6 @@ urlpatterns = i18n_patterns(
     path('cart/', include('carts.urls')),
     path('', HomeView.as_view(), name='home'),
     path('comparison/', include('comparisons.urls')),
-    path('order/', include('orders.urls')),
     path('i18n/', include('django.conf.urls.i18n'))
 )
 
