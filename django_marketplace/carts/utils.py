@@ -1,3 +1,4 @@
+from constance import config
 
 
 def solve_total_price(carts) -> dict:
@@ -16,14 +17,25 @@ def solve_total_price(carts) -> dict:
             total_price += p
 
     total_price = float(total_price)
-    if total_quantity > 5 and total_price > 500:
-        return {"total_price": round(total_price - (total_price * 0.1), 2), "total_quantity": total_quantity}
-    elif total_price > 500:
-        return {"total_price": round(total_price - (total_price * 0.05), 2), "total_quantity": total_quantity}
-    elif total_quantity > 5:
-        return {"total_price": round(total_price - (total_price * 0.05), 2), "total_quantity": total_quantity}
+    new_price = total_price
 
-    return {"total_price": total_price, "total_quantity": total_quantity}
+    data_discounts = {}
+    if total_quantity > config.FOR_COUNT and total_price > config.FOR_PRICE:
+        full_percent = config.FOR_COUNT_PERCENT + config.FOR_PRICE_PERCENT
+        new_price = round(total_price - total_price * full_percent / 100, 2)
+        data_discounts["full_percent"] = full_percent
+
+    elif total_price > config.FOR_PRICE:
+        new_price = round(total_price - total_price * config.FOR_PRICE_PERCENT / 100, 2)
+
+    elif total_quantity > config.FOR_COUNT:
+        new_price = round(total_price - total_price * config.FOR_COUNT_PERCENT / 100, 2)
+
+    data_discounts["total_quantity"] = total_quantity
+    data_discounts["total_price"] = new_price
+    data_discounts["old_price"] = total_price
+
+    return data_discounts
 
 
 def prepare_data(request, carts) -> list[dict]:

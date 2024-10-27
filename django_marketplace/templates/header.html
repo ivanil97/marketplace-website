@@ -99,9 +99,10 @@
                             </span>
                     </a>
                     <div class="CartBlock-block">
-                        {% if total_price %}
+                        {% total_price request carts as price %}
+                        {% if price %}
                             <span class="CartBlock-price">
-                                {% total_price request carts %}$
+                                {{ price.total_price }}$
                             </span>
                         {% endif %}
                     </div>

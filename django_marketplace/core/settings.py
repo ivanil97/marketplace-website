@@ -225,6 +225,10 @@ CONSTANCE_CONFIG = {
     'EXPRESS_DELIVERY_COST': (500, 'Cast of express delivery'),
     'FREE_DELIVERY_MINIMAL_COST': (2000, 'Minimal cast for free delivery'),
     'DELIVERY_COST': (200, 'Cast of simple delivery'),
+    'FOR_COUNT': (6, 'Discount for cart dependence from count cart'),
+    'FOR_COUNT_PERCENT': (5, 'Percent for count products in cart'),
+    'FOR_PRICE': (500, 'Discount for cart dependence from total price cart'),
+    'FOR_PRICE_PERCENT': (5, 'Percent for total price in cart')
 }
 CONSTANCE_CONFIG_FIELDSETS = (
     (
@@ -252,6 +256,19 @@ CONSTANCE_CONFIG_FIELDSETS = (
             ),
             'collapse': False,
         },
+    ),
+    (
+        'discounts',
+        {
+            'fields':
+                (
+                    'FOR_COUNT',
+                    'FOR_COUNT_PERCENT',
+                    'FOR_PRICE',
+                    'FOR_PRICE_PERCENT',
+                ),
+            'collapse': False,
+        }
     ),
 )
 
