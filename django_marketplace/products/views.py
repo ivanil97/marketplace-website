@@ -31,7 +31,10 @@ class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
     queryset = Product.objects.prefetch_related(
         "tags", "images",
-        "seller_price", "features").prefetch_related(Prefetch("seller_price", to_attr="seller")).annotate(
+        "seller_price",
+        "features",
+        Prefetch("discounts", to_attr="discount", queryset=Discount.objects.filter(is_active=True)),
+    ).prefetch_related(Prefetch("seller_price", to_attr="seller")).annotate(
         auto_seller_price=Avg('seller_price__price'
                               ))
     context_object_name = "product"
@@ -124,6 +127,7 @@ class ProductsListView(ListView):
         """
         context = super().get_context_data(**kwargs)
         products = self.get_queryset()
+
         filter_context = get_context_data(self.request, products)
         context.update({
             'filter_context': filter_context,
