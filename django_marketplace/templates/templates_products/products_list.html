@@ -3,7 +3,7 @@
 {% load mptt_tags %}
 {% load i18n %}
 {% block title %} Каталог товаров {% endblock %}
-
+{% load products_tags %}
 {% block header %}
 <!-- Здесь будет header -->
 {% endblock %}
@@ -45,6 +45,13 @@
                                         {{ filter_context.form.in_stock }}
                                         <span class="toggle-box"></span>
                                         <span class="toggle-text">{% translate "Только товары в наличии" %}</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="toggle">
+                                        {{ filter_context.form.in_discount }}
+                                        <span class="toggle-box"></span>
+                                        <span class="toggle-text">Товары со скидкой</span>
                                     </label>
                                 </div>
                                 <div class="form-group">
@@ -147,16 +154,35 @@
                                             </a>
                                         {% endwith %}
                                     {% endif %}
+
+                                    {% if product.discount %}
+                                        {% get_discount product.discount as best_discount %}
+                                        <div class="Card-date">
+                                            <strong class="Card-date-number">{{ best_discount.percent }}%
+                                            </strong><span class="Card-date-month">{{ best_discount.from_date }}</span>
+                                        </div>
+                                    {% endif %}
+
                                     <div class="Card-content">
                                         <strong class="Card-title">
                                             <a href="{% url 'products:product_detail' slug=product.slug %}">{{ product.name }}</a>
                                         </strong>
                                         <div class="Card-description">
-                                            {% if product.auto_seller_price %}
+
+                                            {% if product.discount %}
+                                                {% solve_price product.auto_seller_price|floatformat:0 best_discount as disk %}
                                                 <div class="Card-cost">
-                                                    <span class="Card-price">${{ product.auto_seller_price|floatformat:0 }}</span>
+                                                    <span class="Card-priceOld">{{ disk.old_price }}$</span>
+                                                    <span class="Card-price">{{ disk.dis }}$</span>
                                                 </div>
+                                            {% else %}
+                                                {% if product.auto_seller_price %}
+                                                    <div class="Card-cost">
+                                                        <span class="Card-price">{{ product.auto_seller_price|floatformat:0 }}$</span>
+                                                    </div>
+                                                {% endif %}
                                             {% endif %}
+
                                             <div class="Card-category">
                                                 {{ product.category.name }}
                                             </div>

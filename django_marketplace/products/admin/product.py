@@ -64,7 +64,6 @@ class ProductFeatureInline(admin.TabularInline):
 
 class DiscountInline(admin.TabularInline):
     model = Product.discounts.through
-    max_num = 1
     verbose_name = "Choice discount"
 
 

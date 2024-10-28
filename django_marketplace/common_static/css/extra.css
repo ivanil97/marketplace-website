@@ -1208,6 +1208,13 @@ a.Cart-title {
     color: #71747a;
 }
 
+.Cart-disc {
+    font-size: 16px;
+    display: block;
+    margin-top: 5px;
+    color: #808080;
+}
+
 .Cart-block + .Cart-block {
     margin-left: 20px;
 }
