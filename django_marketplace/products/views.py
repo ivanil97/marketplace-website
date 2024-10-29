@@ -34,9 +34,9 @@ class ProductDetailView(DetailView):
         "seller_price",
         "features",
         Prefetch("discounts", to_attr="discount", queryset=Discount.objects.filter(is_active=True)),
-    ).prefetch_related(Prefetch("seller_price", to_attr="seller")).annotate(
-        auto_seller_price=Avg('seller_price__price'
-                              ))
+        Prefetch("seller_price", to_attr="seller")
+    ).annotate(auto_seller_price=Avg('seller_price__price'))
+
     context_object_name = "product"
 
     def get_context_data(self, **kwargs):

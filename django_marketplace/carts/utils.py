@@ -9,19 +9,19 @@ def solve_total_price(carts) -> dict:
         if not col.get("deleted"): # Расчет полной стоимости идет в том случае если товар из сессии не был удален
             price, discount, quantity = col.get('price'), col.get('discount'), col.get('quantity')
             if discount:
-                p = round((price - price * discount[0].percent / 100) * col['quantity'], 2)
+                max_percent = max(discount, key=lambda obj: obj.percent)
+                p = round((price - price * max_percent.percent / 100) * col['quantity'], 2)
             else:
                 p = price * quantity
 
             total_quantity += quantity
             total_price += p
-
     total_price = float(total_price)
     new_price = total_price
 
     data_discounts = {}
     if total_quantity > config.FOR_COUNT and total_price > config.FOR_PRICE:
-        full_percent = config.FOR_COUNT_PERCENT + config.FOR_PRICE_PERCENT
+        full_percent = max([config.FOR_COUNT_PERCENT, config.FOR_PRICE_PERCENT])
         new_price = round(total_price - total_price * full_percent / 100, 2)
         data_discounts["full_percent"] = full_percent
 
