@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.conf import settings
 
-from comparisons.views import *
+from .views_dir import *
 
 app_name = 'comparisons'
 
