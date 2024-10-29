@@ -228,7 +228,8 @@ CONSTANCE_CONFIG = {
     'FOR_COUNT': (6, 'Discount for cart dependence from count cart'),
     'FOR_COUNT_PERCENT': (5, 'Percent for count products in cart'),
     'FOR_PRICE': (500, 'Discount for cart dependence from total price cart'),
-    'FOR_PRICE_PERCENT': (5, 'Percent for total price in cart')
+    'FOR_PRICE_PERCENT': (5, 'Percent for total price in cart'),
+    'LIMITED_DISCOUNT': (50, 'Limited discount for main page'),
 }
 CONSTANCE_CONFIG_FIELDSETS = (
     (
@@ -266,6 +267,7 @@ CONSTANCE_CONFIG_FIELDSETS = (
                     'FOR_COUNT_PERCENT',
                     'FOR_PRICE',
                     'FOR_PRICE_PERCENT',
+                    'LIMITED_DISCOUNT',
                 ),
             'collapse': False,
         }

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load products_tags %}
 
 {% block content %}
     <body class="Site">
@@ -87,8 +88,8 @@
                                           </strong>
                                           <div class="Card-description">
                                             <div class="Card-cost">
-                                                <span class="Card-priceOld">${{ limited_item_day.price }}</span>
-                                                <span class="Card-price">${{ limited_item_day.price }}</span>
+                                                <span class="Card-priceOld">{{ limited_item_day.price }}$</span>
+                                                <span class="Card-price">{{ limited_item_discount }}$</span>
                                             </div>
                                             <div class="Card-category">
                                                 {{ limited_item_day.product.category }}
@@ -139,6 +140,13 @@
                                                 <img src="{{ img.image.url }}" alt="{{ popular_item.product.name }}" />
                                                 </a>
                                         {% endwith %}
+                                                {% if popular_item.product.one_discount %}
+                                                    {% get_discount popular_item.product.one_discount as best_discount %}
+                                                    <div class="Card-date">
+                                                        <strong class="Card-date-number">{{ best_discount.percent }}%
+                                                        </strong><span class="Card-date-month">{{ best_discount.from_date }}</span>
+                                                    </div>
+                                                {% endif %}
                                             <div class="Card-content">
                                             <strong class="Card-title">
                                                 <a href="{% url 'products:product_detail' slug=popular_item.product.slug %}">
@@ -146,19 +154,24 @@
                                                 </a>
                                             </strong>
                                             <div class="Card-description">
-                                                <div class="Card-cost"><span class="Card-price">
-                                                    {% if popular_item.price %}
-                                                        ${{ popular_item.price }}
+                                                <div class="Card-cost">
+                                                    {% if popular_item.product.one_discount %}
+                                                        {% solve_price popular_item.price best_discount as disk %}
+                                                            <span class="Card-priceOld">{{ disk.old_price }}$</span>
+                                                            <span class="Card-price">{{ disk.dis }}$</span>
                                                     {% else %}
-                                                        No prices available
+                                                        {% if popular_item.price %}
+                                                            <span class="Card-price">{{ popular_item.price }}$</span>
+                                                        {% else %}
+                                                            No prices available
+                                                        {% endif %}
                                                     {% endif %}
-                                                </span>
                                                 </div>
                                                 <div class="Card-category">{{ popular_item.product.category }}
                                                 </div>
                                                 <div class="Card-hover">
                                                     <a class="Card-btn" href="{% url 'carts:add_cart' popular_item.product.seller_price.first.id %}">
-                                                    <img src="{% static 'img/icons/card/cart.svg' %}" alt="cart.svg" />
+                                                    <img src="{% static 'img/icons/card/cart.svg' %}" alt="cart.svg"/>
                                                 </a>
                                                 </div>
                                             </div>
@@ -230,7 +243,6 @@
         <script src="{% static 'plg/range/ion.rangeSlider.min.js' %}"></script>
         <script src="{% static 'plg/Slider/slick.min.js' %}"></script>
         <script src="{% static 'js/scripts.js' %}"></script>
-
     </div>
     </body>
 {% endblock %}
