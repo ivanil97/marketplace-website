@@ -3,7 +3,7 @@
 {% load mptt_tags %}
 {% load cache %}
 {% load i18n %}
-
+{% load products_tags %}
 {% block title %} Product {{ product.pk }} {% endblock %}
 
 {% block header %}
@@ -18,6 +18,13 @@
                     <div class="Product">
                         <div class="ProductCard">
                             <div class="ProductCard-look">
+                                {% if product.discount %}
+                                        {% get_discount product.discount as best_discount %}
+                                        <div class="Card-date">
+                                            <strong class="Card-date-number">{{ best_discount.percent }}%
+                                            </strong><span class="Card-date-month">{{ best_discount.from_date }}</span>
+                                        </div>
+                                {% endif %}
                                 <div class="ProductCard-photo">
                                     {% if first_image.image.url %}
                                         <img src="{{ first_image.image.url }}" alt="{{ product.name }}">
@@ -37,9 +44,17 @@
                                 <div class="ProductCard-header">
                                     <h2 class="ProductCard-title">{{ product.name }}</h2>
                                     <div class="ProductCard-info">
+
                                         <div class="ProductCard-cost">
                                             <div class="ProductCard-price">
-                                                ${{ product.auto_seller_price|floatformat:0 }}</div>
+                                                {% if product.discount %}
+                                                    {% solve_price product.auto_seller_price|floatformat:0 best_discount as disk %}
+                                                        <span class="Card-priceOld">{{ disk.old_price }}$</span>
+                                                        <span>{{ disk.dis }}$</span>
+                                                {% else %}
+                                                    <span>${{ product.auto_seller_price|floatformat:0 }}</span>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

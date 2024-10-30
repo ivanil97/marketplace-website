@@ -1,3 +1,4 @@
+from constance import config
 from django.core.cache.utils import make_template_fragment_key
 from django.views import View
 from django.http import HttpResponseRedirect
@@ -31,9 +32,12 @@ class ProductDetailView(DetailView):
     template_name = "templates_products/product_template.html"
     queryset = Product.objects.prefetch_related(
         "tags", "images",
-        "seller_price", "features").prefetch_related(Prefetch("seller_price", to_attr="seller")).annotate(
-        auto_seller_price=Avg('seller_price__price'
-                              ))
+        "seller_price",
+        "features",
+        Prefetch("discounts", to_attr="discount", queryset=Discount.objects.filter(is_active=True)),
+        Prefetch("seller_price", to_attr="seller")
+    ).annotate(auto_seller_price=Avg('seller_price__price'))
+
     context_object_name = "product"
 
     def get_context_data(self, **kwargs):
@@ -124,6 +128,7 @@ class ProductsListView(ListView):
         """
         context = super().get_context_data(**kwargs)
         products = self.get_queryset()
+
         filter_context = get_context_data(self.request, products)
         context.update({
             'filter_context': filter_context,
@@ -151,14 +156,19 @@ class HomeView(TemplateView):
 
         # Получаем ограниченное предложение и проверяем на наличие данных
         limited_item_day, limited_items, end_of_day = get_limited_items()
+        float(limited_item_day.price)
+        discount_price = round(limited_item_day.price - (limited_item_day.price * config.LIMITED_DISCOUNT) / 100, 2)
 
         # Проверяем, есть ли данные о лимитированном товаре
         if limited_item_day is None:
             context['limited_item_day'] = None
+            context["limited_item_discount"] = None
             context['limited_items'] = []
             context['end_of_day'] = end_of_day
         else:
             context['limited_item_day'] = limited_item_day
+            context["limited_item_discount"] = discount_price
+
             context['limited_items'] = limited_items
             context['end_of_day'] = end_of_day
 
