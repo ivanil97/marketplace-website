@@ -53,8 +53,6 @@ INSTALLED_APPS = [
 
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
-    'vendors.apps.VendorsConfig',
-    'reviews.apps.ReviewsConfig',
     'orders.apps.OrdersConfig',
     'comparisons.apps.ComparisonsConfig',
     'adminpanel.apps.AdminpanelConfig',

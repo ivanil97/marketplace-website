@@ -3,6 +3,7 @@ from django.db.models import Avg, Count, Sum, Min, Max, Prefetch
 from products.models import Product, SellerPrice, Discount
 from products.forms import SearchForm
 from django.db import models
+from core.custom_querysets import one_discount_queryset
 
 class ProductListEnum(enum.Enum):
     POP_ASC = 'quantity_sold'
@@ -25,7 +26,11 @@ def filter_queryset(request, form=None):
     :return: Отфильтрованный набор продуктов.
     """
     queryset = Product.objects.prefetch_related(
-        "tags", "images", "seller_price", "features", Prefetch("discounts", to_attr="discount", queryset=Discount.objects.filter(is_active=True))
+        "tags",
+        "images",
+        "seller_price",
+        "features",
+        Prefetch("discounts", to_attr="discount", queryset=one_discount_queryset)
     ).annotate(
         auto_seller_price=Avg('seller_price__price'),
         rev_count=Count('review'),

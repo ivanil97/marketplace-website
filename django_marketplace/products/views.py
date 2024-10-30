@@ -23,9 +23,9 @@ from products.services.products_list_services import filter_queryset, get_contex
 from products.services.review_service import add_review_to_product
 from users.services.viewed_products_service import ViewedProductsService
 from products.services.index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
-from products.models import Product
-from products.models import Discount
-from products.models import Review
+from products.models import Product, Review, Discount
+
+from core.custom_querysets import one_discount_queryset
 
 
 class ProductDetailView(DetailView):
@@ -34,7 +34,7 @@ class ProductDetailView(DetailView):
         "tags", "images",
         "seller_price",
         "features",
-        Prefetch("discounts", to_attr="discount", queryset=Discount.objects.filter(is_active=True)),
+        Prefetch("discounts", to_attr="discount", queryset=one_discount_queryset),
         Prefetch("seller_price", to_attr="seller")
     ).annotate(auto_seller_price=Avg('seller_price__price'))
 
@@ -181,7 +181,7 @@ class DiscountListView(ListView):
     context_object_name = 'discounts'
 
     def get_queryset(self):
-        return Discount.objects.filter(is_active=True, archived=False).order_by('-to_date')
+        return one_discount_queryset.order_by('-to_date')
 
 
 @receiver(post_save, sender=Product)
