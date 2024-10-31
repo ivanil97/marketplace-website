@@ -45,6 +45,8 @@ tzdata = "2024.1"
 urllib3 = "2.2.2"
 vine = "5.1.0"
 wcwidth = "0.2.13"
+gunicorn = "^23.0.0"
+psycopg2-binary = "^2.9.10"
 
 
 [build-system]
