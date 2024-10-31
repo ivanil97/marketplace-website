@@ -14,6 +14,7 @@ from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
 from dotenv import load_dotenv
+import logging.config
 
 
 load_dotenv()
@@ -106,17 +107,26 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+try:
+    SQL_PORT = int(os.getenv("SQL_PORT", "5432"))
+except ValueError:
+    SQL_PORT = 0
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": os.getenv("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.getenv("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+        "USER": os.getenv("SQL_USER", "user"),
+        "PASSWORD": os.getenv("SQL_PASSWORD", "password"),
+        "HOST": os.getenv("SQL_HOST", "localhost"),
+        "PORT": SQL_PORT,
     }
 }
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "",
+        "BACKEND": os.getenv("DJANGO_CACHE_BACKEND", "django.core.cache.backends.dummy.DummyCache"),
+        "LOCATION": os.getenv("DJANGO_CACHE_LOCATION", ""),
     }
 }
 
@@ -163,12 +173,12 @@ LOCALE_PATHS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'common_static')]
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "common_static")]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "mediafiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -177,20 +187,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/user/account/'
 
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    EMAIL_HOST_USER = "test@test.ru"
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "")
-    EMAIL_USE_TLS = os.getenv("DJANGO_EMAIL_USE_TLS", "1") == 1
-    EMAIL_USE_SSL = os.getenv("DJANGO_EMAIL_USE_SSL", "0") == 1
-    try:
-        EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "0"))
-    except ValueError:
-        EMAIL_PORT = 0
-    EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = os.getenv("DJANGO_EMAIL_BACKEND", "django.core.mail.backends.dummy.EmailBackend")
+EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "")
+EMAIL_USE_TLS = os.getenv("DJANGO_EMAIL_USE_TLS", "1") == 1
+EMAIL_USE_SSL = os.getenv("DJANGO_EMAIL_USE_SSL", "0") == 1
+try:
+    EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "0"))
+except ValueError:
+    EMAIL_PORT = 0
+EMAIL_HOST_USER = os.getenv("DJANGO_EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("DJANGO_EMAIL_HOST_PASSWORD")
 
 INTERNAL_IPS = [
     'localhost',
@@ -212,10 +218,10 @@ REST_FRAMEWORK = {
 CELERY_BROKER_URL = os.getenv("DJANGO_REDIS_URL", "")
 CELERY_RESULT_BACKEND = os.getenv("DJANGO_REDIS_URL", "")
 
+CONSTANCE_BACKEND = os.getenv("DJANGO_CONSTANCE_BACKEND", "constance.backends.memory.MemoryBackend")
 CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
-# CONSTANCE_REDIS_CONNECTION = os.getenv("DJANGO_REDIS_URL", "")
-# CONSTANCE_BACKEND = 'constance.backends.redisd.RedisBackend'
-CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_REDIS_CONNECTION = os.getenv("DJANGO_REDIS_URL", "")
+
 CONSTANCE_CONFIG = {
     'CACHES_CATEGORIES': (60 * 60 * 24, 'Cashes categories for catalog in seconds'),
     'CACHES_PRODUCTS': (60 * 60 * 24, 'Cashes products for catalog in seconds'),
@@ -274,25 +280,28 @@ CONSTANCE_CONFIG_FIELDSETS = (
     ),
 )
 
-# Вывод логов в консоли по SQL запросам
-# LOGGING = {
-#     'version': 1,
-#     'filters': {
-#         'require_debug_true': {
-#             '()': 'django.utils.log.RequireDebugTrue',
-#         },
-#     },
-#     'handlers': {
-#         'console': {
-#             'level': 'DEBUG',
-#             'filters': ['require_debug_true',],
-#             'class': 'logging.StreamHandler',
-#         },
-#     },
-#     'loggers': {
-#         'django.db.backends': {
-#             'level': 'DEBUG',
-#             'handlers': ['console',],
-#         }
-#     }
-# }
+LOGLEVEL = os.getenv("DJANGO_LOGLEVEL", "info").upper()
+
+logging.config.dictConfig({
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {
+            "format": "%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "console",
+        },
+    },
+    "loggers": {
+        "": {
+            "level": LOGLEVEL,
+            "handlers": [
+                "console",
+            ],
+        },
+    },
+})
