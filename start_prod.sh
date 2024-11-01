@@ -2,6 +2,10 @@
 
 python manage.py collectstatic --noinput --clear
 
+python manage.py makemessages -l ru
+python manage.py makemessages -l en
+python manage.py compilemessages
+
 python manage.py makemigrations --noinput
 python manage.py migrate --noinput
 

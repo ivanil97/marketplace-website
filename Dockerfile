@@ -8,6 +8,9 @@ RUN mkdir $APP_HOME/staticfiles
 RUN mkdir $APP_HOME/mediafiles
 WORKDIR $APP_HOME
 
+RUN apt update
+RUN apt install gettext -y
+
 #COPY requirements.txt requirements.txt
 #RUN pip install --upgrade pip
 #RUN pip install -r requirements.txt
