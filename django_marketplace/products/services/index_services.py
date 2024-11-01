@@ -8,7 +8,7 @@ from constance import config
 
 from django.db.models import Prefetch
 
-from products.models import Category, Product, SellerPrice, SliderBanner, StaticBanner, ProductImage
+from products.models import Category, Product, SellerPrice, SliderBanner, StaticBanner, ProductImage, Discount
 
 
 def get_slider_banners():
@@ -47,9 +47,9 @@ def get_popular_items():
     :return: list(dict): список словарей, где каждый товар представляет 1 словарь со всеми параметрами для передачи
     в контекст view-функции
     """
-
+    one_discount_queryset = Discount.objects.filter(is_active=True)
     popular_items_raw = list(SellerPrice.objects.filter(archived=False)
-                             .prefetch_related('product__images')
+                             .prefetch_related('product__images', Prefetch('product__discounts', queryset=one_discount_queryset, to_attr='one_discount'))
                              .order_by('product__sort_index', '-product__quantity_sold'))
 
     popular_items = popular_items_raw[:8]
@@ -72,9 +72,11 @@ def get_limited_items():
     кортеж из трех элементов для передачи во view-функцию:
     Товар для блока "Предложение дня", список товаров ограниченного тиража, время окончания суток.
     """
-
+    one_discount_queryset = Discount.objects.filter(is_active=True)
     limited_items_raw = list(SellerPrice.objects.filter(is_limited=True, archived=False)
-                             .prefetch_related('product__images'))
+                             .prefetch_related(
+        'product__images',
+        Prefetch('product__discounts', queryset=one_discount_queryset, to_attr='one_discount')))
 
     if not limited_items_raw:
         # Если нет доступных товаров, возвращаем None

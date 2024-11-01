@@ -26,8 +26,9 @@ def price_discount(request, cart):
         quantity = 1
 
     if cart['sellerprice']['product']['one_discount']:
-        discount = cart['sellerprice']['product']['one_discount'][0]['percent']
-        p = round((price - price * discount / 100) * quantity, 2)
+        discount = cart['sellerprice']['product']['one_discount']
+        max_dis = max(discount, key=lambda obj: obj.get("percent", 1))
+        p = round((price - price * max_dis.get("percent", 1) / 100) * quantity, 2)
         old_price = round(old_price * quantity, 2)
         return {"price_discount": p, "old_price": old_price}
     else:
@@ -57,7 +58,7 @@ def total_price(request, carts):
 
     else:
         # Этот блок отработает если пользователь находится на других страницах магазина кроме страницы с корзиной
-        one_discount_queryset = Discount.objects.order_by('id')[:1]
+        one_discount_queryset = Discount.objects.filter(is_active=True)
         if request.user.is_authenticated:
             carts = Cart.objects.filter(user=request.user.id).prefetch_related(
                 Prefetch('sellerprice__product__discounts', queryset=one_discount_queryset, to_attr='one_discount')
