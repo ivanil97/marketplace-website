@@ -1,4 +1,5 @@
 from django.core.cache.utils import make_template_fragment_key
+from django.shortcuts import redirect
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, ListView
@@ -63,7 +64,7 @@ class ProductDetailView(DetailView):
 class ReviewCreateView(CreateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'templates_products/review_create.html'
+    template_name = 'templates_products/product_template.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -76,7 +77,7 @@ class ReviewCreateView(CreateView):
         user = self.request.user
         comment = form.cleaned_data['comment']
         add_review_to_product(slug=product_slug, user=user, comment=comment)
-        return HttpResponseRedirect(self.get_success_url())
+        return redirect('products:product_detail', slug=product_slug)
 
     def get_success_url(self):
         if self.kwargs['slug']:

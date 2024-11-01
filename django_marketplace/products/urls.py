@@ -10,7 +10,7 @@ urlpatterns = [
     path('catalog/', ProductsListView.as_view(), name="products_list"),
     path('catalog/sale/', SaleView.as_view(), name='sale_list'),
     path('<slug:slug>/', ProductDetailView.as_view(), name="product_detail"),
-    path('<slug:slug>/add-review/', ReviewCreateView.as_view(), name='review_create'),
+    path('add-review/<slug:slug>/', ReviewCreateView.as_view(), name='review_create'),
 ]
 
 if settings.DEBUG:
