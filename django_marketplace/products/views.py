@@ -25,7 +25,7 @@ from products.services.products_list_services import filter_queryset, get_contex
 from products.services.review_service import add_review_to_product
 from users.services.viewed_products_service import ViewedProductsService
 from products.services.index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
-from products.models import Product
+from products.models import Product, Tag
 from products.models import Discount
 from products.models import Review
 
@@ -111,6 +111,7 @@ class ProductsListView(ListView):
             form = SearchForm(self.request.POST)
             if form.is_valid():
                 return filter_queryset(self.request, form)
+
         return filter_queryset(self.request)
 
     def post(self, request, *args, **kwargs):
@@ -133,8 +134,10 @@ class ProductsListView(ListView):
         products = self.get_queryset()
 
         filter_context = get_context_data(self.request, products)
+        unique_tags = Tag.objects.all().distinct()
         context.update({
             'filter_context': filter_context,
+            'tags': unique_tags,
         })
         return context
 
