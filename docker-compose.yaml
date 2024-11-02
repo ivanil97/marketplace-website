@@ -30,7 +30,7 @@ services:
       - ./app_data/mediafiles:/var/team42_app/mediafiles
       - ./app_data/staticfiles:/var/team42_app/staticfiles
       - ./app_data/import:/var/team42_app/import
-      - ./app_data/import:/var/team42_app/fixtures
+      - ./app_data/fixtures:/var/team42_app/fixtures
     env_file:
       - .env
     depends_on:
