@@ -40,10 +40,11 @@
 {% endif %}
 
 
-<header class="Section-header Section-header_product">
-    <h3 class="Section-title">Добавить отзыв
-    </h3>
-</header>
+{% if user.is_authenticated %}
+    <header class="Section-header Section-header_product">
+        <h3 class="Section-title">Добавить отзыв
+        </h3>
+    </header>
 <div class="Tabs-addComment">
     <form class="form" action="{% url 'products:review_create' slug=product.slug %}" method="post">
         {% csrf_token %}
@@ -56,3 +57,8 @@
         </div>
     </form>
 </div>
+{% else %}
+<p>{% translate "Только зарегистрированные пользователи могут оставлять отзывы. Пожалуйста, войдите в аккаунт или зарегеструруйтесь." %}</p>
+<a class="btn btn_primary" href="{% url 'user:login' %}">{% translate 'Вход' %}</a>
+<a class="btn btn_primary" href="{% url 'user:register' %}">{% translate 'Регистрация' %}</a>
+{% endif %}

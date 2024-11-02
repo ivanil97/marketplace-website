@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, ListView
 from django.dispatch import receiver
 from django.core.cache import cache
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from products.services.product_context import product_context
 from django.urls import reverse_lazy, reverse
@@ -62,10 +63,11 @@ class ProductDetailView(DetailView):
         return obj
 
 
-class ReviewCreateView(CreateView):
+class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewForm
     template_name = 'templates_products/product_template.html'
+    login_url = 'user/login/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
