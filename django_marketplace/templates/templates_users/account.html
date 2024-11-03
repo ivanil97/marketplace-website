@@ -69,7 +69,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="Order-info Order-info_status">
-                                            <div class="Order-infoType">Статус:
+                                            <div class="Order-infoType">{% translate "Статус" %}:
                                             </div>
                                             {% if i_order.payment_status == "paid" %}
                                                 <div class="Order-infoContent">{{ i_order.get_payment_status_label }}

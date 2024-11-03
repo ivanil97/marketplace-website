@@ -1,6 +1,7 @@
 from django import forms
 from products.models.review import Review
 from products.models.product import Product
+from django.utils.translation import gettext_lazy as _
 
 
 class ReviewForm(forms.ModelForm):
@@ -33,7 +34,7 @@ class SearchForm(forms.Form):
                 'name': 'title',
                 'type': 'text',
                 'id': 'title',
-                'placeholder': 'Название',
+                'placeholder': _('Название'),
             },
         ),
         label='',
