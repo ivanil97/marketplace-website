@@ -106,6 +106,8 @@ celerybeat.pid
 
 # Environments
 .env
+.env.local
+.env.prod
 .venv
 env/
 venv/
@@ -144,8 +146,8 @@ data/
 *.db
 *.sqlite3
 /category_cache/
-/uploads/
+mediafiles/
 /django_marketplace/uploads/
 cache/
 /gajdenv/
-
+import/

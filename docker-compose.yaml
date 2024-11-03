@@ -1,4 +1,18 @@
 services:
+  db:
+    image: postgres
+    volumes:
+      - ./app_data/database:/var/team42_app/postgresql/data
+    environment:
+      - POSTGRES_DB=$SQL_DATABASE
+      - POSTGRES_USER=$SQL_USER
+      - POSTGRES_PASSWORD=$SQL_PASSWORD
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $SQL_USER -d $SQL_DATABASE" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   app:
     build:
       context: .
@@ -9,20 +23,31 @@ services:
       options:
         max-file: "10"
         max-size: "200k"
-    command:
-      - "python"
-      - "manage.py"
-      - "runserver"
-      - "0.0.0.0:8080"
-    ports:
-      - "8000:8080"
+    command: ./start_prod.sh
+    expose:
+      - 8080
     volumes:
-       - ./django_marketplace/db.sqlite3:/var/team42_app/db.sqlite3
-       - ./django_marketplace/import:/var/team42_app/import
+      - ./app_data/mediafiles:/var/team42_app/mediafiles
+      - ./app_data/staticfiles:/var/team42_app/staticfiles
+      - ./app_data/import:/var/team42_app/import
+      - ./app_data/fixtures:/var/team42_app/fixtures
     env_file:
       - .env
     depends_on:
-      - redis
+      redis:
+        condition: service_started
+      db:
+        condition: service_healthy
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./app_data/mediafiles:/var/team42_app/mediafiles
+      - ./app_data/staticfiles:/var/team42_app/staticfiles
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - app
   celery:
     build:
       context: .
