@@ -320,13 +320,13 @@
                                             <div class="Order-info">
                                                 <div class="Order-infoType">Город:
                                                 </div>
-                                                <div class="Order-infoContent">Москва
+                                                <div class="Order-infoContent">
                                                 </div>
                                             </div>
                                             <div class="Order-info">
                                                 <div class="Order-infoType">Адрес:
                                                 </div>
-                                                <div class="Order-infoContent">Ул. Академика Арцимовича, д. 10, кв. 10
+                                                <div class="Order-infoContent">
                                                 </div>
                                             </div>
                                             <div class="Order-info Order-info_pay">
@@ -352,8 +352,18 @@
                                                     </div>
                                                 </div>
                                                 <div class="Cart-block Cart-block_price">
-                                                    <div class="Cart-price">{{ i_item.sellerprice.price }}$
-                                                    </div>
+                                                    {% price_discount_order request i_item as price_set %}
+                                                    {% if price_set %}
+                                                        <div class="Card-priceOld">{{ price_set.old_price }}$
+                                                        </div>
+                                                        <div class="Cart-price">{{ price_set.discount_price }}$
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="Cart-price">{{ i_item.sellerprice.price }}$
+                                                        </div>
+                                                    {% endif %}
+                                                    {{ x.discount_price }}
+                                                    {{ x.old_price }}
                                                 </div>
                                             </div>
                                             <div class="Cart-block Cart-block_row">
