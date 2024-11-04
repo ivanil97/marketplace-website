@@ -35,6 +35,11 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1',
 ] + os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.' + host for host in ALLOWED_HOSTS
+]
+
 AUTH_USER_MODEL = 'users.User'
 """
 AUTH_USER_MODEL = 'users.User' - использовать модель User из приложения users вместо стандартной модели auth.User

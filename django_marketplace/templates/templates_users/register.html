@@ -35,7 +35,7 @@
                 <input type="password" name="password2" id="name" placeholder="{% translate 'Повторить пароль' %}"/>
             </div>
             <input type="submit" value="{% translate 'Зарегистрироваться' %}"/>
-            <a class="registr" href={% url 'user:login' %}>
+            <a class="registr" href="{% url 'user:login' %}">
                 {% translate "Вход" %}
             </a>
             <div class="clear"></div>

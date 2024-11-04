@@ -1,10 +1,12 @@
 from constance import config
 from django.core.cache.utils import make_template_fragment_key
+from django.shortcuts import redirect
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, ListView
 from django.dispatch import receiver
 from django.core.cache import cache
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from products.services.product_context import product_context
 from django.urls import reverse_lazy, reverse
@@ -23,7 +25,7 @@ from products.services.products_list_services import filter_queryset, get_contex
 from products.services.review_service import add_review_to_product
 from users.services.viewed_products_service import ViewedProductsService
 from products.services.index_services import get_slider_banners, get_static_banners, get_popular_items, get_limited_items
-from products.models import Product
+from products.models import Product, Tag
 from products.models import Discount
 from products.models import Review
 
@@ -61,10 +63,11 @@ class ProductDetailView(DetailView):
         return obj
 
 
-class ReviewCreateView(CreateView):
+class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'templates_products/review_create.html'
+    template_name = 'templates_products/product_template.html'
+    login_url = 'user/login/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -77,7 +80,7 @@ class ReviewCreateView(CreateView):
         user = self.request.user
         comment = form.cleaned_data['comment']
         add_review_to_product(slug=product_slug, user=user, comment=comment)
-        return HttpResponseRedirect(self.get_success_url())
+        return redirect('products:product_detail', slug=product_slug)
 
     def get_success_url(self):
         if self.kwargs['slug']:
@@ -108,6 +111,7 @@ class ProductsListView(ListView):
             form = SearchForm(self.request.POST)
             if form.is_valid():
                 return filter_queryset(self.request, form)
+
         return filter_queryset(self.request)
 
     def post(self, request, *args, **kwargs):
@@ -130,8 +134,10 @@ class ProductsListView(ListView):
         products = self.get_queryset()
 
         filter_context = get_context_data(self.request, products)
+        unique_tags = Tag.objects.all().distinct()
         context.update({
             'filter_context': filter_context,
+            'tags': unique_tags,
         })
         return context
 

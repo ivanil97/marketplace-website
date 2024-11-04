@@ -1,12 +1,14 @@
 from django.contrib.auth import login
+from django.db.models import Prefetch
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView
 
 from carts.models import Cart
+from carts.templatetags.carts_tags import total_price
 from orders.forms import OrderProceedForm
 from orders.models import Order
-from orders.utils import get_cart_from_request
+from orders.utils import get_cart_data
 from users.models import User
 
 
@@ -21,10 +23,9 @@ class OrderProcessView(TemplateView, FormView):
         if self.request.user.is_authenticated:
             cart = Cart.objects.filter(user=self.request.user.id).prefetch_related('sellerprice__product__images')
         else:
-            cart = get_cart_from_request(self.request)
+            cart = get_cart_data(self.request)['cart_items']
 
         context['cart'] = cart
-
         if 'user_exists' in self.request.session:
             context['user_exists'] = True
             del self.request.session['user_exists']
@@ -32,6 +33,11 @@ class OrderProcessView(TemplateView, FormView):
         return context
 
     def form_valid(self, form):
+        # получение данных корзины
+        carts = get_cart_data(self.request)['cart_items']
+        cart_products = get_cart_data(self.request)['cart_products']
+        total_carts_price = total_price(self.request, carts)['total_price']
+
         # проверка существования пользователя при попытке его регистрации при оформлении заказа
         if not self.request.user.is_authenticated:
             name = form.cleaned_data["first_name"]
@@ -57,18 +63,7 @@ class OrderProcessView(TemplateView, FormView):
                 self.request.session['user_exists'] = True
                 return redirect('orders:order_proceed')
 
-        # получение данных корзины, если корзина была создана авторизованным пользователем
-        carts = Cart.objects.filter(user=self.request.user.id).prefetch_related('sellerprice__product__images')
-        cart_products = [i_cart.sellerprice.product for i_cart in carts]
-        total_carts_price = sum([i_cart.quantity * i_cart.sellerprice.price for i_cart in carts])
-
-        # получение данных корзины, если корзина была создана неавторизованным пользователем
-        if not carts:
-            carts = get_cart_from_request(self.request)
-            cart_products = [i_cart['sellerprice'].product for i_cart in carts]
-            total_carts_price = sum([i_cart['quantity'] * i_cart['sellerprice'].price for i_cart in carts])
-
-        # создание нового заказа на основании полученных данных о корзине
+        # создание нового заказа на основании полученных данных о корзине и пользователе
         new_order = Order.objects.create(
             user=self.request.user,
             total_price=total_carts_price,
@@ -77,7 +72,6 @@ class OrderProcessView(TemplateView, FormView):
             payment_option=form.cleaned_data['payment_option'],
             delivery_option=form.cleaned_data['delivery_option']
         )
-
         new_order.products.set(cart_products)
 
         return redirect(reverse(self.success_url, kwargs={'pk': new_order.pk}))

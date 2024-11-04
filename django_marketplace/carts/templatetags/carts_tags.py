@@ -1,4 +1,5 @@
 from django import template
+from django.http import HttpRequest
 
 from carts.models import Cart
 from django.db.models import Prefetch
@@ -47,7 +48,7 @@ def quantity_products(request):
 
 @register.simple_tag()
 def total_price(request, carts):
-    """Шаблонный тег для отображения полной стимости товаров корзины в header"""
+    """Шаблонный тег для отображения полной стоимости товаров корзины в header"""
     if carts:
         # Этот блок отработает если пользователь перешел на страницу с корзиной
         if request.user.is_authenticated:
@@ -75,10 +76,16 @@ def total_price(request, carts):
 
 @register.simple_tag()
 def get_quantity(request, cart):
-    """Шаблонный тег для получения количества выбраного товара из сессии"""
+    """Шаблонный тег для получения количества выбранного товара из сессии"""
     return request.session['cart'][str(cart['id'])]['quantity']
 
 
 @register.simple_tag()
 def get_url(request, lan):
     return f"/{lan}/{request.get_full_path()[4:]}"
+
+
+@register.simple_tag()
+def get_quantity_order(request: HttpRequest, cart_key: int) -> int:
+    """Шаблонный тег для получения количества выбранного товара из сессии в процессе заказа"""
+    return request.session.get('cart')[str(cart_key)]['quantity']
