@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% load carts_tags %}
 
 {% block content %}
@@ -102,9 +104,28 @@
             </div>
         </div>
             `;
-        }
+    }
 
-        window.onload = updatePreview;
+    function highlightActiveStep() {
+        const hash = window.location.hash;
+        const stepNumber = hash ? hash.replace('#step', '') : '1';
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        menuItems.forEach(item => {
+            item.classList.remove('menu-item_ACTIVE');
+        });
+
+        const activeItem = document.querySelector(`.menu-item[data-step="${stepNumber}"]`);
+        if (activeItem) {
+            activeItem.classList.add('menu-item_ACTIVE');
+        }
+    }
+
+    window.onload = function() {
+        updatePreview();
+        highlightActiveStep();
+    };
+    window.onhashchange = highlightActiveStep;
 </script>
 
 <div class="Middle Middle_top">
@@ -119,13 +140,13 @@
                         <div class="Section-columnContent">
                             <div class="NavigateProfile">
                                 <ul class="menu menu_vt">
-                                    <li class="menu-item_ACTIVE menu-item"><a class="menu-link Order-next" href="#step1">Шаг 1. Параметры пользователя</a>
+                                    <li class="menu-item" data-step="1"><a class="menu-link Order-next" href="#step1" onclick="event.preventDefault(); location.hash = '#step1'; highlightActiveStep();">{% translate "Шаг 1. Параметры пользователя" %}</a>
                                     </li>
-                                    <li class="menu-item"><a class="menu-link Order-next" href="#step2">Шаг 2. Способ доставки</a>
+                                    <li class="menu-item" data-step="2"><a class="menu-link Order-next" href="#step2" onclick="event.preventDefault(); location.hash = '#step2'; highlightActiveStep();">{% translate "Шаг 2. Способ доставки" %}</a>
                                     </li>
-                                    <li class="menu-item"><a class="menu-link Order-next" href="#step3">Шаг 3. Способ оплаты</a>
+                                    <li class="menu-item" data-step="3"><a class="menu-link Order-next" href="#step3" onclick="event.preventDefault(); location.hash = '#step3'; highlightActiveStep();">{% translate "Шаг 3. Способ оплаты" %}</a>
                                     </li>
-                                    <li class="menu-item"><a class="menu-link Order-next" href="#step4">Шаг 4. Подтверждение заказа</a>
+                                    <li class="menu-item"  data-step="4"><a class="menu-link Order-next" href="#step4" onclick="event.preventDefault(); location.hash = '#step4'; highlightActiveStep();">{% translate "Шаг 4. Подтверждение заказа" %}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -318,34 +339,87 @@
                                     </div>
                                 </div>
                                 <div class="Cart Cart_order">
-                                    {% for i_item in cart %}
-                                    <div class="Cart-product">
-                                        <div class="Cart-block Cart-block_row">
-                                            {% with i_item.sellerprice.product.images.all|first as img %}
-                                            <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="{{ img.image.url }}" alt="{{ i_item.product.name }}" /></a>
-                                            </div>
-                                            {% endwith %}
-                                            <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#"> {{ i_item.sellerprice.product.name }}</a>
-                                                <div class="Cart-desc">{{ i_item.sellerprice.product.description }}
+                                    {% if user.is_authenticated %}
+                                        {% for i_item in cart %}
+                                        <div class="Cart-product">
+                                            <div class="Cart-block Cart-block_row">
+                                                {% with i_item.sellerprice.product.images.all|first as img %}
+                                                <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="{% url 'products:product_detail' slug=i_item.sellerprice.product.slug %}"><img class="Cart-img" src="{{ img.image.url }}" alt="{{ i_item.product.name }}" /></a>
+                                                </div>
+                                                {% endwith %}
+                                                <div class="Cart-block Cart-block_info"><a class="Cart-title" href="{% url 'products:product_detail' slug=i_item.sellerprice.product.slug %}"> {{ i_item.sellerprice.product.name }}</a>
+                                                    <div class="Cart-desc">{{ i_item.sellerprice.product.description }}
+                                                    </div>
+                                                </div>
+                                                <div class="Cart-block Cart-block_price">
+                                                    <div class="Cart-price">{{ i_item.sellerprice.price }}$
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="Cart-block Cart-block_price">
-                                                <div class="Cart-price">{{ i_item.sellerprice.price }}$
+                                            <div class="Cart-block Cart-block_row">
+                                                <div class="Cart-block Cart-block_amount">{{ i_item.quantity }} шт.
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="Cart-block Cart-block_row">
-                                            <div class="Cart-block Cart-block_amount">{{ i_item.quantity }} шт.
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for i_item in cart %}
+                                        <div class="Cart-product">
+                                            <div class="Cart-block Cart-block_row">
+                                                {% with i_item.product.images.all|first as img %}
+                                                <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="{% url 'products:product_detail' slug=i_item.product.slug %}"><img class="Cart-img" src="{{ img.image.url }}" alt="{{ i_item.product.name }}" /></a>
+                                                </div>
+                                                {% endwith %}
+                                                <div class="Cart-block Cart-block_info"><a class="Cart-title" href="{% url 'products:product_detail' slug=i_item.product.slug %}"> {{ i_item.product.name }}</a>
+                                                    <div class="Cart-desc">{{ i_item.product.description }}
+                                                    </div>
+                                                </div>
+                                                <div class="Cart-block Cart-block_price">
+                                                    <div class="Cart-price">{{ i_item.price }}$
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="Cart-block Cart-block_row">
+                                                {% get_quantity_order request i_item.id as item_quantity %}
+                                                <div class="Cart-block Cart-block_amount"> {{ item_quantity }} шт.
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {% endfor %}
+                                        {% endfor %}
+                                    {% endif %}
                                     <div class="Cart-total">
-                                        <div class="Cart-block Cart-block_total">
-                                            <strong class="Cart-title">Итого:
-                                                {% total_price request carts as price %}
-                                            </strong><span class="Cart-price">{{ price.total_price }}$</span>
-                                        </div>
+                                            <div class="Cart-block Cart-block_total">
+                                                <strong class="Cart-title">{% translate "Итого" %}:</strong>
+                                                    {% total_price request carts as price %}
+                                                    {% if price.old_price > config.FOR_PRICE and price.total_quantity > config.FOR_COUNT %}
+                                                        <span class="Card-priceOld">{{ price.old_price }}$</span>
+                                                        <span class="Cart-price">{{ price.total_price }}$</span>
+                                                        <div class="Cart-disc">
+                                                            {% if price.old_price > config.FOR_PRICE %}
+                                                                Ваша стоимость покупок в корзине составила более <b>{{ config.FOR_PRICE }}$</b>, для вас скидка составит <b>{{ price.full_percent }}%</b>
+                                                            {% else %}
+                                                                Ваше количество товаров в корзине более <b>{{ config.FOR_COUNT }} шт.</b>, для вас дополнительная скидка <b>{{ price.full_percent }}%</b>
+                                                            {% endif %}
+                                                        </div>
+                                                    {% elif price.old_price > config.FOR_PRICE %}
+                                                        <span class="Card-priceOld">{{ price.old_price }}$</span>
+                                                        <span class="Cart-price">{{ price.total_price }}$</span>
+                                                        <div class="Cart-disc">
+                                                            Ваша стоимость покупок в корзине составила более <b>{{ config.FOR_PRICE }}$</b>, для вас дополнительная скидка <b>{{ config.FOR_PRICE_PERCENT }}%</b>
+                                                        </div>
+                                                    {% elif price.total_quantity >  config.FOR_COUNT %}
+                                                        <span class="Card-priceOld">{{ price.old_price }}$</span>
+                                                        <span class="Cart-price">{{ price.total_price }}$</span>
+                                                        <div class="Cart-disc">
+                                                            Ваше количество товаров в корзине более <b>{{ config.FOR_COUNT }} шт.</b>, для вас дополнительная скидка <b>{{ config.FOR_COUNT_PERCENT }}%</b>
+                                                        </div>
+                                                    {% else %}
+                                                        <span class="Cart-price">{{ price.total_price }}$</span>
+                                                        <div class="Cart-disc">Если ваша стоимость покупок в корзине составит более <b>{{ config.FOR_PRICE }}$</b>, мы сделаем для вас скидку <b>{{ config.FOR_PRICE_PERCENT }}%</b></div>
+                                                        <div class="Cart-disc">Если количество купленного вами товара превысит <b>{{ config.FOR_COUNT }} шт.</b>, мы сделаем для вас скидку <b>{{ config.FOR_COUNT_PERCENT }}%</b></div>
+                                                        <div class="Cart-disc">Если будет выполнено два условия скидок на корзину, будет выбрано максимально выгодное предложение.</div>
+                                                    {% endif %}
+                                            </div>
                                         <div class="Cart-block">
                                             <button class="btn btn_primary btn_lg" type="submit">Оплатить
                                             </button>

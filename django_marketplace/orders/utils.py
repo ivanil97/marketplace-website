@@ -1,26 +1,53 @@
-from typing import List, Dict
+from typing import Dict
 
+from django.db.models import Prefetch
 from django.http import HttpRequest
 
-from products.models import SellerPrice
+from carts.models import Cart
+from products.models import SellerPrice, Discount
 
 
-def get_cart_from_request(request: HttpRequest) -> List[Dict]:
+def get_cart_data(request: HttpRequest) -> Dict:
     """
-    Функция для создания списка товаров в корзине, если она была создана неавторизированным пользователем,
-    возвращает список словарей формата {"quantity": количество товара, "sellerprice": Queryset[SellerPrice]}
-    :return: List[Dict]
+    Функция получает данные корзины пользователя на основе его статуса аутентификации.
+    Функция проверяет, аутентифицирован ли пользователь:
+    - Если аутентифицирован, она извлекает данные из корзины пользователя
+    - Если не аутентифицирован, она извлекает данные из сессии пользователя
+
+    Функция создает словарь, содержащий два ключа:
+    - 'cart_items': Queryset элементов корзины или цен продавцов, в зависимости от аутентификации пользователя.
+    - 'cart_products': Список продуктов, связанных с элементами корзины.
+
+    :param request: Объект HTTP-запроса, содержащий информацию о пользователе и сессии.
+    :type request: HttpRequest
+    :return: Словарь, содержащий элементы корзины и продукты.
+    :return: Dict
     """
-    carts_data = request.session.get('cart', {})
-    cart_ids = [id_k for id_k, value_k in request.session.get('cart', {}).items() if
-                not value_k.get('deleted')]
+    one_discount_queryset = Discount.objects.filter(is_active=True)
 
-    cart_items = SellerPrice.objects.filter(pk__in=cart_ids).prefetch_related('product__images')
+    if request.user.is_authenticated:
+        carts = Cart.objects.filter(user=request.user.id)
+        cart_items = carts.prefetch_related(
+            Prefetch('sellerprice__product__discounts', queryset=one_discount_queryset, to_attr='one_discount')
+        )
+        cart_products = [i_cart.sellerprice.product for i_cart in carts]
+        cart = {
+            'cart_items': cart_items,
+            'cart_products': cart_products
+        }
 
-    cart = [
-        {'quantity': carts_data[str(cart_item.id)]['quantity'],
-         'sellerprice': cart_item}
-        for cart_item in cart_items
-    ]
+    else:
+        cart_ids = [id_k for id_k, value_k in request.session.get('cart', {}).items() if
+                    not value_k.get('deleted')]
+
+        cart_items = SellerPrice.objects.filter(pk__in=cart_ids).prefetch_related(
+            Prefetch('product__discounts', queryset=one_discount_queryset, to_attr='one_discount')
+        )
+
+        cart_products = [i_cart.product for i_cart in cart_items]
+        cart = {
+            'cart_items': cart_items,
+            'cart_products': cart_products
+        }
 
     return cart
