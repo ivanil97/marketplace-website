@@ -15,12 +15,12 @@
     <div class="Middle-top">
         <div class="wrap">
             <div class="Middle-header">
-                <h1 class="Middle-title">Личный кабинет
+                <h1 class="Middle-title">{% translate "Личный кабинет" %}
                 </h1>
                 <ul class="breadcrumbs Middle-breadcrumbs">
                     <li class="breadcrumbs-item"><a href="{% url 'home' %}">home</a>
                     </li>
-                    <li class="breadcrumbs-item breadcrumbs-item_current"><span>Личный кабинет</span>
+                    <li class="breadcrumbs-item breadcrumbs-item_current"><span>{% translate "Личный кабинет" %}</span>
                     </li>
                 </ul>
             </div>
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="Section-content">
-                <h1>История просмотров товаров</h1>
+                <h1>{% translate "История просмотров товаров" %}</h1>
                 <div class="Cards">
                     <ul>
                         {% if products %}
@@ -56,7 +56,7 @@
                         </li>
                         {% endfor %}
                         {% else %}
-                        <li>История просмотров пуста.</li>
+                        <li>{% translate "История просмотров пуста." %}</li>
                         {% endif %}
                     </ul>
                 </div>

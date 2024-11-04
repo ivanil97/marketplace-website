@@ -42,7 +42,7 @@
 
 {% if user.is_authenticated %}
     <header class="Section-header Section-header_product">
-        <h3 class="Section-title">Добавить отзыв
+        <h3 class="Section-title">{% translate "Добавить отзыв" %}
         </h3>
     </header>
 <div class="Tabs-addComment">
@@ -50,10 +50,10 @@
         {% csrf_token %}
         {{ form.as_p }}
         <div class="form-group">
-            <textarea class="form-textarea" name="comment" placeholder="Отзыв"></textarea>
+            <textarea class="form-textarea" name="comment" placeholder="{% translate 'Отзыв' %}"></textarea>
         </div>
         <div class="form-group">
-            <button class="btn btn_muted" type="submit">Отправить отзыв</button>
+            <button class="btn btn_muted" type="submit">{% translate "Отправить отзыв" %}</button>
         </div>
     </form>
 </div>

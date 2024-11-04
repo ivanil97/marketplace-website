@@ -4,12 +4,10 @@ from django.shortcuts import render
 from products.models import ProductImage, SellerPrice, Discount
 from carts.models import Cart
 from carts.serializers import serializer_data_user, serializer_data_session
+from core.custom_querysets import one_discount_queryset, one_image_queryset
 
 
 def users_cart(request):
-    one_image_queryset = ProductImage.objects.order_by('id')[:1]
-    one_discount_queryset = Discount.objects.filter(is_active=True)
-
     if request.user.is_authenticated:
         carts = Cart.objects.filter(user=request.user.id)
         carts = carts.prefetch_related(
