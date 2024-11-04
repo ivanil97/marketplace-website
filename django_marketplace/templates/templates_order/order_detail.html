@@ -45,7 +45,7 @@
                                 <div class="row-block">
                                     <div class="Order-info Order-info_delivery">
                                         <div class="Order-infoType">{% translate "Тип доставки" %}:</div>
-                                        <div class="Order-infoContent">{{ order.get_delivery_option_display }}</div>
+                                        <div class="Order-infoContent">{% translate order.get_delivery_option_display %}</div>
                                     </div>
                                     <div class="Order-info">
                                         <div class="Order-infoType">{% translate "Город" %}:</div>
@@ -57,11 +57,11 @@
                                     </div>
                                     <div class="Order-info Order-info_pay">
                                         <div class="Order-infoType">{% translate "Оплата" %}:</div>
-                                        <div class="Order-infoContent">{{ order.get_payment_option_display }}</div>
+                                        <div class="Order-infoContent">{% translate order.get_payment_option_display %}</div>
                                     </div>
                                     <div class="Order-info Order-info_status">
                                         <div class="Order-infoType">{% translate "Статус" %}:</div>
-                                        <div class="Order-infoContent">{{ order.get_status_display }}</div>
+                                        <div class="Order-infoContent">{% translate order.get_status_display %}</div>
                                     </div>
                                     {% if order.payment_status == 'unpaid' %}
                                     <div class="Order-info Order-info_error">

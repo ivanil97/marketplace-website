@@ -147,7 +147,7 @@ data/
 *.sqlite3
 /category_cache/
 mediafiles/
-/django_marketplace/uploads/
+/django_marketplace/mediafiles/
 cache/
 /gajdenv/
 import/
