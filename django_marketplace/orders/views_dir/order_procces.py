@@ -1,10 +1,8 @@
 from django.contrib.auth import login
-from django.db.models import Prefetch
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView
 
-from carts.models import Cart
 from carts.templatetags.carts_tags import total_price
 from orders.forms import OrderProceedForm
 from orders.models import Order
@@ -20,10 +18,7 @@ class OrderProcessView(TemplateView, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        if self.request.user.is_authenticated:
-            cart = Cart.objects.filter(user=self.request.user.id).prefetch_related('sellerprice__product__images')
-        else:
-            cart = get_cart_data(self.request)['cart_items']
+        cart = get_cart_data(self.request)['cart_items']
 
         context['cart'] = cart
         if 'user_exists' in self.request.session:

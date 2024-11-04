@@ -20,7 +20,7 @@ def get_cart_data(request: HttpRequest) -> Dict:
 
     :param request: Объект HTTP-запроса, содержащий информацию о пользователе и сессии.
     :type request: HttpRequest
-    :return: Словарь, содержащий элементы корзины и продукты.
+    :return: Словарь, содержащий элементы корзины и товары.
     :return: Dict
     """
     one_discount_queryset = Discount.objects.filter(is_active=True)

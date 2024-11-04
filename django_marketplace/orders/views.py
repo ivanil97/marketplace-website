@@ -13,6 +13,7 @@ class OrderDetailView(TemplateView):
         context = super().get_context_data(**kwargs)
         order_id = self.kwargs.get('pk')
         order = get_object_or_404(Order, id=order_id, user=self.request.user)
+        print(order.products.all())
         context['order'] = order
         context['products'] = order.products.all()
         return context
@@ -27,7 +28,3 @@ class OrderDetailView(TemplateView):
             order.save()
 
         return redirect('orders:order_detail', pk=order_id)
-
-
-def add_order(request):
-    return HttpResponse("Оформление заказа")
