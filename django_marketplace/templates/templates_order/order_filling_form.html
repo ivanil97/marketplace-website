@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
-
 {% load carts_tags %}
 {% load order_tags %}
 
+{% load i18n %}
 {% block content %}
 <script>
     function updatePreview() {
@@ -58,19 +57,19 @@
             <div class="row">
                 <div class="row-block">
                     <div class="Order-info">
-                        <div class="Order-infoType">Имя и фамилия:
+                        <div class="Order-infoType">{% translate "ФИО" %}:
                         </div>
                         <div class="Order-infoContent">${name}
                         </div>
                     </div>
                     <div class="Order-info">
-                        <div class="Order-infoType">Телефон:
+                        <div class="Order-infoType">{% translate "Телефон" %}:
                         </div>
                         <div class="Order-infoContent">${phone}
                         </div>
                     </div>
                     <div class="Order-info">
-                        <div class="Order-infoType">E-mail:
+                        <div class="Order-infoType">{% translate "E-mail" %}:
                         </div>
                         <div class="Order-infoContent">${email}
                         </div>
@@ -78,25 +77,25 @@
                 </div>
                 <div class="row-block">
                     <div class="Order-info Order-info_delivery">
-                        <div class="Order-infoType">Тип доставки:
+                        <div class="Order-infoType">{% translate "Тип доставки" %}:
                         </div>
                         <div class="Order-infoContent">${delivery_option_label}
                         </div>
                     </div>
                     <div class="Order-info">
-                        <div class="Order-infoType">Город:
+                        <div class="Order-infoType">{% translate "Город" %}:
                         </div>
                         <div class="Order-infoContent">${city}
                         </div>
                     </div>
                     <div class="Order-info">
-                        <div class="Order-infoType">Адрес:
+                        <div class="Order-infoType">{% translate "Адрес" %}:
                         </div>
                         <div class="Order-infoContent">${address}
                         </div>
                     </div>
                     <div class="Order-info Order-info_pay">
-                        <div class="Order-infoType">Оплата:
+                        <div class="Order-infoType">{% translate "Оплата" %}:
                         </div>
                         <div class="Order-infoContent">${payment_option_label}
                         </div>
@@ -135,7 +134,7 @@
                 <div class="Section-column">
                     <div class="Section-columnSection">
                         <header class="Section-header">
-                            <strong class="Section-title">Прогресс заполнения
+                            <strong class="Section-title">{% translate "Прогресс заполнения" %}
                             </strong>
                         </header>
                         <div class="Section-columnContent">
@@ -159,20 +158,20 @@
                         {% csrf_token %}
                         <div class="Order-block Order-block_OPEN" id="step1">
                             <header class="Section-header Section-header_sm">
-                                <h2 class="Section-title">Шаг 1. Параметры пользователя
+                                <h2 class="Section-title">{% translate "Шаг 1. Параметры пользователя" %}
                                 </h2>
                             </header>
                             <div class="row">
                                 <div class="row-block">
                                     <div class="form-group">
-                                        <label class="form-label" for="first_name">Имя и фамилия</label>
+                                        <label class="form-label" for="first_name">{% translate "ФИО" %}</label>
                                         <input class="form-input" id="first_name" name="first_name" type="text" value="{{ user.first_name }} {{ user.last_name }} " oninput="updatePreview()"/>
                                         <div style="color: red">
                                             {{ form.errors.first_name|join:", " }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="phone">Телефон
+                                        <label class="form-label" for="phone">{% translate "Телефон" %}
                                         </label>
                                         {% if user.phone_number %}
                                         {% with phone_prefix="+7" %}
@@ -200,13 +199,13 @@
                                 <div class="row-block">
                                     {% if not user.is_authenticated %}
                                     <div class="form-group">
-                                        <label class="form-label" for="password">Пароль
+                                        <label class="form-label" for="password">{% translate "Пароль" %}
                                         </label>
                                         <input class="form-input" id="password" name="password" type="password"
                                                placeholder="{{ form.password.field.widget.attrs.placeholder }}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="password_reply">Подтверждение пароля
+                                        <label class="form-label" for="password_reply">{% translate "Подтверждение пароля" %}
                                         </label>
                                         <input class="form-input" id="password_reply" name="password_reply" type="password"
                                                placeholder="{{ form.password_reply.field.widget.attrs.placeholder }}"/>
@@ -215,23 +214,23 @@
                                             {{ form.errors.password_reply|join:", " }}
                                         </div>
                                     </div>
-                                    <div class="form-group"><a class="btn btn_muted Order-btnReg" href="{% url 'user:login' %}?next={% url 'orders:order_proceed' %}">Я уже зарегистрирован</a>
+                                    <div class="form-group"><a class="btn btn_muted Order-btnReg" href="{% url 'user:login' %}?next={% url 'orders:order_proceed' %}">{% translate "Я уже зарегистрирован" %}</a>
                                     </div>
                                     {% endif %}
                                 </div>
                             </div>
-                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step2">Дальше</a>
+                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step2">{% translate "Дальше" %}</a>
                             </div>
 
                             {% if user_exists %}
                                 <div class="Profile-success">
-                                    Пользователь с указанным email существует, вы можете авторизоваться
+                                    {% translate "Пользователь с указанным email существует, вы можете авторизоваться" %}
                                 </div>
                             {% endif %}
                         </div>
                         <div class="Order-block" id="step2">
                             <header class="Section-header Section-header_sm">
-                                <h2 class="Section-title">Шаг 2. Способ доставки
+                                <h2 class="Section-title">{% translate "Шаг 2. Способ доставки" %}
                                 </h2>
                             </header>
                             <div class="form-group">
@@ -240,13 +239,13 @@
                                         <label class="toggle">
                                             <input type="radio" name="delivery_option" value="{{ value }}" {% if forloop.first %}checked="checked"{% endif %} oninput="updatePreview();"/>
                                             <span class="toggle-box"></span>
-                                            <span class="toggle-text">{{ label }}</span>
+                                            <span class="toggle-text">{% translate label %}</span>
                                         </label>
                                     </div>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="city">Город
+                                <label class="form-label" for="city">{% translate "Город" %}
                                 </label>
                                 <input class="form-input" id="city" name="city" type="text" oninput="updatePreview();"/>
                                     <div style="color: red">
@@ -254,19 +253,19 @@
                                     </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="address">Адрес
+                                <label class="form-label" for="address">{% translate "Адрес" %}
                                 </label>
                                 <textarea class="form-textarea" name="address" id="address" oninput="updatePreview();"></textarea>
                                 <div style="color: red">
                                     {{ form.errors.address|join:", " }}
                                 </div>
                             </div>
-                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step3">Дальше</a>
+                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step3">{% translate "Дальше" %}</a>
                             </div>
                         </div>
                         <div class="Order-block" id="step3">
                             <header class="Section-header Section-header_sm">
-                                <h2 class="Section-title">Шаг 3. Способ оплаты
+                                <h2 class="Section-title">{% translate "Шаг 3. Способ оплаты" %}
                                 </h2>
                             </header>
                             <div class="form-group">
@@ -275,17 +274,17 @@
                                         <label class="toggle">
                                             <input type="radio" name="payment_option" value="{{ value }}" {% if forloop.first %}checked="checked"{% endif %} oninput="updatePreview();"/>
                                             <span class="toggle-box"></span>
-                                            <span class="toggle-text">{{ label }}</span>
+                                            <span class="toggle-text">{% translate label %}</span>
                                         </label>
                                     </div>
                                 {% endfor %}
                             </div>
-                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step4">Дальше</a>
+                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step4">{% translate "Дальше" %}</a>
                             </div>
                         </div>
                         <div class="Order-block" id="step4">
                             <header class="Section-header Section-header_sm">
-                                <h2 class="Section-title">Шаг 4. Подтверждение заказа
+                                <h2 class="Section-title">{% translate "Шаг 4. Подтверждение заказа" %}
                                 </h2>
                             </header>
                             <div class="Order-infoBlock">
@@ -293,13 +292,13 @@
                                     <div class="row">
                                         <div class="row-block">
                                             <div class="Order-info">
-                                                <div class="Order-infoType">Имя и фамилия:
+                                                <div class="Order-infoType">{% translate "ФИО" %}:
                                                 </div>
                                                 <div class="Order-infoContent">{{ user.first_name }} {{ user.last_name }}
                                                 </div>
                                             </div>
                                             <div class="Order-info">
-                                                <div class="Order-infoType">Телефон:
+                                                <div class="Order-infoType">{% translate "Телефон" %}:
                                                 </div>
                                                 <div class="Order-infoContent">+7{{ user.phone_number }}
                                                 </div>
@@ -313,25 +312,25 @@
                                         </div>
                                         <div class="row-block">
                                             <div class="Order-info Order-info_delivery">
-                                                <div class="Order-infoType">Тип доставки:
+                                                <div class="Order-infoType">{% translate "Тип доставки" %}:
                                                 </div>
                                                 <div class="Order-infoContent">
                                                 </div>
                                             </div>
                                             <div class="Order-info">
-                                                <div class="Order-infoType">Город:
+                                                <div class="Order-infoType">{% translate "Город" %}:
                                                 </div>
                                                 <div class="Order-infoContent">
                                                 </div>
                                             </div>
                                             <div class="Order-info">
-                                                <div class="Order-infoType">Адрес:
+                                                <div class="Order-infoType">{% translate "Адрес" %}:
                                                 </div>
                                                 <div class="Order-infoContent">
                                                 </div>
                                             </div>
                                             <div class="Order-info Order-info_pay">
-                                                <div class="Order-infoType">Оплата:
+                                                <div class="Order-infoType">{% translate "Оплата" %}:
                                                 </div>
                                                 <div class="Order-infoContent">
                                                 </div>
@@ -432,7 +431,7 @@
                                                     {% endif %}
                                             </div>
                                         <div class="Cart-block">
-                                            <button class="btn btn_primary btn_lg" type="submit">Оплатить
+                                            <button class="btn btn_primary btn_lg" type="submit">{% translate "Оплатить" %}
                                             </button>
                                         </div>
                                     </div>

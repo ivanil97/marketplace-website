@@ -83,7 +83,7 @@
                             {% endif %}
                             <div class="dropdown-content">
                                 <a class="dropdown-content-a" href="{% url 'user:account' %}">{% translate "Личный кабинет" %}</a>
-                                <a class="dropdown-content-a" href="account.html">{% translate "Административный раздел" %}</a>
+                                <a class="dropdown-content-a" href="/admin">{% translate "Административный раздел" %}</a>
                                 <form id="logout-form" action="{% url 'user:logout' %}" method="post">
                                     <a class="dropdown-content-a" href="#" onclick="document.getElementById('logout-form').submit(); return false;">
                                         {% translate "Выход" %}
