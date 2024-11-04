@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
-
 {% load carts_tags %}
-
+{% load i18n %}
 {% block content %}
 <script>
     function updatePreview() {
@@ -57,19 +55,19 @@
             <div class="row">
                 <div class="row-block">
                     <div class="Order-info">
-                        <div class="Order-infoType">Имя и фамилия:
+                        <div class="Order-infoType">{% translate "ФИО" %}:
                         </div>
                         <div class="Order-infoContent">${name}
                         </div>
                     </div>
                     <div class="Order-info">
-                        <div class="Order-infoType">Телефон:
+                        <div class="Order-infoType">{% translate "Телефон" %}:
                         </div>
                         <div class="Order-infoContent">${phone}
                         </div>
                     </div>
                     <div class="Order-info">
-                        <div class="Order-infoType">E-mail:
+                        <div class="Order-infoType">{% translate "E-mail" %}:
                         </div>
                         <div class="Order-infoContent">${email}
                         </div>
@@ -77,25 +75,25 @@
                 </div>
                 <div class="row-block">
                     <div class="Order-info Order-info_delivery">
-                        <div class="Order-infoType">Тип доставки:
+                        <div class="Order-infoType">{% translate "Тип доставки" %}:
                         </div>
                         <div class="Order-infoContent">${delivery_option_label}
                         </div>
                     </div>
                     <div class="Order-info">
-                        <div class="Order-infoType">Город:
+                        <div class="Order-infoType">{% translate "Город" %}:
                         </div>
                         <div class="Order-infoContent">${city}
                         </div>
                     </div>
                     <div class="Order-info">
-                        <div class="Order-infoType">Адрес:
+                        <div class="Order-infoType">{% translate "Адрес" %}:
                         </div>
                         <div class="Order-infoContent">${address}
                         </div>
                     </div>
                     <div class="Order-info Order-info_pay">
-                        <div class="Order-infoType">Оплата:
+                        <div class="Order-infoType">{% translate "Оплата" %}:
                         </div>
                         <div class="Order-infoContent">${payment_option_label}
                         </div>
@@ -104,28 +102,9 @@
             </div>
         </div>
             `;
-    }
-
-    function highlightActiveStep() {
-        const hash = window.location.hash;
-        const stepNumber = hash ? hash.replace('#step', '') : '1';
-        const menuItems = document.querySelectorAll('.menu-item');
-
-        menuItems.forEach(item => {
-            item.classList.remove('menu-item_ACTIVE');
-        });
-
-        const activeItem = document.querySelector(`.menu-item[data-step="${stepNumber}"]`);
-        if (activeItem) {
-            activeItem.classList.add('menu-item_ACTIVE');
         }
-    }
 
-    window.onload = function() {
-        updatePreview();
-        highlightActiveStep();
-    };
-    window.onhashchange = highlightActiveStep;
+        window.onload = updatePreview;
 </script>
 
 <div class="Middle Middle_top">
@@ -134,19 +113,19 @@
                 <div class="Section-column">
                     <div class="Section-columnSection">
                         <header class="Section-header">
-                            <strong class="Section-title">Прогресс заполнения
+                            <strong class="Section-title">{% translate "Прогресс заполнения" %}
                             </strong>
                         </header>
                         <div class="Section-columnContent">
                             <div class="NavigateProfile">
                                 <ul class="menu menu_vt">
-                                    <li class="menu-item" data-step="1"><a class="menu-link Order-next" href="#step1" onclick="event.preventDefault(); location.hash = '#step1'; highlightActiveStep();">{% translate "Шаг 1. Параметры пользователя" %}</a>
+                                    <li class="menu-item_ACTIVE menu-item"><a class="menu-link Order-next" href="#step1">{% translate "Шаг 1. Параметры пользователя" %}</a>
                                     </li>
-                                    <li class="menu-item" data-step="2"><a class="menu-link Order-next" href="#step2" onclick="event.preventDefault(); location.hash = '#step2'; highlightActiveStep();">{% translate "Шаг 2. Способ доставки" %}</a>
+                                    <li class="menu-item"><a class="menu-link Order-next" href="#step2">{% translate "Шаг 2. Способ доставки" %}</a>
                                     </li>
-                                    <li class="menu-item" data-step="3"><a class="menu-link Order-next" href="#step3" onclick="event.preventDefault(); location.hash = '#step3'; highlightActiveStep();">{% translate "Шаг 3. Способ оплаты" %}</a>
+                                    <li class="menu-item"><a class="menu-link Order-next" href="#step3">{% translate "Шаг 3. Способ оплаты" %}</a>
                                     </li>
-                                    <li class="menu-item"  data-step="4"><a class="menu-link Order-next" href="#step4" onclick="event.preventDefault(); location.hash = '#step4'; highlightActiveStep();">{% translate "Шаг 4. Подтверждение заказа" %}</a>
+                                    <li class="menu-item"><a class="menu-link Order-next" href="#step4">{% translate "Шаг 4. Подтверждение заказа" %}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -158,20 +137,20 @@
                         {% csrf_token %}
                         <div class="Order-block Order-block_OPEN" id="step1">
                             <header class="Section-header Section-header_sm">
-                                <h2 class="Section-title">Шаг 1. Параметры пользователя
+                                <h2 class="Section-title">{% translate "Шаг 1. Параметры пользователя" %}
                                 </h2>
                             </header>
                             <div class="row">
                                 <div class="row-block">
                                     <div class="form-group">
-                                        <label class="form-label" for="first_name">Имя и фамилия</label>
+                                        <label class="form-label" for="first_name">{% translate "ФИО" %}</label>
                                         <input class="form-input" id="first_name" name="first_name" type="text" value="{{ user.first_name }} {{ user.last_name }} " oninput="updatePreview()"/>
                                         <div style="color: red">
                                             {{ form.errors.first_name|join:", " }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="phone">Телефон
+                                        <label class="form-label" for="phone">{% translate "Телефон" %}
                                         </label>
                                         {% if user.phone_number %}
                                         {% with phone_prefix="+7" %}
@@ -199,13 +178,13 @@
                                 <div class="row-block">
                                     {% if not user.is_authenticated %}
                                     <div class="form-group">
-                                        <label class="form-label" for="password">Пароль
+                                        <label class="form-label" for="password">{% translate "Пароль" %}
                                         </label>
                                         <input class="form-input" id="password" name="password" type="password"
                                                placeholder="{{ form.password.field.widget.attrs.placeholder }}"/>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="password_reply">Подтверждение пароля
+                                        <label class="form-label" for="password_reply">{% translate "Подтверждение пароля" %}
                                         </label>
                                         <input class="form-input" id="password_reply" name="password_reply" type="password"
                                                placeholder="{{ form.password_reply.field.widget.attrs.placeholder }}"/>
@@ -214,23 +193,23 @@
                                             {{ form.errors.password_reply|join:", " }}
                                         </div>
                                     </div>
-                                    <div class="form-group"><a class="btn btn_muted Order-btnReg" href="{% url 'user:login' %}?next={% url 'orders:order_proceed' %}">Я уже зарегистрирован</a>
+                                    <div class="form-group"><a class="btn btn_muted Order-btnReg" href="{% url 'user:login' %}?next={% url 'orders:order_proceed' %}">{% translate "Я уже зарегистрирован" %}</a>
                                     </div>
                                     {% endif %}
                                 </div>
                             </div>
-                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step2">Дальше</a>
+                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step2">{% translate "Дальше" %}</a>
                             </div>
 
                             {% if user_exists %}
                                 <div class="Profile-success">
-                                    Пользователь с указанным email существует, вы можете авторизоваться
+                                    {% translate "Пользователь с указанным email существует, вы можете авторизоваться" %}
                                 </div>
                             {% endif %}
                         </div>
                         <div class="Order-block" id="step2">
                             <header class="Section-header Section-header_sm">
-                                <h2 class="Section-title">Шаг 2. Способ доставки
+                                <h2 class="Section-title">{% translate "Шаг 2. Способ доставки" %}
                                 </h2>
                             </header>
                             <div class="form-group">
@@ -239,13 +218,13 @@
                                         <label class="toggle">
                                             <input type="radio" name="delivery_option" value="{{ value }}" {% if forloop.first %}checked="checked"{% endif %} oninput="updatePreview();"/>
                                             <span class="toggle-box"></span>
-                                            <span class="toggle-text">{{ label }}</span>
+                                            <span class="toggle-text">{% translate label %}</span>
                                         </label>
                                     </div>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="city">Город
+                                <label class="form-label" for="city">{% translate "Город" %}
                                 </label>
                                 <input class="form-input" id="city" name="city" type="text" oninput="updatePreview();"/>
                                     <div style="color: red">
@@ -253,19 +232,19 @@
                                     </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="address">Адрес
+                                <label class="form-label" for="address">{% translate "Адрес" %}
                                 </label>
                                 <textarea class="form-textarea" name="address" id="address" oninput="updatePreview();"></textarea>
                                 <div style="color: red">
                                     {{ form.errors.address|join:", " }}
                                 </div>
                             </div>
-                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step3">Дальше</a>
+                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step3">{% translate "Дальше" %}</a>
                             </div>
                         </div>
                         <div class="Order-block" id="step3">
                             <header class="Section-header Section-header_sm">
-                                <h2 class="Section-title">Шаг 3. Способ оплаты
+                                <h2 class="Section-title">{% translate "Шаг 3. Способ оплаты" %}
                                 </h2>
                             </header>
                             <div class="form-group">
@@ -274,17 +253,17 @@
                                         <label class="toggle">
                                             <input type="radio" name="payment_option" value="{{ value }}" {% if forloop.first %}checked="checked"{% endif %} oninput="updatePreview();"/>
                                             <span class="toggle-box"></span>
-                                            <span class="toggle-text">{{ label }}</span>
+                                            <span class="toggle-text">{% translate label %}</span>
                                         </label>
                                     </div>
                                 {% endfor %}
                             </div>
-                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step4">Дальше</a>
+                            <div class="Order-footer"><a class="btn btn_success Order-next" href="#step4">{% translate "Дальше" %}</a>
                             </div>
                         </div>
                         <div class="Order-block" id="step4">
                             <header class="Section-header Section-header_sm">
-                                <h2 class="Section-title">Шаг 4. Подтверждение заказа
+                                <h2 class="Section-title">{% translate "Шаг 4. Подтверждение заказа" %}
                                 </h2>
                             </header>
                             <div class="Order-infoBlock">
@@ -292,13 +271,13 @@
                                     <div class="row">
                                         <div class="row-block">
                                             <div class="Order-info">
-                                                <div class="Order-infoType">Имя и фамилия:
+                                                <div class="Order-infoType">{% translate "ФИО" %}:
                                                 </div>
                                                 <div class="Order-infoContent">{{ user.first_name }} {{ user.last_name }}
                                                 </div>
                                             </div>
                                             <div class="Order-info">
-                                                <div class="Order-infoType">Телефон:
+                                                <div class="Order-infoType">{% translate "Телефон" %}:
                                                 </div>
                                                 <div class="Order-infoContent">+7{{ user.phone_number }}
                                                 </div>
@@ -312,25 +291,25 @@
                                         </div>
                                         <div class="row-block">
                                             <div class="Order-info Order-info_delivery">
-                                                <div class="Order-infoType">Тип доставки:
+                                                <div class="Order-infoType">{% translate "Тип доставки" %}:
                                                 </div>
                                                 <div class="Order-infoContent">
                                                 </div>
                                             </div>
                                             <div class="Order-info">
-                                                <div class="Order-infoType">Город:
+                                                <div class="Order-infoType">{% translate "Город" %}:
                                                 </div>
                                                 <div class="Order-infoContent">Москва
                                                 </div>
                                             </div>
                                             <div class="Order-info">
-                                                <div class="Order-infoType">Адрес:
+                                                <div class="Order-infoType">{% translate "Адрес" %}:
                                                 </div>
                                                 <div class="Order-infoContent">Ул. Академика Арцимовича, д. 10, кв. 10
                                                 </div>
                                             </div>
                                             <div class="Order-info Order-info_pay">
-                                                <div class="Order-infoType">Оплата:
+                                                <div class="Order-infoType">{% translate "Оплата" %}:
                                                 </div>
                                                 <div class="Order-infoContent">
                                                 </div>
@@ -339,89 +318,36 @@
                                     </div>
                                 </div>
                                 <div class="Cart Cart_order">
-                                    {% if user.is_authenticated %}
-                                        {% for i_item in cart %}
-                                        <div class="Cart-product">
-                                            <div class="Cart-block Cart-block_row">
-                                                {% with i_item.sellerprice.product.images.all|first as img %}
-                                                <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="{% url 'products:product_detail' slug=i_item.sellerprice.product.slug %}"><img class="Cart-img" src="{{ img.image.url }}" alt="{{ i_item.product.name }}" /></a>
-                                                </div>
-                                                {% endwith %}
-                                                <div class="Cart-block Cart-block_info"><a class="Cart-title" href="{% url 'products:product_detail' slug=i_item.sellerprice.product.slug %}"> {{ i_item.sellerprice.product.name }}</a>
-                                                    <div class="Cart-desc">{{ i_item.sellerprice.product.description }}
-                                                    </div>
-                                                </div>
-                                                <div class="Cart-block Cart-block_price">
-                                                    <div class="Cart-price">{{ i_item.sellerprice.price }}$
-                                                    </div>
+                                    {% for i_item in cart %}
+                                    <div class="Cart-product">
+                                        <div class="Cart-block Cart-block_row">
+                                            {% with i_item.sellerprice.product.images.all|first as img %}
+                                            <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="{{ img.image.url }}" alt="{{ i_item.product.name }}" /></a>
+                                            </div>
+                                            {% endwith %}
+                                            <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#"> {{ i_item.sellerprice.product.name }}</a>
+                                                <div class="Cart-desc">{{ i_item.sellerprice.product.description }}
                                                 </div>
                                             </div>
-                                            <div class="Cart-block Cart-block_row">
-                                                <div class="Cart-block Cart-block_amount">{{ i_item.quantity }} шт.
+                                            <div class="Cart-block Cart-block_price">
+                                                <div class="Cart-price">{{ i_item.sellerprice.price }}$
                                                 </div>
                                             </div>
                                         </div>
-                                        {% endfor %}
-                                    {% else %}
-                                        {% for i_item in cart %}
-                                        <div class="Cart-product">
-                                            <div class="Cart-block Cart-block_row">
-                                                {% with i_item.product.images.all|first as img %}
-                                                <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="{% url 'products:product_detail' slug=i_item.product.slug %}"><img class="Cart-img" src="{{ img.image.url }}" alt="{{ i_item.product.name }}" /></a>
-                                                </div>
-                                                {% endwith %}
-                                                <div class="Cart-block Cart-block_info"><a class="Cart-title" href="{% url 'products:product_detail' slug=i_item.product.slug %}"> {{ i_item.product.name }}</a>
-                                                    <div class="Cart-desc">{{ i_item.product.description }}
-                                                    </div>
-                                                </div>
-                                                <div class="Cart-block Cart-block_price">
-                                                    <div class="Cart-price">{{ i_item.price }}$
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="Cart-block Cart-block_row">
-                                                {% get_quantity_order request i_item.id as item_quantity %}
-                                                <div class="Cart-block Cart-block_amount"> {{ item_quantity }} шт.
-                                                </div>
+                                        <div class="Cart-block Cart-block_row">
+                                            <div class="Cart-block Cart-block_amount">{{ i_item.quantity }} {% translate "шт" %}.
                                             </div>
                                         </div>
-                                        {% endfor %}
-                                    {% endif %}
+                                    </div>
+                                    {% endfor %}
                                     <div class="Cart-total">
-                                            <div class="Cart-block Cart-block_total">
-                                                <strong class="Cart-title">{% translate "Итого" %}:</strong>
-                                                    {% total_price request carts as price %}
-                                                    {% if price.old_price > config.FOR_PRICE and price.total_quantity > config.FOR_COUNT %}
-                                                        <span class="Card-priceOld">{{ price.old_price }}$</span>
-                                                        <span class="Cart-price">{{ price.total_price }}$</span>
-                                                        <div class="Cart-disc">
-                                                            {% if price.old_price > config.FOR_PRICE %}
-                                                                Ваша стоимость покупок в корзине составила более <b>{{ config.FOR_PRICE }}$</b>, для вас скидка составит <b>{{ price.full_percent }}%</b>
-                                                            {% else %}
-                                                                Ваше количество товаров в корзине более <b>{{ config.FOR_COUNT }} шт.</b>, для вас дополнительная скидка <b>{{ price.full_percent }}%</b>
-                                                            {% endif %}
-                                                        </div>
-                                                    {% elif price.old_price > config.FOR_PRICE %}
-                                                        <span class="Card-priceOld">{{ price.old_price }}$</span>
-                                                        <span class="Cart-price">{{ price.total_price }}$</span>
-                                                        <div class="Cart-disc">
-                                                            Ваша стоимость покупок в корзине составила более <b>{{ config.FOR_PRICE }}$</b>, для вас дополнительная скидка <b>{{ config.FOR_PRICE_PERCENT }}%</b>
-                                                        </div>
-                                                    {% elif price.total_quantity >  config.FOR_COUNT %}
-                                                        <span class="Card-priceOld">{{ price.old_price }}$</span>
-                                                        <span class="Cart-price">{{ price.total_price }}$</span>
-                                                        <div class="Cart-disc">
-                                                            Ваше количество товаров в корзине более <b>{{ config.FOR_COUNT }} шт.</b>, для вас дополнительная скидка <b>{{ config.FOR_COUNT_PERCENT }}%</b>
-                                                        </div>
-                                                    {% else %}
-                                                        <span class="Cart-price">{{ price.total_price }}$</span>
-                                                        <div class="Cart-disc">Если ваша стоимость покупок в корзине составит более <b>{{ config.FOR_PRICE }}$</b>, мы сделаем для вас скидку <b>{{ config.FOR_PRICE_PERCENT }}%</b></div>
-                                                        <div class="Cart-disc">Если количество купленного вами товара превысит <b>{{ config.FOR_COUNT }} шт.</b>, мы сделаем для вас скидку <b>{{ config.FOR_COUNT_PERCENT }}%</b></div>
-                                                        <div class="Cart-disc">Если будет выполнено два условия скидок на корзину, будет выбрано максимально выгодное предложение.</div>
-                                                    {% endif %}
-                                            </div>
+                                        <div class="Cart-block Cart-block_total">
+                                            <strong class="Cart-title">{% translate "Итого" %}:
+                                                {% total_price request carts as price %}
+                                            </strong><span class="Cart-price">{{ price.total_price }}$</span>
+                                        </div>
                                         <div class="Cart-block">
-                                            <button class="btn btn_primary btn_lg" type="submit">Оплатить
+                                            <button class="btn btn_primary btn_lg" type="submit">{% translate "Оплатить" %}
                                             </button>
                                         </div>
                                     </div>

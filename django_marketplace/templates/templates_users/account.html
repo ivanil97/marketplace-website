@@ -53,13 +53,13 @@
                                                 <div class="Order-info Order-info_delivery">
                                                     <div class="Order-infoType">{% translate "Тип доставки" %}:
                                                     </div>
-                                                    <div class="Order-infoContent">{{ order.get_delivery_label }}
+                                                    <div class="Order-infoContent">{% translate order.get_delivery_label %}
                                                     </div>
                                                 </div>
                                                 <div class="Order-info Order-info_pay">
                                                     <div class="Order-infoType">{% translate "Оплата" %}:
                                                     </div>
-                                                    <div class="Order-infoContent">{{ order.get_payment_label }}
+                                                    <div class="Order-infoContent">{% translate order.get_payment_label %}
                                                     </div>
                                                 </div>
                                                 <div class="Order-info">
@@ -69,21 +69,22 @@
                                                     </div>
                                                 </div>
                                                 <div class="Order-info Order-info_status">
-                                            <div class="Order-infoType">Статус:
+                                            <div class="Order-infoType">{% translate "Статус" %}:
                                             </div>
                                             {% if i_order.payment_status == "paid" %}
-                                                <div class="Order-infoContent">{{ i_order.get_payment_status_label }}
+                                                <div class="Order-infoContent">{% translate "Оплачен" %}
                                                 </div>
                                             {% else %}
-                                                <a class="Order-infoContent" href="{% url 'orders:order_payment' pk=order.id %}">{{ order.get_payment_status_label }}
+                                                <a class="Order-infoContent" href="{% url 'orders:order_payment' pk=order.id %}">{% translate "Не оплачен" %}
                                                 </a>
                                             {% endif %}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    {% translate "Ожидает обработки" %}
                                     {% else %}
-                                        No orders yet
+                                        {% translate "У вас еще нет заказов" %}
                                     {% endif %}
                                 </div>
                             </div>
