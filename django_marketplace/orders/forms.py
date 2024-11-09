@@ -4,10 +4,10 @@ from users.forms import ProfileDataForm
 from .models import Order
 
 
-class OrderForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = ['products']
+# class OrderForm(forms.ModelForm):
+#     class Meta:
+#         model = Order
+#         fields = ['seller_price_objects']
 
 
 class OrderProceedForm(ProfileDataForm):

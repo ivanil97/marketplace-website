@@ -5,27 +5,33 @@ from django.http import HttpRequest
 from typing_extensions import Optional
 
 from carts.models import Cart
+from orders.models import OrderItem
 
-from products.models import SellerPrice
-
+from products.models import SellerPrice, Discount
 
 register = template.Library()
 
 
 @register.simple_tag()
 def get_quantity_order(request: HttpRequest, cart_key: int) -> int:
-    """Шаблонный тег для получения количества выбранного товара из сессии в процессе заказа"""
+    """
+    Шаблонный тег для получения количества выбранного товара из сессии в процессе заказа
+    Args:
+        request (HttpRequest): request, содержащий информацию о текущем пользователе.
+        cart_key (int): ID продукта в корзине
+    """
     return request.session.get('cart')[str(cart_key)]['quantity']
 
 
 @register.simple_tag()
-def price_discount_order(request: HttpRequest, cart_item: Union[Cart, SellerPrice]) -> Optional[Dict[str, float]]:
-    """Шаблонный тег для подсчета стоимости товара с учетом скидки или без нее в процессе заказа
+def price_discount_order(request: HttpRequest, cart_item: Union[Cart, SellerPrice, OrderItem]) -> Optional[Dict[str, float]]:
+    """
+    Шаблонный тег для подсчета стоимости товара с учетом скидки или без нее в процессе заказа и просмотра детальной страницы заказа
 
     Args:
         request (HttpRequest): request, содержащий информацию о текущем пользователе.
-        cart_item (Union[Cart, SellerPrice]): Элемент корзины, в зависимости от статуса аутентификации пользователя может быть
-        объектом Cart или SellerPrice
+        cart_item (Union[Cart, SellerPrice, OrderItem]): Элемент корзины, в зависимости от статуса аутентификации пользователя может быть
+        объектом Cart, SellerPrice или OrderItem
 
     Returns:
         Optional[Dict[str, float]]: Словарь с ценой со скидкой и старой ценой, если скидка применима,
@@ -33,7 +39,10 @@ def price_discount_order(request: HttpRequest, cart_item: Union[Cart, SellerPric
             - 'discount_price': цена товара с учетом максимальной скидки.
             - 'old_price': исходная цена товара без скидки.
     """
-    if request.user.is_authenticated:
+    if isinstance(cart_item, OrderItem):
+        price = cart_item.seller_price.price
+        discount = Discount.objects.filter(is_active=True)
+    elif request.user.is_authenticated:
         price = cart_item.sellerprice.price
         discount = cart_item.sellerprice.product.one_discount
     else:

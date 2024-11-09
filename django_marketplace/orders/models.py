@@ -1,9 +1,6 @@
-from cProfile import label
-from random import choice
-
 from django.db import models
 from django.conf import settings
-from products.models import Product
+from products.models import SellerPrice
 
 
 class Order(models.Model):
@@ -46,11 +43,6 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         related_name='orders',
         verbose_name='Пользователь'
-    )
-    products = models.ManyToManyField(
-        Product,
-        related_name='orders',
-        verbose_name='Товары'
     )
     total_price = models.DecimalField(
         max_digits=10,
@@ -107,3 +99,21 @@ class Order(models.Model):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
         ordering = ['-created_at']
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='order_items',
+        verbose_name='Заказ'
+    )
+    seller_price = models.ForeignKey(
+        SellerPrice,
+        on_delete=models.CASCADE,
+        related_name='seller_price',
+        verbose_name='Цена'
+    )
+    quantity = models.PositiveIntegerField(verbose_name="Количество")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
