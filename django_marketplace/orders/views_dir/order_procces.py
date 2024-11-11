@@ -5,7 +5,7 @@ from django.views.generic import TemplateView, FormView
 
 from carts.templatetags.carts_tags import total_price
 from orders.forms import OrderProceedForm
-from orders.models import Order
+from orders.models import Order, OrderItem
 from orders.utils import get_cart_data
 from users.models import User
 
@@ -67,6 +67,14 @@ class OrderProcessView(TemplateView, FormView):
             payment_option=form.cleaned_data['payment_option'],
             delivery_option=form.cleaned_data['delivery_option']
         )
-        new_order.products.set(cart_products)
+        new_order.save()
+
+        for i_item in cart_products:
+            new_item = OrderItem.objects.create(
+                order=new_order,
+                seller_price=i_item['seller_price'],
+                quantity=i_item['quantity']
+            )
+            new_item.save()
 
         return redirect(reverse(self.success_url, kwargs={'pk': new_order.pk}))

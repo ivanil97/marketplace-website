@@ -2,6 +2,7 @@ from typing import Dict
 
 from django.db.models import Prefetch
 from django.http import HttpRequest
+from more_itertools.recipes import quantify
 
 from carts.models import Cart
 from products.models import SellerPrice, Discount
@@ -30,24 +31,31 @@ def get_cart_data(request: HttpRequest) -> Dict:
         cart_items = carts.prefetch_related(
             Prefetch('sellerprice__product__discounts', queryset=one_discount_queryset, to_attr='one_discount')
         )
-        cart_products = [i_cart.sellerprice.product for i_cart in carts]
-        cart = {
-            'cart_items': cart_items,
-            'cart_products': cart_products
-        }
+        cart_products = [
+            {"seller_price": i_cart.sellerprice,
+             "quantity": i_cart.quantity}
+            for i_cart in carts
+        ]
 
     else:
         cart_ids = [id_k for id_k, value_k in request.session.get('cart', {}).items() if
                     not value_k.get('deleted')]
+        carts_request = request.session.get('cart', {})
 
         cart_items = SellerPrice.objects.filter(pk__in=cart_ids).prefetch_related(
             Prefetch('product__discounts', queryset=one_discount_queryset, to_attr='one_discount')
         )
 
-        cart_products = [i_cart.product for i_cart in cart_items]
-        cart = {
-            'cart_items': cart_items,
-            'cart_products': cart_products
-        }
+        cart_products = [
+            {"seller_price": i_cart,
+             "quantity": carts_request[str(i_cart.id)]['quantity']}
+            for i_cart in cart_items
+        ]
+
+
+    cart = {
+        'cart_items': cart_items,
+        'cart_products': cart_products
+    }
 
     return cart

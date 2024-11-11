@@ -94,7 +94,7 @@
                                     <span class="Cart-price">{{ price.total_price }}$</span>
                                     <div class="Cart-disc">
                                         {% if price.old_price > config.FOR_PRICE %}
-                                            {% translate "Ваша стоимость покупок в корзине составила более" %} <b>{{ config.FOR_PRICE }} $.</b> {% translate "для вас скидка составит" %} <b>{{ price.full_percent }}%</b>
+                                            {% translate "Ваша стоимость покупок в корзине составила более" %} <b>{{ config.FOR_PRICE }}$.</b> {% translate "для вас скидка составит" %} <b>{{ price.full_percent }}%</b>
                                         {% else %}
                                             {% translate "Ваше количество товаров в корзине более" %} <b>{{ config.FOR_COUNT }}</b> {% translate "для вас дополнительная скидка" %} <b>{{ price.full_percent }}%</b>
                                         {% endif %}
@@ -103,7 +103,7 @@
                                     <span class="Card-priceOld">{{ price.old_price }}$</span>
                                     <span class="Cart-price">{{ price.total_price }}$</span>
                                     <div class="Cart-disc">
-                                        {% translate "Ваша стоимость покупок в корзине составила более" %} <b>{{ config.FOR_PRICE }} $.</b> {% translate "для вас дополнительная скидка" %} <b>{{ config.FOR_PRICE_PERCENT }}%</b>
+                                        {% translate "Ваша стоимость покупок в корзине составила более" %} <b>{{ config.FOR_PRICE }}$.</b> {% translate "для вас дополнительная скидка" %} <b>{{ config.FOR_PRICE_PERCENT }}%</b>
                                     </div>
                                 {% elif price.total_quantity >  config.FOR_COUNT %}
                                     <span class="Card-priceOld">{{ price.old_price }}$</span>
@@ -113,7 +113,7 @@
                                     </div>
                                 {% else %}
                                     <span class="Cart-price">{{ price.total_price }}$</span>
-                                    <div class="Cart-disc">{% translate "Если ваша стоимость покупок в корзине составит более" %} <b>{{ config.FOR_PRICE }} $.</b> {% translate "мы сделаем для вас скидку" %} <b>{{ config.FOR_PRICE_PERCENT }}%</b></div>
+                                    <div class="Cart-disc">{% translate "Если ваша стоимость покупок в корзине составит более" %} <b>{{ config.FOR_PRICE }}$.</b> {% translate "мы сделаем для вас скидку" %} <b>{{ config.FOR_PRICE_PERCENT }}%</b></div>
                                     <div class="Cart-disc">{% translate "Если количество купленного вами товара превысит" %} <b>{{ config.FOR_COUNT }}</b> {% translate "мы сделаем для вас скидку" %} <b>{{ config.FOR_COUNT_PERCENT }}%</b></div>
                                     <div class="Cart-disc">{% translate "Если будет выполнено два условия скидок на корзину будет выбрано максимально выгодное предложение." %}</div>
                                 {% endif %}

@@ -71,11 +71,11 @@
                                                 <div class="Order-info Order-info_status">
                                             <div class="Order-infoType">{% translate "Статус" %}:
                                             </div>
-                                            {% if i_order.payment_status == "paid" %}
-                                                <div class="Order-infoContent">{% translate "Оплачен" %}
+                                            {% if order.payment_status == "paid" %}
+                                                <div class="Order-infoContent">{% translate order.get_payment_status_label %}
                                                 </div>
                                             {% else %}
-                                                <a class="Order-infoContent" href="{% url 'orders:order_payment' pk=order.id %}">{% translate "Не оплачен" %}
+                                                <a class="Order-infoContent" href="{% url 'orders:order_payment' pk=order.id %}">{% translate order.get_payment_status_label %}
                                                 </a>
                                             {% endif %}
                                                 </div>
