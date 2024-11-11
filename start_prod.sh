@@ -9,7 +9,7 @@ python manage.py compilemessages
 python manage.py makemigrations --noinput
 python manage.py migrate --noinput
 
-if [ "LOAD_FIXTURES" = "1" ]
+if [ "$LOAD_FIXTURES" = "1" ]
 then
     echo "Loading fixtures..."
     python manage.py smartload
