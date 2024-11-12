@@ -16,8 +16,8 @@
                                     <strong class="Slider-title">{{ slider_banner.title }}</strong>
                                     <div class="Slider-text">{{ slider_banner.description }}</div>
                                     <div class="Slider-footer">
-                                        <a class="btn btn_primary" href="{{ slider_banner.link }}">
-                                            {% translate "Кнопка действия" %}
+                                        <a class="btn btn_primary" href="{% url 'products:product_detail' slug=slider_banner.product.slug %}">
+                                            {% translate "Открыть" %}
                                         </a>
                                     </div>
                                 </div>
@@ -47,7 +47,7 @@
             <div class="wrap">
                 <div class="BannersHome">
                     {% for static_banner in static_banners %}
-                    <a class="BannersHomeBlock" href="{{ static_banner.link }}">
+                    <a class="BannersHomeBlock" href="{% url 'products:products_list' %}?category={{ static_banner.category.id }}">
                         <div class="BannersHomeBlock-row">
                             <div class="BannersHomeBlock-block">
                                 <strong class="BannersHomeBlock-title">{{ static_banner.title }}</strong>
