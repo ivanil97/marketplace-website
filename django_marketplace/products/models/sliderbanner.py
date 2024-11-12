@@ -1,5 +1,8 @@
 from django.db import models
 
+from products.models import Product
+
+
 class SliderBanner(models.Model):
     """
     Модель для хранения информации о слайдерных баннерах.
@@ -16,7 +19,7 @@ class SliderBanner(models.Model):
     """
     title = models.CharField(max_length=100, verbose_name="Заголовок")
     image = models.ImageField(upload_to='banners/sliders/', verbose_name="Изображение")
-    link = models.URLField(blank=True, null=True, verbose_name="Ссылка")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product', verbose_name="Продукт")
     is_active = models.BooleanField(default=True, verbose_name="Активен")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="Цена")
