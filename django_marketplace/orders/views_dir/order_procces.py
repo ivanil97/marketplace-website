@@ -1,8 +1,10 @@
+from constance import config
 from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView
 
+from carts.models import Cart
 from carts.templatetags.carts_tags import total_price
 from orders.forms import OrderProceedForm
 from orders.models import Order, OrderItem
@@ -21,6 +23,10 @@ class OrderProcessView(TemplateView, FormView):
         cart = get_cart_data(self.request)['cart_items']
 
         context['cart'] = cart
+        context['express_delivery_cost'] = config.EXPRESS_DELIVERY_COST
+        context['delivery_cost'] = config.DELIVERY_COST
+        context['free_delivery_minimal_cost'] = config.FREE_DELIVERY_MINIMAL_COST
+
         if 'user_exists' in self.request.session:
             context['user_exists'] = True
             del self.request.session['user_exists']
@@ -59,9 +65,18 @@ class OrderProcessView(TemplateView, FormView):
                 return redirect('orders:order_proceed')
 
         # создание нового заказа на основании полученных данных о корзине и пользователе
+        if total_carts_price > config.FREE_DELIVERY_MINIMAL_COST:
+            delivery_cost = 0
+        else:
+            delivery_option = form.cleaned_data['delivery_option']
+            if delivery_option == 'express':
+                delivery_cost = config.EXPRESS_DELIVERY_COST
+            else:
+                delivery_cost = config.DELIVERY_COST
+
         new_order = Order.objects.create(
             user=self.request.user,
-            total_price=total_carts_price,
+            total_price=total_carts_price + delivery_cost,
             city=form.cleaned_data['city'],
             address=form.cleaned_data['address'],
             payment_option=form.cleaned_data['payment_option'],
@@ -76,5 +91,9 @@ class OrderProcessView(TemplateView, FormView):
                 quantity=i_item['quantity']
             )
             new_item.save()
+
+        carts_to_delete = Cart.objects.filter(user=self.request.user.id)
+        if carts_to_delete:
+            carts_to_delete.delete()
 
         return redirect(reverse(self.success_url, kwargs={'pk': new_order.pk}))

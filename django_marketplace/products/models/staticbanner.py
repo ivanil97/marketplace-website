@@ -1,5 +1,8 @@
 from django.db import models
 
+from products.models import Category
+
+
 class StaticBanner(models.Model):
     """
     Модель для хранения информации о статических баннерах.
@@ -16,7 +19,7 @@ class StaticBanner(models.Model):
     """
     title = models.CharField(max_length=100, verbose_name="Заголовок")
     image = models.ImageField(upload_to='banners/static/', verbose_name="Изображение")
-    link = models.URLField(blank=True, null=True, verbose_name="Ссылка")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category', verbose_name="Категория")
     is_active = models.BooleanField(default=True, verbose_name="Активен")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="Цена")
