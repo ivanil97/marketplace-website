@@ -15,10 +15,16 @@
         <form method="post">
             {% csrf_token %}
             <div>
-                <input class="user-input" type="text" name="username" id="name" placeholder="E-mail" />
+                <input class="user-input" type="email" name="username" id="name" placeholder="E-mail" />
+            </div>
+            <div class="form-error">
+                <strong>{{ form.username.errors }}</strong>
             </div>
             <div>
                 <input type="password" name="password" id="name" placeholder="*********" />
+            </div>
+            <div class="form-error">
+                <strong>{{ form.password.errors }}</strong>
             </div>
             <div>
                 <input type="submit" value="{% translate 'Войти' %}" />
