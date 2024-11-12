@@ -195,8 +195,8 @@ LOGIN_REDIRECT_URL = '/user/account/'
 
 EMAIL_BACKEND = os.getenv("DJANGO_EMAIL_BACKEND", "django.core.mail.backends.dummy.EmailBackend")
 EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "")
-EMAIL_USE_TLS = os.getenv("DJANGO_EMAIL_USE_TLS", "1") == 1
-EMAIL_USE_SSL = os.getenv("DJANGO_EMAIL_USE_SSL", "0") == 1
+EMAIL_USE_TLS = os.getenv("DJANGO_EMAIL_USE_TLS", "1") == "1"
+EMAIL_USE_SSL = os.getenv("DJANGO_EMAIL_USE_SSL", "0") == "1"
 try:
     EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "0"))
 except ValueError:
