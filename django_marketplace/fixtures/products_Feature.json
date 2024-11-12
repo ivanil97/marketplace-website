@@ -1,0 +1,1 @@
+[{"model": "products.feature", "pk": 1, "fields": {"name": "Тип", "name_en": "Type", "name_ru": "Тип"}}, {"model": "products.feature", "pk": 2, "fields": {"name": "Цвет", "name_en": "Color", "name_ru": "Цвет"}}]

@@ -183,6 +183,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "common_static")]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "mediafiles"
 
+FOLDER_FIXTURES = os.getenv("FOLDER_FIXTURES", "fixtures")
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -231,9 +234,9 @@ CONSTANCE_CONFIG = {
     'CACHES_BANNERS': (60 * 10, 'Cashes products for catalog in seconds'),
     'CACHES_SELLERS': (60 * 60 * 24, 'Cashes sellers in seconds'),
     'CACHES_SELLERS_TOP_PRODUCTS': (60 * 60, 'Cashes products for catalog in seconds'),
-    'EXPRESS_DELIVERY_COST': (500, 'Cast of express delivery'),
-    'FREE_DELIVERY_MINIMAL_COST': (2000, 'Minimal cast for free delivery'),
-    'DELIVERY_COST': (200, 'Cast of simple delivery'),
+    'EXPRESS_DELIVERY_COST': (50, 'Cost of express delivery'),
+    'FREE_DELIVERY_MINIMAL_COST': (2000, 'Minimal cost for free delivery'),
+    'DELIVERY_COST': (20, 'Cost of simple delivery'),
     'FOR_COUNT': (6, 'Discount for cart dependence from count cart'),
     'FOR_COUNT_PERCENT': (5, 'Percent for count products in cart'),
     'FOR_PRICE': (500, 'Discount for cart dependence from total price cart'),
