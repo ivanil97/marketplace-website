@@ -2,7 +2,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./app_data/database:/var/team42_app/postgresql/data
+      - ./app_data/database:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=$SQL_DATABASE
       - POSTGRES_USER=$SQL_USER
