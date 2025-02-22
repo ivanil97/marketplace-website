@@ -33,7 +33,7 @@
 Склонировать проект:
 
 ```
-git clone https://gitlab.skillbox.ru/pythondjango_team42/django_diploma.git
+git clone https://github.com/ivanil97/marketplace-website.git
 ```
 В репозитории хранится файл .env.template. Надо на его основе создать и заполнить файл .env 
 
